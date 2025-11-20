@@ -54,3 +54,33 @@ char* SkipSpaces(char* ptr)
     }
     return ptr;
 }
+
+
+size_t GetWord(char** word, size_t len, char** cur_pos)
+{
+    assert( word);
+    assert(*word);
+    assert( cur_pos);
+    assert(*cur_pos);
+
+    char* buffer = *word;
+    size_t start_len = len;
+
+    size_t cur_len = 0;
+    while(!isspace((unsigned char) **cur_pos) && **cur_pos != '\0')
+    {
+        buffer[cur_len++] = **cur_pos;
+        ++*cur_pos;
+        if(cur_len >= start_len)
+        {
+            start_len *= 2;
+            char* new_buffer = realloc(buffer, start_len);
+            assert(new_buffer);
+            buffer = new_buffer;
+        }
+    }
+    buffer[cur_len] = '\0';
+    *word = buffer;
+
+    return cur_len;
+}

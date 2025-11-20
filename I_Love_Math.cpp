@@ -24,7 +24,7 @@ Node_t* GetTreeNode(char** cur_pos)
     {                                                 // тогда:
         *cur_pos = SkipSpaces(++*cur_pos);            // пропустили скобку, потом пробелы после скобки
                                                       // теперь мы на первом символе слова
-        data_t word = GetAndUnuliseWord(*cur_pos);    // считываем это слово и анализируем, что нам попалось
+        data_t* word = GetAndUnulyzeWord(*cur_pos);    // считываем это слово и анализируем, что нам попалось
         Node_t* node = TreeNodeCtor(word, GetTreeNode(cur_pos), GetTreeNode(cur_pos)); // создаем узел с нужным значнием и прикрепляем к нему поддеревья
         if (!node) return NULL;                       // не забываем сделать проверку, на то, что узел успешно создался
         // т.к. GetTreeNode после себя оставляет указатель на непробельный символ, то мы должны встретить ')' после прочтения поддеревьев
@@ -35,7 +35,7 @@ Node_t* GetTreeNode(char** cur_pos)
         }
         else
         {  // все плохо, узел считался неправильно
-            FREE(node);                               // очищаем память, если надо
+            FREE(node)                                // очищаем память, если надо
             *cur_pos = SkipSpaces(++*cur_pos);        // пропускаем скобку и пробельные символы послее нее
             return NULL;
         }                                             // чтение узла закончили
@@ -47,4 +47,26 @@ Node_t* GetTreeNode(char** cur_pos)
         return NULL;
     }
     else return NULL;                                 // во всех остальных случаях возвращаем NULL, не смещаясь с некорректного символа
+}
+
+
+// после себя всегда оставляет указатель на не пробельный символ
+data_t* GetAndUnulyzeWord(char** cur_pos)
+{
+    assert( cur_pos);
+    assert(*cur_pos);
+    const size_t START_LEN = 1 << 4;
+
+    char* word = (char*) calloc(START_LEN, sizeof(char));
+    assert(word && "memmory allocation err");
+
+    if (!GetWord(&word, cur_pos)) // после себя всегда оставляет указатель на не пробельный символ
+    {
+        FREE(word)
+        return NULL;
+    }
+
+    data_t* ret_value = UnulyzeWord(word);
+    FREE(word);
+    return ret_value;
 }

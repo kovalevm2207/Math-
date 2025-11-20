@@ -13,5 +13,6 @@
 #define FREE(ptr) if(ptr) {free(ptr); ptr = NULL;}
 
 Node_t* GetTreeNode(char** cur_pos);
+data_t* GetAndUnulyzeWord(char** cur_pos);
 
 #endif // MATH_TYPES

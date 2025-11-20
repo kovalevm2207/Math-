@@ -1,21 +1,22 @@
 #include "Tree.h"
 
 
-Node_t* TreeNodeCtor(data_t data, Node_t* left_som, Node_t* right_som)
+Node_t* TreeNodeCtor(data_t* data, Node_t* left_som, Node_t* right_som)
 {
+    assert(data && "NULL data, check GetWord or somone else func");
     Value_t value = {};
 
-    switch(data.type)
+    switch(data->type)
     {
         case NUM:
-            value.num = data.value;
-            return TreeNodeCtor_(data.type, value, left_som, right_som);
+            value.num = data->value;
+            return TreeNodeCtor_(data->type, value, left_som, right_som);
         case VAR:
-            value.var = data.value;
-            return TreeNodeCtor_(data.type, value, left_som, right_som);
+            value.var = data->value;
+            return TreeNodeCtor_(data->type, value, left_som, right_som);
         case OP:
-            value.op = data.value;
-            return TreeNodeCtor_(data.type, value, left_som, right_som);
+            value.op = data->value;
+            return TreeNodeCtor_(data->type, value, left_som, right_som);
         default:
             return NULL;
     }
