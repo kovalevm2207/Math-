@@ -96,6 +96,11 @@ typedef enum
     POSTORDER = 2
 } TraverseMode_t;
 
+typedef struct
+{
+    NodeType_t type;
+    Value_t value;
+} data_t;
 
 #ifdef DEBUG
     #define ON_DEBUG(func) func

@@ -20,12 +20,6 @@ Node_t* GetTreeNode(char** cur_pos)
     assert( cur_pos && "NULL ptr on buffer ptr, check GetTreeNode func");
     assert(*cur_pos && "NULL ptr on buffer, check SkipSpaces func");
 
-    typedef struct
-    {
-        NodeType_t type;
-        Value_t value;
-    } data_t;
-
     if(**cur_pos == '(')                              // мы могли встретить новый узел
     {                                                 // тогда:
         *cur_pos = SkipSpaces(++*cur_pos);            // пропустили скобку, потом пробелы после скобки

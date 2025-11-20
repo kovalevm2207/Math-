@@ -1,6 +1,28 @@
 #include "Tree.h"
 
-Node_t* TreeNodeCtor(NodeType_t type, Value_t value, Node_t* left_som, Node_t* right_som)
+
+Node_t* TreeNodeCtor(data_t data, Node_t* left_som, Node_t* right_som)
+{
+    Value_t value = {};
+
+    switch(data.type)
+    {
+        case NUM:
+            value.num = data.value;
+            return TreeNodeCtor_(data.type, value, left_som, right_som);
+        case VAR:
+            value.var = data.value;
+            return TreeNodeCtor_(data.type, value, left_som, right_som);
+        case OP:
+            value.op = data.value;
+            return TreeNodeCtor_(data.type, value, left_som, right_som);
+        default:
+            return NULL;
+    }
+}
+
+
+Node_t* TreeNodeCtor_(NodeType_t type, Value_t value, Node_t* left_som, Node_t* right_som)
 {
     Node_t* node = (Node_t*) calloc(1, sizeof(Node_t));
     if(node == NULL) return NULL;
