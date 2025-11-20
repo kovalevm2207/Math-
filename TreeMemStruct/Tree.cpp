@@ -1,11 +1,11 @@
 #include "Tree.h"
 
-Node_t* TreeNodeCtor(Operator_t op, Value_t value, Node_t* left_som, Node_t* right_som)
+Node_t* TreeNodeCtor(NodeType_t type, Value_t value, Node_t* left_som, Node_t* right_som)
 {
     Node_t* node = (Node_t*) calloc(1, sizeof(Node_t));
     if(node == NULL) return NULL;
 
-    node->op = op;
+    node->node_type = type;
     node->value = value;
     node->prev_node = NULL;
     node->left = left_som;
@@ -46,7 +46,7 @@ TreeErr_t TreeSortInsert(Node_t* root, Node_t* node)
 {
     assert(root != NULL);
     assert(node != NULL);
-    assert(root->op == NUM);
+    assert(root->node_type == NUM);
 
     while(1)
     {
@@ -78,7 +78,7 @@ TreeErr_t DeleteTreeNode(Node_t** node)
     if (cur_node->left)  DeleteTreeNode(&cur_node->left);
     if (cur_node->right) DeleteTreeNode(&cur_node->right);
 
-    switch(cur_node->op)
+    switch(cur_node->node_type)
     {
         case NUM:
             cur_node->value.num = 0;
@@ -87,8 +87,7 @@ TreeErr_t DeleteTreeNode(Node_t** node)
             cur_node->value.var = 0;
             break;
         case OP:
-            free(cur_node->value.op);
-            cur_node->value.op = NULL;
+            cur_node->value.op = ADD;
             break;
         default:
             return INCORRECT_TYPE;
@@ -144,13 +143,13 @@ TreeErr_t PrintTreeData(FILE* stream, const Node_t* node)
     assert(stream != NULL);
     assert(node != NULL);
 
-    switch(node->op)
+    switch(node->node_type)
     {
         case NUM:
             fprintf(stream, " %f ", node->value.num);
             break;
         case OP:
-            fprintf(stream, " %s ", node->value.op);
+            fprintf(stream, " %d ", node->value.op);
             break;
         case VAR:
             fprintf(stream, " %d ", node->value.var); // пока просто печатаем номер переменной, а не ее название

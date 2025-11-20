@@ -1,0 +1,33 @@
+digraph DUMP
+{
+    rankdir=TB;
+    splines=false;
+    node[fontname="Arial",fontsize=24,];
+    edge [style="bold", arrowhead="normal", splines=line, dir=normal]
+    node0 [shape=plaintext, label=<
+        <TABLE BORDER="0" CELLBORDER="2" CELLSPACING="3" CELLPADDING="3" BGCOLOR="#0bdfeeff" FIXEDSIZE="FALSE" ALIGN="CENTER" VALIGN="MIDDLE" SIDES="LRTB" >
+            <TR><TD PORT="p" BGCOLOR="#00ff66" COLSPAN="2" COLOR="#000000">0x504000000090</TD></TR>
+            <TR><TD PORT="t" BGCOLOR="#468f5dff" COLSPAN="2" COLOR="#000000ff">type = OP (enum = 2)</TD></TR>
+            <TR><TD PORT="v" BGCOLOR="#c5a1e6ff" COLSPAN="2" COLOR="#000000">value =  || "SIN" || "sin" || 5 ||</TD></TR>
+            <TR><TD PORT="l" COLSPAN="1" ALIGN="CENTER" COLOR="#000000" BGCOLOR="#ff4400">0x504000000010</TD><TD PORT="r" COLSPAN="1" ALIGN="CENTER" COLOR="#000000" BGCOLOR="#aaff00">0x504000000050</TD></TR>
+        </TABLE>
+    >];
+    node1 [shape=plaintext, label=<
+        <TABLE BORDER="0" CELLBORDER="2" CELLSPACING="3" CELLPADDING="3" BGCOLOR="#0bdfeeff" FIXEDSIZE="FALSE" ALIGN="CENTER" VALIGN="MIDDLE" SIDES="LRTB" >
+            <TR><TD PORT="p" BGCOLOR="#ff4400" COLSPAN="2" COLOR="#000000">0x504000000010</TD></TR>
+            <TR><TD PORT="t" BGCOLOR="#468f5dff" COLSPAN="2" COLOR="#000000ff">type = VAR (enum = 1)</TD></TR>
+            <TR><TD PORT="v" BGCOLOR="#c5a1e6ff" COLSPAN="2" COLOR="#000000">value =  "x" (0)</TD></TR>
+            <TR><TD PORT="l" COLSPAN="1" ALIGN="CENTER" COLOR="#000000" BGCOLOR="#cccccc">0x000000000000</TD><TD PORT="r" COLSPAN="1" ALIGN="CENTER" COLOR="#000000" BGCOLOR="#cccccc">0x000000000000</TD></TR>
+        </TABLE>
+    >];
+    node2 [shape=plaintext, label=<
+        <TABLE BORDER="0" CELLBORDER="2" CELLSPACING="3" CELLPADDING="3" BGCOLOR="#0bdfeeff" FIXEDSIZE="FALSE" ALIGN="CENTER" VALIGN="MIDDLE" SIDES="LRTB" >
+            <TR><TD PORT="p" BGCOLOR="#aaff00" COLSPAN="2" COLOR="#000000">0x504000000050</TD></TR>
+            <TR><TD PORT="t" BGCOLOR="#468f5dff" COLSPAN="2" COLOR="#000000ff">type = NUM (enum = 0)</TD></TR>
+            <TR><TD PORT="v" BGCOLOR="#c5a1e6ff" COLSPAN="2" COLOR="#000000">value = 10.500000 </TD></TR>
+            <TR><TD PORT="l" COLSPAN="1" ALIGN="CENTER" COLOR="#000000" BGCOLOR="#cccccc">0x000000000000</TD><TD PORT="r" COLSPAN="1" ALIGN="CENTER" COLOR="#000000" BGCOLOR="#cccccc">0x000000000000</TD></TR>
+        </TABLE>
+    >];
+    node0:<l> -> node1:n [dir=normal, color="#4d00a6ff"];
+    node0:<r> -> node2:n [dir=normal, color="#4d00a6ff"];
+}

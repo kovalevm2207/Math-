@@ -29,19 +29,19 @@ else
 	FLAGS = $(DED_FLAGS_LINUX) -ITreeMemStruct
 endif
 
-TREE_DIR = TreeMemStruct
+all: test
 
-all: $(TREE_DIR)/Tree.o Main.o $(TREE_DIR)/TreeDump.o
-	@ g++ $(FLAGS) $(MODE) $(TREE_DIR)/Tree.o Main.o $(TREE_DIR)/TreeDump.o -o math++
+test: ObjectFiles/Tree.o ObjectFiles/Test.o ObjectFiles/TreeDump.o
+	@ g++ $(FLAGS) $(MODE) ObjectFiles/Tree.o ObjectFiles/Test.o ObjectFiles/TreeDump.o -o test
 
-$(TREE_DIR)/Tree.o: $(TREE_DIR)/Tree.cpp $(TREE_DIR)/Tree.h $(TREE_DIR)/TreeBase.h
-	@ g++ $(FLAGS) $(MODE) -c $(TREE_DIR)/Tree.cpp -o $(TREE_DIR)/Tree.o
+ObjectFiles/Tree.o: TreeMemStruct/Tree.cpp TreeMemStruct/Tree.h TreeMemStruct/TreeBase.h
+	@ g++ $(FLAGS) $(MODE) -c TreeMemStruct/Tree.cpp -o ObjectFiles/Tree.o
 
-$(TREE_DIR)/TreeDump.o: $(TREE_DIR)/TreeDump.cpp $(TREE_DIR)/TreeDump.h $(TREE_DIR)/Tree.h $(TREE_DIR)/TreeBase.h
-	@ g++ $(FLAGS) $(MODE) -c $(TREE_DIR)/TreeDump.cpp -o $(TREE_DIR)/TreeDump.o
+ObjectFiles/TreeDump.o: TreeMemStruct/TreeDump.cpp TreeMemStruct/TreeDump.h TreeMemStruct/Tree.h TreeMemStruct/TreeBase.h
+	@ g++ $(FLAGS) $(MODE) -c TreeMemStruct/TreeDump.cpp -o ObjectFiles/TreeDump.o
 
-Main.o: Main.cpp Types.h
-	@ g++ $(FLAGS) $(MODE) -c Main.cpp -o Main.o
+ObjectFiles/Test.o: Test.cpp Types.h
+	@ g++ $(FLAGS) $(MODE) -c Test.cpp -o ObjectFiles/Test.o
 
 clean:
-	rm *.o $(TREE_DIR)/*.o math++
+	rm *.o ObjectFiles/*.o test

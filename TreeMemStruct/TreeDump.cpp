@@ -83,7 +83,7 @@ void MakeNodes(const Node_t* node, int* node_count, FILE* file)
                  "FIXEDSIZE=\"FALSE\" "        // фиксированный размер (игнорирует содержимое)
                  "ALIGN=\"CENTER\" "           // Горизонтальное выравнивание
                  "VALIGN=\"MIDDLE\" "          // Вертикальное выравнивание
-                 "SIDES=\"LRTB\" "          // Какие стороны рамки показывать
+                 "SIDES=\"LRTB\" "             // Какие стороны рамки показывать
                  ">\n"
         "            <TR><TD PORT=\"p\" "
                         "BGCOLOR=\"%s\" "
@@ -95,24 +95,25 @@ void MakeNodes(const Node_t* node, int* node_count, FILE* file)
                         "BGCOLOR=\"#468f5dff\" "
                         "COLSPAN=\"2\" "
                         "COLOR=\"#000000ff\">"
-                            "node%s"
+                            "type = %s (enum = %d)"
                     "</TD></TR>\n"
         "            <TR><TD PORT=\"v\" "
                         "BGCOLOR=\"#c5a1e6ff\" "
                         "COLSPAN=\"2\" "
-                        "COLOR=\"#000000\">",
-        *node_count, GenerateColor(node), node, Operators[node->op]
+                        "COLOR=\"#000000\">"
+                            "value = ",
+        *node_count, GenerateColor(node), node, NodeTypes[node->node_type], node->node_type
     );
-    switch(node->op)
+    switch(node->node_type)
     {
         case NUM:
             fprintf(file, "%f ", node->value.num);
             break;
         case VAR:
-            fprintf(file, "%d ", node->value.var);
+            fprintf(file, " \"%s\" (%d)", Variables[node->value.var], node->value.var);
             break;
         case OP:
-            fprintf(file, "%s ", node->value.op);
+            fprintf(file, " || \"%s\" || \"%s\" || %d ||", Operators[node->value.op].name, Operators[node->value.op].symbol, node->value.op);
             break;
         default:
             return;

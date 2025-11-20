@@ -7,25 +7,73 @@
 #include <string.h>
 // to do: struct Tree_s {ptr, max_size}
 
+const char* const Variables[] = {"x"};
+
 typedef enum
 {
     NUM,
     VAR,
     OP
+} NodeType_t; // да я знаю что это Node type type, и что
+
+const char* const NodeTypes[] = {"NUM", "VAR", "OP"};
+
+typedef enum
+{
+    ADD,
+    SUB,
+    MUL,
+    DIV,
+    POW,
+    SIN,
+    COS,
+    TG,
+    CTG,
+    ARCSIN,
+    ARCCOS,
+    ARCTG,
+    ARCCTG,
+    LOG,
+    LG,
+    LN
 } Operator_t;
+
+const struct
+{
+    const char* name;
+    const char* symbol;
+} Operators[] =
+{
+    {"ADD",    "+"     },
+    {"SUB",    "-"     },
+    {"MUL",    "*"     },
+    {"DIV",    "/"     },
+    {"POW",    "^"     },
+    {"SIN",    "sin"   },
+    {"COS",    "cos"   },
+    {"TG",     "tg"    },
+    {"CTG",    "ctg"   },
+    {"ARCSIN", "arcsin"},
+    {"ARCCOS", "arccos"},
+    {"ARCTG",  "arctg" },
+    {"ARCCTG", "arcctg"},
+    {"LOG",    "log"   },
+    {"LG",     "lg"    },
+    {"LN",     "ln"    },
+};
 
 typedef union
 {
     double num;
     int    var;
-    char*  op;
+    Operator_t  op;
 } Value_t;
 
 typedef struct Node_t
 {
     struct Node_t** prev_node;
     Value_t   value;
-    Operator_t op;
+    NodeType_t node_type;
     struct Node_t*  left;
     struct Node_t*  right;
 } Node_t;
@@ -50,7 +98,6 @@ typedef enum
     POSTORDER = 2
 } TraverseMode_t;
 
-const char* const Operators[] = {"NUM", "VAR", "OP"};
 
 #ifdef DEBUG
     #define ON_DEBUG(func) func
