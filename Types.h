@@ -8,5 +8,10 @@
 
 #include "TreeMemStruct/Tree.h"
 #include "color_print.h"
+#include "Instruments.h"
+
+#define FREE(ptr) if(ptr) {free(ptr); ptr = NULL;}
+
+Node_t* GetTreeNode(char** cur_pos);
 
 #endif // MATH_TYPES

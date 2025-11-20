@@ -1,0 +1,16 @@
+(*
+    (x
+        nil
+        nil
+    )
+    (+
+        (y
+            nil
+            nil
+        )
+        (6
+            nil
+            nil
+        )
+    )
+)

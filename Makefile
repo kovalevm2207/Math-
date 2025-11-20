@@ -29,7 +29,10 @@ else
 	FLAGS = $(DED_FLAGS_LINUX) -ITreeMemStruct
 endif
 
-all: test
+all: test math++
+
+math++: ObjectFiles/I_Love_Math.o ObjectFiles/Tree.o ObjectFiles/TreeDump.o ObjectFiles/Instruments.o
+	@ g++ $(FLAGS) $(MODE) ObjectFiles/I_Love_Math.o ObjectFiles/Tree.o ObjectFiles/TreeDump.o ObjectFiles/Instruments.o -o math++
 
 test: ObjectFiles/Tree.o ObjectFiles/Test.o ObjectFiles/TreeDump.o
 	@ g++ $(FLAGS) $(MODE) ObjectFiles/Tree.o ObjectFiles/Test.o ObjectFiles/TreeDump.o -o test
@@ -42,6 +45,12 @@ ObjectFiles/TreeDump.o: TreeMemStruct/TreeDump.cpp TreeMemStruct/TreeDump.h Tree
 
 ObjectFiles/Test.o: Test.cpp Types.h
 	@ g++ $(FLAGS) $(MODE) -c Test.cpp -o ObjectFiles/Test.o
+
+ObjectFiles/I_Love_Math.o: I_Love_Math.cpp Types.h
+	@ g++ $(FLAGS) $(MODE) -c I_Love_Math.cpp -o ObjectFiles/I_Love_Math.o
+
+ObjectFiles/Instruments.o: Instruments.cpp Instruments.h
+	@ g++ $(FLAGS) $(MODE) -c Instruments.cpp -o ObjectFiles/Instruments.o
 
 clean:
 	rm *.o ObjectFiles/*.o test
