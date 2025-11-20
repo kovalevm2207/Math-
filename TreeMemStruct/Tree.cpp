@@ -1,11 +1,12 @@
 #include "Tree.h"
 
-Node_t* TreeNodeCtor(Tree_t data, Node_t* left_som, Node_t* right_som)
+Node_t* TreeNodeCtor(Operator_t op, Value_t value, Node_t* left_som, Node_t* right_som)
 {
     Node_t* node = (Node_t*) calloc(1, sizeof(Node_t));
     if(node == NULL) return NULL;
 
-    node->data = data;
+    node->op = op;
+    node->value = value;
     node->prev_node = NULL;
     node->left = left_som;
     node->right = right_som;
@@ -48,7 +49,7 @@ TreeErr_t TreeSortInsert(Node_t* root, Node_t* node)
 
     while(1)
     {
-        if(node->data <= root->data)
+        if(node->value <= root->value)
         {
             if (root->left == node) return TREE_ERR_DUPLICATE_NODE;
             if (TreeInsertLeft(root, node) == TREE_OK) break;
@@ -76,8 +77,22 @@ TreeErr_t DeleteTreeNode(Node_t** node)
     if (cur_node->left)  DeleteTreeNode(&cur_node->left);
     if (cur_node->right) DeleteTreeNode(&cur_node->right);
 
-    free(cur_node->data);
-    cur_node->data = NULL;
+    switch(cur_node->op)
+    {
+        case NUM:
+            cur_node->value.num = 0;
+            break;
+        case VAR:
+            cur_node->value.var = 0;
+            break;
+        case OP:
+            free(cur_node->value.op);
+            cur_node->value.op = NULL;
+            break;
+        default:
+            return INCORRECT_TYPE;
+    }
+
     if (cur_node->prev_node) *(cur_node->prev_node) = NULL;
 
     free(cur_node);

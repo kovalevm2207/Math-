@@ -5,17 +5,29 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
-
-typedef char* Tree_t;
-
 // to do: struct Tree_s {ptr, max_size}
+
+typedef enum
+{
+    NUM,
+    VAR,
+    OP
+} Operator_t;
+
+typedef union
+{
+    double num;
+    int    var;
+    char*  op;
+} Value_t;
 
 typedef struct Node_t
 {
-    Node_t** prev_node;
-    Tree_t data;
-    Node_t* left;
-    Node_t* right;
+    struct Node_t** prev_node;
+    Value_t   value;
+    Operator_t op;
+    struct Node_t*  left;
+    struct Node_t*  right;
 } Node_t;
 
 typedef enum
@@ -30,7 +42,6 @@ typedef enum
     INVALID_MODE            = 1 << 7
 } TreeErr_t;
 
-
 typedef enum
 {
     PREORDER  = 0,
@@ -38,6 +49,16 @@ typedef enum
     POSTORDER = 2
 } TraverseMode_t;
 
+const struct
+{
+    Operator_t op;
+    const char* const name;
+} Operators[] =
+{
+    {NUM, "NUM"},
+    {VAR, "VAR"},
+    {OP,  "OP"}
+};
 
 #ifdef DEBUG
     #define ON_DEBUG(func) func
