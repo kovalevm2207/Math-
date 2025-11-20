@@ -46,10 +46,11 @@ TreeErr_t TreeSortInsert(Node_t* root, Node_t* node)
 {
     assert(root != NULL);
     assert(node != NULL);
+    assert(root->op == NUM);
 
     while(1)
     {
-        if(node->value <= root->value)
+        if(node->value.num <= root->value.num)
         {
             if (root->left == node) return TREE_ERR_DUPLICATE_NODE;
             if (TreeInsertLeft(root, node) == TREE_OK) break;
@@ -115,24 +116,48 @@ TreeErr_t PrintTreeNode(FILE* stream, const Node_t* node, TraverseMode_t mode)
     switch(mode)
     {
         case PREORDER:
-            fprintf      (stream, "\"%s\"", node->data);
+            PrintTreeData(stream, node);
             PrintTreeNode(stream, node->left,  mode);
             PrintTreeNode(stream, node->right, mode);
             break;
         case INORDER:
             PrintTreeNode(stream, node->left,  mode);
-            fprintf      (stream, "\"%s\"", node->data);
+            PrintTreeData(stream, node);
             PrintTreeNode(stream, node->right, mode);
             break;
         case POSTORDER:
             PrintTreeNode(stream, node->left,  mode);
             PrintTreeNode(stream, node->right, mode);
-            fprintf      (stream, "\"%s\"", node->data);
+            PrintTreeData(stream, node);
             break;
         default:
             return INVALID_MODE;
     }
     fprintf(stream, ")");
+
+    return TREE_OK;
+}
+
+
+TreeErr_t PrintTreeData(FILE* stream, const Node_t* node)
+{
+    assert(stream != NULL);
+    assert(node != NULL);
+
+    switch(node->op)
+    {
+        case NUM:
+            fprintf(stream, " %f ", node->value.num);
+            break;
+        case OP:
+            fprintf(stream, " %s ", node->value.op);
+            break;
+        case VAR:
+            fprintf(stream, " %d ", node->value.var); // пока просто печатаем номер переменной, а не ее название
+            break;                                    // далее скорее всего будет массив с навзвниями...
+        default:
+            return INCORRECT_TYPE;
+    }
 
     return TREE_OK;
 }

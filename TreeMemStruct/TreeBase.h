@@ -39,7 +39,8 @@ typedef enum
     END_FILE_ERR            = 1 << 4,
     TREE_ERR_DUPLICATE_NODE = 1 << 5,
     NULL_NODE               = 1 << 6,
-    INVALID_MODE            = 1 << 7
+    INVALID_MODE            = 1 << 7,
+    INCORRECT_TYPE          = 1 << 8
 } TreeErr_t;
 
 typedef enum
@@ -49,16 +50,7 @@ typedef enum
     POSTORDER = 2
 } TraverseMode_t;
 
-const struct
-{
-    Operator_t op;
-    const char* const name;
-} Operators[] =
-{
-    {NUM, "NUM"},
-    {VAR, "VAR"},
-    {OP,  "OP"}
-};
+const char* const Operators[] = {"NUM", "VAR", "OP"};
 
 #ifdef DEBUG
     #define ON_DEBUG(func) func

@@ -85,26 +85,39 @@ void MakeNodes(const Node_t* node, int* node_count, FILE* file)
                  "VALIGN=\"MIDDLE\" "          // Вертикальное выравнивание
                  "SIDES=\"LRTB\" "          // Какие стороны рамки показывать
                  ">\n"
-        "            <TR><TD PORT=\"h\" "
-                        "BGCOLOR=\"#ffffffff\" "
-                        "COLSPAN=\"2\" "
-                        "COLOR=\"#383838ff\">"
-                            "node%d"
-                    "</TD></TR>\n"
         "            <TR><TD PORT=\"p\" "
                         "BGCOLOR=\"%s\" "
                         "COLSPAN=\"2\" "
                         "COLOR=\"#000000\">"
                             "%p"
                     "</TD></TR>\n"
-        "            <TR><TD PORT=\"d\" "
+        "            <TR><TD PORT=\"t\" "
+                        "BGCOLOR=\"#468f5dff\" "
+                        "COLSPAN=\"2\" "
+                        "COLOR=\"#000000ff\">"
+                            "node%s"
+                    "</TD></TR>\n"
+        "            <TR><TD PORT=\"v\" "
                         "BGCOLOR=\"#c5a1e6ff\" "
                         "COLSPAN=\"2\" "
-                        "COLOR=\"#000000\">"
-                            "%s "
-                    "</TD></TR>\n",
-        *node_count, *node_count, GenerateColor(node), node, node->data
+                        "COLOR=\"#000000\">",
+        *node_count, GenerateColor(node), node, Operators[node->op]
     );
+    switch(node->op)
+    {
+        case NUM:
+            fprintf(file, "%f ", node->value.num);
+            break;
+        case VAR:
+            fprintf(file, "%d ", node->value.var);
+            break;
+        case OP:
+            fprintf(file, "%s ", node->value.op);
+            break;
+        default:
+            return;
+    }
+    fprintf(file, "</TD></TR>\n");
 
     fprintf(file, "            <TR><TD PORT=\"l\" "
                                   "COLSPAN=\"1\" "
