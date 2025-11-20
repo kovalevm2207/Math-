@@ -37,19 +37,6 @@ char* SkipSpaces(char* ptr)
 
     while(*ptr && isspace((unsigned char) *ptr))
     {
-        switch(*ptr)
-        {
-            case '\n':
-                ON_DEBUG(printf("enter\n"));
-                break;
-            case ' ':
-                ON_DEBUG(printf("space\n"));
-                break;
-            default:
-                ON_DEBUG(printf("%c", *ptr));
-                break;
-        }
-
         ptr++;
     }
     return ptr;
@@ -74,7 +61,7 @@ size_t GetWord(char** word, size_t len, char** cur_pos)
         if(cur_len >= start_len)
         {
             start_len *= 2;
-            char* new_buffer = realloc(buffer, start_len);
+            char* new_buffer = (char*) realloc(buffer, start_len);
             assert(new_buffer);
             buffer = new_buffer;
         }

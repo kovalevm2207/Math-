@@ -92,7 +92,7 @@ void MakeNodes(const Node_t* node, int* node_count, FILE* file)
                             "%p"
                     "</TD></TR>\n"
         "            <TR><TD PORT=\"t\" "
-                        "BGCOLOR=\"#468f5dff\" "
+                        "BGCOLOR=\"#B0E0B0ff\" "
                         "COLSPAN=\"2\" "
                         "COLOR=\"#000000ff\">"
                             "type = %s (enum = %d)"

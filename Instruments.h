@@ -15,5 +15,6 @@
 
 char* ReadFile(const char* const name);
 char* SkipSpaces(char* ptr);
+size_t GetWord(char** word, size_t len, char** cur_pos);
 
 #endif // MATH_INSTRUMENTS

@@ -8,50 +8,72 @@ int main()
     char* cur_pos = SkipSpaces(user_file);
 
     Node_t* user_tree = GetTreeNode(&cur_pos);
+    ON_DEBUG(printf("user_tree = %p\n", user_tree));
+    TreeDump(user_tree, 1);
 
+    DeleteTreeNode(&user_tree);
     FREE(user_file)
 
     return 0;
 }
 
-// после себя всегда оставляет указатель на не пробельный символ
+
 Node_t* GetTreeNode(char** cur_pos)
 {
+    ON_DEBUG(printf("In func GetTreeNode\n"));
+    ON_DEBUG(printf("\tat the begining we are on sym: %c (%d)\n", **cur_pos, **cur_pos));
     assert( cur_pos && "NULL ptr on buffer ptr, check GetTreeNode func");
     assert(*cur_pos && "NULL ptr on buffer, check SkipSpaces func");
 
-    if(**cur_pos == '(')                              // мы могли встретить новый узел
-    {                                                 // тогда:
-        *cur_pos = SkipSpaces(++*cur_pos);            // пропустили скобку, потом пробелы после скобки
-                                                      // теперь мы на первом символе слова
+    if(**cur_pos == '(')
+    {
+        ON_DEBUG(printf("\thave found (\n"));
+        *cur_pos = SkipSpaces(++*cur_pos);
+        ON_DEBUG(printf("\tnow we are on %c\n", **cur_pos));
+
         data_t word = {};
-        GetAndUnulyzeWord(*cur_pos, &word);           // считываем это слово и анализируем, что нам попалось
-        Node_t* node = TreeNodeCtor(word, GetTreeNode(cur_pos), GetTreeNode(cur_pos)); // создаем узел с нужным значнием и прикрепляем к нему поддеревья
-        if (!node) return NULL;                       // не забываем сделать проверку, на то, что узел успешно создался
-        // т.к. GetTreeNode после себя оставляет указатель на непробельный символ, то мы должны встретить ')' после прочтения поддеревьев
-        if (*cur_pos == ')')
-        {  // все хорошо, узел считался правильно
-            *cur_pos = SkipSpaces(++*cur_pos);        // пропускаем скобку и пробельные символы послее нее
-            return node;                              // возвращаем указатель на получившийся узел
+        GetAndUnulyzeWord(cur_pos, &word);
+        ON_DEBUG(printf("\tafter retunr from analyze we have type: %s(%d)\n", NodeTypes[word.type], word.type));
+
+        ON_DEBUG(printf("\tbefore TreeNodeCtore we are on: %c (%d)\n", **cur_pos, **cur_pos));
+        Node_t* left_som  = GetTreeNode(cur_pos);
+        Node_t* right_som = GetTreeNode(cur_pos);
+        Node_t* node = TreeNodeCtor(&word, left_som, right_som);
+        if (!node) return NULL;
+        ON_DEBUG(printf("\tafter TreeNodeCtor we have: ptr = %p\n", node));
+        ON_DEBUG(printf("\tafter TreeNodeCtor we are on symbol: %c (%d)\n", **cur_pos, **cur_pos));
+
+        if (**cur_pos == ')')
+        {
+            *cur_pos = SkipSpaces(++*cur_pos);
+            return node;
         }
         else
-        {  // все плохо, узел считался неправильно
-            FREE(node)                                // очищаем память, если надо
-            *cur_pos = SkipSpaces(++*cur_pos);        // пропускаем скобку и пробельные символы послее нее
+        {
+            FREE(node)
+            *cur_pos = SkipSpaces(++*cur_pos);
             return NULL;
-        }                                             // чтение узла закончили
+        }
     }
-    else if(strncmp(*cur_pos, "nil") == 0)            // но также мы могли встретить еще и "nil"
-    {                                                 // тогда:
-        *cur_pos += sizeof("nil") - 1;                // прпускаем "nil"
-        *cur_pos = SkipSpaces(*cur_pos);              // пропускаем все пробельные символы
+    else if(strncmp(*cur_pos, "nil", 3) == 0)
+    {
+        ON_DEBUG(printf("\thave found: nil\n"));
+
+        *cur_pos += sizeof("nil") - 1;
+        *cur_pos = SkipSpaces(*cur_pos);
+
+        ON_DEBUG(printf("After skip 'nil' and spaces we are on: %c (%d)\n", **cur_pos, **cur_pos));
+        ON_DEBUG(printf("Out from GetTreeNode"));
+
         return NULL;
     }
-    else return NULL;                                 // во всех остальных случаях возвращаем NULL, не смещаясь с некорректного символа
+
+    ON_DEBUG(printf(RED_COLOR "\tinvalid word in txt file\n" RESET));
+
+    return NULL;
 }
 
 
-// после себя всегда оставляет указатель на не пробельный символ
 data_t* GetAndUnulyzeWord(char** cur_pos, data_t* data)
 {
     assert( cur_pos);
@@ -61,14 +83,17 @@ data_t* GetAndUnulyzeWord(char** cur_pos, data_t* data)
     char* word = (char*) calloc(START_LEN, sizeof(char));
     assert(word && "memmory allocation err");
 
-    if (!GetWord(&word, START_LEN, cur_pos)) // после себя всегда оставляет указатель на не пробельный символ
+    if (!GetWord(&word, START_LEN, cur_pos))
     {
         FREE(word)
         return NULL;
     }
+    ON_DEBUG(printf("\twe have read: %s\n", word));
 
     UnulyzeWord(word, data);
+    ON_DEBUG(printf("\tafter analyze we have type: %s(%d)\n", NodeTypes[data->type], data->type));
     FREE(word);
+    *cur_pos = SkipSpaces(*cur_pos);
     return data;
 }
 
@@ -84,7 +109,7 @@ data_t* UnulyzeWord(char* word, data_t* data)
         return data;
     }
 
-    Operator_t check_op = 0;
+    Operator_t check_op = ADD;
     if(FindOperator(word, &check_op))
     {
         data->type = OP;
@@ -109,7 +134,7 @@ bool FindOperator(char* word, Operator_t* op)
     {
         if(strcmp(Operators[i].symbol, word) == 0)
         {
-            *op = i;
+            *op = (Operator_t) i;
             return true;
         }
     }
