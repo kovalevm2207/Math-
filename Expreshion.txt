@@ -1,16 +1,28 @@
 (*
-    (x
-        nil
-        nil
+    (-
+        (x
+            nil
+            nil
+        )
+        (-4
+            nil
+            nil
+        )
     )
     (+
         (y
             nil
             nil
         )
-        (6
-            nil
-            nil
+        (*
+            (6.72
+                nil
+                nil
+            )
+            (z
+                nil
+                nil
+            )
         )
     )
 )
