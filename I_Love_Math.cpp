@@ -24,7 +24,8 @@ Node_t* GetTreeNode(char** cur_pos)
     {                                                 // тогда:
         *cur_pos = SkipSpaces(++*cur_pos);            // пропустили скобку, потом пробелы после скобки
                                                       // теперь мы на первом символе слова
-        data_t* word = GetAndUnulyzeWord(*cur_pos);    // считываем это слово и анализируем, что нам попалось
+        data_t word = {};
+        GetAndUnulyzeWord(*cur_pos, &word);           // считываем это слово и анализируем, что нам попалось
         Node_t* node = TreeNodeCtor(word, GetTreeNode(cur_pos), GetTreeNode(cur_pos)); // создаем узел с нужным значнием и прикрепляем к нему поддеревья
         if (!node) return NULL;                       // не забываем сделать проверку, на то, что узел успешно создался
         // т.к. GetTreeNode после себя оставляет указатель на непробельный символ, то мы должны встретить ')' после прочтения поддеревьев
@@ -51,7 +52,7 @@ Node_t* GetTreeNode(char** cur_pos)
 
 
 // после себя всегда оставляет указатель на не пробельный символ
-data_t* GetAndUnulyzeWord(char** cur_pos)
+data_t* GetAndUnulyzeWord(char** cur_pos, data_t* data)
 {
     assert( cur_pos);
     assert(*cur_pos);
@@ -60,13 +61,58 @@ data_t* GetAndUnulyzeWord(char** cur_pos)
     char* word = (char*) calloc(START_LEN, sizeof(char));
     assert(word && "memmory allocation err");
 
-    if (!GetWord(&word, cur_pos)) // после себя всегда оставляет указатель на не пробельный символ
+    if (!GetWord(&word, START_LEN, cur_pos)) // после себя всегда оставляет указатель на не пробельный символ
     {
         FREE(word)
         return NULL;
     }
 
-    data_t* ret_value = UnulyzeWord(word);
+    UnulyzeWord(word, data);
     FREE(word);
-    return ret_value;
+    return data;
+}
+
+data_t* UnulyzeWord(char* word, data_t* data)
+{
+    assert(word);
+    double check_num = 0;
+
+    if (sscanf(word, "%lf", &check_num))
+    {
+        data->type = NUM;
+        data->value.num = check_num;
+        return data;
+    }
+
+    Operator_t check_op = 0;
+    if(FindOperator(word, &check_op))
+    {
+        data->type = OP;
+        data->value.op = check_op;
+        return data;
+    }
+
+    if(('a' <= word[0] && word[0] <= 'z') || ('A' <= word[0] && word[0] <= 'Z'))
+    {
+        data->type = VAR;
+        data->value.var = strdup(word);
+        return data;
+    }
+
+    return NULL;
+}
+
+
+bool FindOperator(char* word, Operator_t* op)
+{
+    for (size_t i = 0; i < sizeof(Operators)/sizeof(Operators[0]); i++)
+    {
+        if(strcmp(Operators[i].symbol, word) == 0)
+        {
+            *op = i;
+            return true;
+        }
+    }
+
+    return false;
 }
