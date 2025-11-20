@@ -3,7 +3,7 @@
 int main()
 {
     Value_t left_addend = {};
-    left_addend.var = 0;
+    left_addend.var = strdup("x");
     Node_t* left = TreeNodeCtor(VAR, left_addend, NULL, NULL);
 
     Value_t right_addend = {};

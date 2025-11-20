@@ -7,8 +7,6 @@
 #include <string.h>
 // to do: struct Tree_s {ptr, max_size}
 
-const char* const Variables[] = {"x"};
-
 typedef enum
 {
     NUM,
@@ -65,7 +63,7 @@ const struct
 typedef union
 {
     double num;
-    int    var;
+    char* var;
     Operator_t  op;
 } Value_t;
 

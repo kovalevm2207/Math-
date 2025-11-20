@@ -110,10 +110,10 @@ void MakeNodes(const Node_t* node, int* node_count, FILE* file)
             fprintf(file, "%f ", node->value.num);
             break;
         case VAR:
-            fprintf(file, " \"%s\" (%d)", Variables[node->value.var], node->value.var);
+            fprintf(file, "\"%s\" ", node->value.var);
             break;
         case OP:
-            fprintf(file, " || \"%s\" || \"%s\" || %d ||", Operators[node->value.op].name, Operators[node->value.op].symbol, node->value.op);
+            fprintf(file, "\"%s\" or \"%s\" or %d ", Operators[node->value.op].name, Operators[node->value.op].symbol, node->value.op);
             break;
         default:
             return;

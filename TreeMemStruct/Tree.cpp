@@ -84,7 +84,8 @@ TreeErr_t DeleteTreeNode(Node_t** node)
             cur_node->value.num = 0;
             break;
         case VAR:
-            cur_node->value.var = 0;
+            free(cur_node->value.var);
+            cur_node->value.var = NULL;
             break;
         case OP:
             cur_node->value.op = ADD;
@@ -152,7 +153,7 @@ TreeErr_t PrintTreeData(FILE* stream, const Node_t* node)
             fprintf(stream, " %d ", node->value.op);
             break;
         case VAR:
-            fprintf(stream, " %d ", node->value.var); // пока просто печатаем номер переменной, а не ее название
+            fprintf(stream, " %s ", node->value.var); // пока просто печатаем номер переменной, а не ее название
             break;                                    // далее скорее всего будет массив с навзвниями...
         default:
             return INCORRECT_TYPE;
