@@ -166,7 +166,7 @@ void BeginLaTeXDocument(FILE* file)
     "\\usepackage{wrapfig}\n"
     "\\usepackage[warn]{mathtext}\n"
     "\\usepackage[russian]{babel}\n"
-    "\\usepackage{ amssymb }\n"
+    "\\usepackage{amssymb}\n"
     "\\usepackage{graphicx, float, multicol, hyperref, pgfplots, amsmath}\n"
     "\\usepackage{pgfplots}\n"
     "\\pgfplotsset{compat=1.18}\n"
@@ -218,47 +218,77 @@ void WriteTreeNodeLaTeX(FILE* file, Node_t* node)
     assert(file);
     assert(node);
 
-    if(node->node_type == NUM)
+    switch(node->node_type)
     {
-        if(node->value.num < 0) fprintf(file, "(%g)", node->value.num);
-        else                    fprintf(file,  "%g", node->value.num);
-        return;
-    }
-    if(node->node_type == VAR)
-    {
-        fprintf(file, "%s", node->value.var);
-        return;
-    }
-    switch(node->value.op)
-    {
-        case ADD    : PrintSimpleOperator      (file, "+",      node); return;
-        case SUB    : PrintSimpleOperator      (file, "-",      node); return;
-        case MUL    : PrintSimpleOperator      (file, "\\cdot", node); return;
-        case DIV    : PrintDiv                 (file, /*frac*/  node); return;
-        case POW    : PrintPow                 (file, /*^*/     node); return;
-        case SIN    : PrintOneSubtreeOperator  (file, "sin",    node); return;
-        case COS    : PrintOneSubtreeOperator  (file, "cos",    node); return;
-        case TG     : PrintOneSubtreeOperator  (file, "tg",     node); return;
-        case CTG    : PrintOneSubtreeOperator  (file, "ctg",    node); return;
-        case SH     : PrintOneSubtreeOperator  (file, "sh",     node); return;
-        case CH     : PrintOneSubtreeOperator  (file, "ch",     node); return;
-        case TH     : PrintOneSubtreeOperator  (file, "th",     node); return;
-        case CTH    : PrintOneSubtreeOperator  (file, "cth",    node); return;
-        case ARCSIN : PrintOneSubtreeOperator  (file, "arcsin", node); return;
-        case ARCCOS : PrintOneSubtreeOperator  (file, "arccos", node); return;
-        case ARCTG  : PrintOneSubtreeOperator  (file, "arctg",  node); return;
-        case ARCCTG : PrintOneSubtreeOperator  (file, "arcctg", node); return;
-        case LOG    : PrintLog                 (file, /*log*/   node); return;
-        case LG     : PrintOneSubtreeOperator  (file, "lg",     node); return;
-        case LN     : PrintOneSubtreeOperator  (file, "ln",     node); return;
+        case NUM:
+            if(node->value.num < 0) fprintf(file, "(%g)", node->value.num);
+            else                    fprintf(file,  "%g", node->value.num);
+            return;
+        case VAR:
+            fprintf(file, "%s", node->value.var);
+            return;
+        case OP:
+            switch(node->value.op)
+            {
+                case ADD    : PrintSimpleOperator      (file, "+",      node); break;
+                case SUB    : PrintSimpleOperator      (file, "-",      node); break;
+                case MUL    : PrintSimpleOperator      (file, "\\cdot", node); break;
+                case DIV    : PrintDiv                 (file, /*frac*/  node); break;
+                case POW    : PrintPow                 (file, /*^*/     node); break;
+                case SIN    : PrintOneSubtreeOperator  (file, "sin",    node); break;
+                case COS    : PrintOneSubtreeOperator  (file, "cos",    node); break;
+                case TG     : PrintOneSubtreeOperator  (file, "tg",     node); break;
+                case CTG    : PrintOneSubtreeOperator  (file, "ctg",    node); break;
+                case SH     : PrintOneSubtreeOperator  (file, "sh",     node); break;
+                case CH     : PrintOneSubtreeOperator  (file, "ch",     node); break;
+                case TH     : PrintOneSubtreeOperator  (file, "th",     node); break;
+                case CTH    : PrintOneSubtreeOperator  (file, "cth",    node); break;
+                case ARCSIN : PrintOneSubtreeOperator  (file, "arcsin", node); break;
+                case ARCCOS : PrintOneSubtreeOperator  (file, "arccos", node); break;
+                case ARCTG  : PrintOneSubtreeOperator  (file, "arctg",  node); break;
+                case ARCCTG : PrintOneSubtreeOperator  (file, "arcctg", node); break;
+                case LOG    : PrintLog                 (file, /*log*/   node); break;
+                case LG     : PrintOneSubtreeOperator  (file, "lg",     node); break;
+                case LN     : PrintOneSubtreeOperator  (file, "ln",     node); break;
+                default:
+                    return;
+            }
         default:
             return;
     }
+    return;
+}
+
+
+bool NeedBraces(Node_t* node, Node_t* next_node)
+{
+    assert(node);
+    assert(next_node);
+
+    ON_DEBUG(printf("node:      type = %s op = %s\n", NodeTypes[node->node_type], Operators[node->value.op].name));
+    ON_DEBUG(printf("next_node: type = %s\n", NodeTypes[next_node->node_type]));
+    switch(next_node->node_type)
+    {
+        case NUM:
+        case VAR:
+            return false;
+        case OP:
+            if(Operators[next_node->value.op].priority < Operators[node->value.op].priority)
+                return true;
+            else
+                return false;
+        default:
+            return false;
+    }
+    return false;
 }
 
 
 void PrintLog(FILE* file, Node_t* node)
 {
+    assert(file);
+    assert(node);
+
     fprintf(file, "\\operatorname{log}_{");
     WriteTreeNodeLaTeX(file, node->left);
     fprintf(file, "}\\left(");
@@ -269,6 +299,9 @@ void PrintLog(FILE* file, Node_t* node)
 
 void PrintDiv(FILE* file, Node_t* node)
 {
+    assert(file);
+    assert(node);
+
     fprintf(file, "\\frac{");
     WriteTreeNodeLaTeX(file, node->left);
     fprintf(file, "}{");
@@ -278,6 +311,9 @@ void PrintDiv(FILE* file, Node_t* node)
 
 void PrintPow(FILE* file, Node_t* node)
 {
+    assert(file);
+    assert(node);
+
     WriteTreeNodeLaTeX(file, node->left);
     fprintf(file, "^{");
     WriteTreeNodeLaTeX(file, node->right);
@@ -287,14 +323,29 @@ void PrintPow(FILE* file, Node_t* node)
 
 void PrintSimpleOperator(FILE* file, const char* const op, Node_t* node)
 {
+    assert(file);
+    assert(op);
+    assert(node);
+
+    bool left_braces_marker = NeedBraces(node, node->left);
+    if(left_braces_marker) fprintf(file, "\\left(");
     WriteTreeNodeLaTeX(file, node->left);
+    if(left_braces_marker) fprintf(file, "\\right)");
+
     fprintf(file, "%s ", op);
+    bool right_braces_marker = NeedBraces(node, node->right);
+    if(right_braces_marker) fprintf(file, "\\left(");
     WriteTreeNodeLaTeX(file, node->right);
+    if(right_braces_marker) fprintf(file, "\\right)");
 }
 
 
 void PrintOneSubtreeOperator(FILE* file, const char* const op, Node_t* node)
 {
+    assert(file);
+    assert(op);
+    assert(node);
+
     fprintf(file, "\\operatorname{%s}\\left(", op);
     WriteTreeNodeLaTeX(file, node->right);
     fprintf(file, "\\right) ");

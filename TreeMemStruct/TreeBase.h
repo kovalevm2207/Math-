@@ -44,28 +44,29 @@ const struct
 {
     const char* name;
     const char* symbol;
+    int         priority;
 } Operators[] =
 {
-    {"ADD",    "+"     },
-    {"SUB",    "-"     },
-    {"MUL",    "*"     },
-    {"DIV",    "/"     },
-    {"POW",    "^"     },
-    {"SIN",    "sin"   },
-    {"COS",    "cos"   },
-    {"TG",     "tg"    },
-    {"CTG",    "ctg"   },
-    {"SH",     "sh"    },
-    {"CH",     "ch"    },
-    {"TH",     "th"    },
-    {"CTH",    "cth"   },
-    {"ARCSIN", "arcsin"},
-    {"ARCCOS", "arccos"},
-    {"ARCTG",  "arctg" },
-    {"ARCCTG", "arcctg"},
-    {"LOG",    "log"   },
-    {"LG",     "lg"    },
-    {"LN",     "ln"    },
+    {"ADD",    "+" ,    0},
+    {"SUB",    "-" ,    0},
+    {"MUL",    "*" ,    1},
+    {"DIV",    "/" ,    1},
+    {"POW",    "^" ,    2},
+    {"SIN",    "sin",   2},
+    {"COS",    "cos",   2},
+    {"TG",     "tg",    2},
+    {"CTG",    "ctg",   2},
+    {"SH",     "sh",    2},
+    {"CH",     "ch",    2},
+    {"TH",     "th",    2},
+    {"CTH",    "cth",   2},
+    {"ARCSIN", "arcsin",2},
+    {"ARCCOS", "arccos",2},
+    {"ARCTG",  "arctg", 2},
+    {"ARCCTG", "arcctg",2},
+    {"LOG",    "log",   2},
+    {"LG",     "lg",    2},
+    {"LN",     "ln",    2},
 };
 
 typedef union

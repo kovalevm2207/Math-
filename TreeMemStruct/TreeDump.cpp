@@ -214,7 +214,7 @@ TreeErr_t WriteInHtmlFile(const Node_t* node, int count_img, const char* func, c
     assert(func != NULL);
     assert(file != NULL);
 
-    FILE* dump_file = fopen("dump.html", "a");
+    FILE* dump_file = fopen("dump.html", "w");
     CHECK_PTR(dump_file, FILE);
 
     fprintf(dump_file, "<pre><b>TreeDump from %s at %s:%d\n",

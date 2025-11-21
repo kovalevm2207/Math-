@@ -7,7 +7,7 @@
 \usepackage{wrapfig}
 \usepackage[warn]{mathtext}
 \usepackage[russian]{babel}
-\usepackage{ amssymb }
+\usepackage{amssymb}
 \usepackage{graphicx, float, multicol, hyperref, pgfplots, amsmath}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
@@ -49,6 +49,6 @@
 \end{titlepage}
 \section{Ваше исходное выражение}
 
-\[\frac{x- (-4)\cdot y+ 6.72\cdot z}{\operatorname{sin}\left(x^{x}\right) }\]
+\[\frac{\left(x- (-4)\right)\cdot \left(y+ 6.72\cdot z\right)}{\operatorname{sin}\left(x^{x}\right) }\]
 
 \end{document}
