@@ -12,10 +12,13 @@ int main()
     TreeDump(user_tree, 1);
 
     // write in LaTeX
-    FILE* file = fopen("LaTeX.txt","r");
+    FILE* file = fopen("LaTeX.txt","w");
     assert(file);
     BeginLaTeXDocument(file);
-    LaTeXWriteTreeNode();
+    WriteTreeNodeLaTeX(file, user_tree);
+    EndLaTeXDocument(file);
+    fclose(file);
+    file = NULL;
 
     DeleteTreeNode(&user_tree);
 
@@ -156,23 +159,23 @@ void BeginLaTeXDocument(FILE* file)
     fprintf(file,
     "\\documentclass[a4paper,12pt]{article}\n"
     "\\usepackage[T2A]{fontenc}\n"
-    "\\usepackage[utf8]{inputenc}  \n"
-    "\\usepackage{longtable}    % длинные таблицы\n"
-    "\\usepackage[left=2cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}  % размеры полей\n"
-    "\\usepackage{array} \n"
-    "\\usepackage{wrapfig}  % обтекание текстом\n"
-    "\\usepackage[warn]{mathtext}  % русские буквы в математических формулах\n"
-    "\\usepackage[russian]{babel}  % русские индексы \n"
+    "\\usepackage[utf8]{inputenc}\n"
+    "\\usepackage{longtable}\n"
+    "\\usepackage[left=2cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}\n"
+    "\\usepackage{array}\n"
+    "\\usepackage{wrapfig}\n"
+    "\\usepackage[warn]{mathtext}\n"
+    "\\usepackage[russian]{babel}\n"
     "\\usepackage{ amssymb }\n"
     "\\usepackage{graphicx, float, multicol, hyperref, pgfplots, amsmath}\n"
     "\\usepackage{pgfplots}\n"
     "\\pgfplotsset{compat=1.18}\n"
     "\\usepackage{tikz}\n"
-    "\\usepackage{rotating}  % для sidewaysfigure\n"
-    "\\usepackage[english,russian]{babel}  \n"
-    "\\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}  % математические штуки\n"
-    "\\usepackage{graphicx}  % картинки\n"
-    "\\usepackage{subcaption} % картинки в ряд\n"
+    "\\usepackage{rotating}\n"
+    "\\usepackage[english,russian]{babel}\n"
+    "\\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}\n"
+    "\\usepackage{graphicx}\n"
+    "\\usepackage{subcaption}\n"
     "\n"
     "\\begin{document}\n"
     "\n"
@@ -185,7 +188,7 @@ void BeginLaTeXDocument(FILE* file)
     "	\\end{center}\n"
     "	\n"
     "	\n"
-    "	\vspace{4.5cm}\n"
+    "	\\vspace{4.5cm}\n"
     "	{\\huge\n"
     "		\\begin{center}\n"
     "			{\\bf Отчёт о взятии производной произвольной функции}\\\n"
@@ -203,5 +206,108 @@ void BeginLaTeXDocument(FILE* file)
     "		\\today\n"
     "	\\end{center}\n"
     "\\end{titlepage}\n"
+    "\\section{Ваше исходное выражение}\n"
+    "\n"
+    "\\["
+    );
+}
+
+
+void WriteTreeNodeLaTeX(FILE* file, Node_t* node)
+{
+    assert(file);
+    assert(node);
+
+    if(node->node_type == NUM)
+    {
+        if(node->value.num < 0) fprintf(file, "(%g)", node->value.num);
+        else                    fprintf(file,  "%g", node->value.num);
+        return;
+    }
+    if(node->node_type == VAR)
+    {
+        fprintf(file, "%s", node->value.var);
+        return;
+    }
+    switch(node->value.op)
+    {
+        case ADD    : PrintSimpleOperator      (file, "+",      node); return;
+        case SUB    : PrintSimpleOperator      (file, "-",      node); return;
+        case MUL    : PrintSimpleOperator      (file, "\\cdot", node); return;
+        case DIV    : PrintDiv                 (file, /*frac*/  node); return;
+        case POW    : PrintPow                 (file, /*^*/     node); return;
+        case SIN    : PrintOneSubtreeOperator  (file, "sin",    node); return;
+        case COS    : PrintOneSubtreeOperator  (file, "cos",    node); return;
+        case TG     : PrintOneSubtreeOperator  (file, "tg",     node); return;
+        case CTG    : PrintOneSubtreeOperator  (file, "ctg",    node); return;
+        case SH     : PrintOneSubtreeOperator  (file, "sh",     node); return;
+        case CH     : PrintOneSubtreeOperator  (file, "ch",     node); return;
+        case TH     : PrintOneSubtreeOperator  (file, "th",     node); return;
+        case CTH    : PrintOneSubtreeOperator  (file, "cth",    node); return;
+        case ARCSIN : PrintOneSubtreeOperator  (file, "arcsin", node); return;
+        case ARCCOS : PrintOneSubtreeOperator  (file, "arccos", node); return;
+        case ARCTG  : PrintOneSubtreeOperator  (file, "arctg",  node); return;
+        case ARCCTG : PrintOneSubtreeOperator  (file, "arcctg", node); return;
+        case LOG    : PrintLog                 (file, /*log*/   node); return;
+        case LG     : PrintOneSubtreeOperator  (file, "lg",     node); return;
+        case LN     : PrintOneSubtreeOperator  (file, "ln",     node); return;
+        default:
+            return;
+    }
+}
+
+
+void PrintLog(FILE* file, Node_t* node)
+{
+    fprintf(file, "\\operatorname{log}_{");
+    WriteTreeNodeLaTeX(file, node->left);
+    fprintf(file, "}\\left(");
+    WriteTreeNodeLaTeX(file, node->right);
+    fprintf(file, "\\right) ");
+}
+
+
+void PrintDiv(FILE* file, Node_t* node)
+{
+    fprintf(file, "\\frac{");
+    WriteTreeNodeLaTeX(file, node->left);
+    fprintf(file, "}{");
+    WriteTreeNodeLaTeX(file, node->right);
+    fprintf(file, "}");
+}
+
+void PrintPow(FILE* file, Node_t* node)
+{
+    WriteTreeNodeLaTeX(file, node->left);
+    fprintf(file, "^{");
+    WriteTreeNodeLaTeX(file, node->right);
+    fprintf(file, "}");
+}
+
+
+void PrintSimpleOperator(FILE* file, const char* const op, Node_t* node)
+{
+    WriteTreeNodeLaTeX(file, node->left);
+    fprintf(file, "%s ", op);
+    WriteTreeNodeLaTeX(file, node->right);
+}
+
+
+void PrintOneSubtreeOperator(FILE* file, const char* const op, Node_t* node)
+{
+    fprintf(file, "\\operatorname{%s}\\left(", op);
+    WriteTreeNodeLaTeX(file, node->right);
+    fprintf(file, "\\right) ");
+}
+
+
+void EndLaTeXDocument(FILE* file)
+{
+    assert(file);
+
+    fprintf(file,
+        "\\]\n"
+        "\n"
+        "\\end{document}"
     );
 }

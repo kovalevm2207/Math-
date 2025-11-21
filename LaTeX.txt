@@ -1,0 +1,54 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage[left=2cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{array}
+\usepackage{wrapfig}
+\usepackage[warn]{mathtext}
+\usepackage[russian]{babel}
+\usepackage{ amssymb }
+\usepackage{graphicx, float, multicol, hyperref, pgfplots, amsmath}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tikz}
+\usepackage{rotating}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+\begin{document}
+
+\begin{titlepage}
+	\begin{center}
+		{\large МОСКОВСКИЙ ФИЗИКО-ТЕХНИЧЕСКИЙ ИНСТИТУТ (НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ УНИВЕРСИТЕТ)}
+	\end{center}
+	\begin{center}
+		{\large Физтех-школа радиотехники и компьютерных технологий (ФРКТ)}
+	\end{center}
+	
+	
+	\vspace{4.5cm}
+	{\huge
+		\begin{center}
+			{\bf Отчёт о взятии производной произвольной функции}\
+		\end{center}
+	}
+	\vspace{2cm}
+	\begin{flushright}
+		{\LARGE Автор: \\ Ковалев Михаил Андреевич \\
+			\vspace{0.2cm}
+			Группа Б01-502}
+	\end{flushright}
+	\vspace{8cm}
+	\begin{center}
+		г. Долгопрудный\\
+		\today
+	\end{center}
+\end{titlepage}
+\section{Ваше исходное выражение}
+
+\[\frac{x- (-4)\cdot y+ 6.72\cdot z}{\operatorname{sin}\left(x^{x}\right) }\]
+
+\end{document}
