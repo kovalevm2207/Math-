@@ -8,11 +8,16 @@ int main()
     char* cur_pos = SkipSpaces(user_file);
 
     Node_t* user_tree = GetTreeNode(&cur_pos);
-    ON_DEBUG(printf("user_tree = %p\n", user_tree));
+    FREE(user_file)
     TreeDump(user_tree, 1);
 
+    // write in LaTeX
+    FILE* file = fopen("LaTeX.txt","r");
+    assert(file);
+    BeginLaTeXDocument(file);
+    LaTeXWriteTreeNode();
+
     DeleteTreeNode(&user_tree);
-    FREE(user_file)
 
     return 0;
 }
@@ -97,6 +102,7 @@ data_t* GetAndUnulyzeWord(char** cur_pos, data_t* data)
     return data;
 }
 
+
 data_t* UnulyzeWord(char* word, data_t* data)
 {
     assert(word);
@@ -140,4 +146,62 @@ bool FindOperator(char* word, Operator_t* op)
     }
 
     return false;
+}
+
+
+void BeginLaTeXDocument(FILE* file)
+{
+    assert(file);
+
+    fprintf(file,
+    "\\documentclass[a4paper,12pt]{article}\n"
+    "\\usepackage[T2A]{fontenc}\n"
+    "\\usepackage[utf8]{inputenc}  \n"
+    "\\usepackage{longtable}    % длинные таблицы\n"
+    "\\usepackage[left=2cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}  % размеры полей\n"
+    "\\usepackage{array} \n"
+    "\\usepackage{wrapfig}  % обтекание текстом\n"
+    "\\usepackage[warn]{mathtext}  % русские буквы в математических формулах\n"
+    "\\usepackage[russian]{babel}  % русские индексы \n"
+    "\\usepackage{ amssymb }\n"
+    "\\usepackage{graphicx, float, multicol, hyperref, pgfplots, amsmath}\n"
+    "\\usepackage{pgfplots}\n"
+    "\\pgfplotsset{compat=1.18}\n"
+    "\\usepackage{tikz}\n"
+    "\\usepackage{rotating}  % для sidewaysfigure\n"
+    "\\usepackage[english,russian]{babel}  \n"
+    "\\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}  % математические штуки\n"
+    "\\usepackage{graphicx}  % картинки\n"
+    "\\usepackage{subcaption} % картинки в ряд\n"
+    "\n"
+    "\\begin{document}\n"
+    "\n"
+    "\\begin{titlepage}\n"
+    "	\\begin{center}\n"
+    "		{\\large МОСКОВСКИЙ ФИЗИКО-ТЕХНИЧЕСКИЙ ИНСТИТУТ (НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ УНИВЕРСИТЕТ)}\n"
+    "	\\end{center}\n"
+    "	\\begin{center}\n"
+    "		{\\large Физтех-школа радиотехники и компьютерных технологий (ФРКТ)}\n"
+    "	\\end{center}\n"
+    "	\n"
+    "	\n"
+    "	\vspace{4.5cm}\n"
+    "	{\\huge\n"
+    "		\\begin{center}\n"
+    "			{\\bf Отчёт о взятии производной произвольной функции}\\\n"
+    "		\\end{center}\n"
+    "	}\n"
+    "	\\vspace{2cm}\n"
+    "	\\begin{flushright}\n"
+    "		{\\LARGE Автор: \\\\ Ковалев Михаил Андреевич \\\\\n"
+    "			\\vspace{0.2cm}\n"
+    "			Группа Б01-502}\n"
+    "	\\end{flushright}\n"
+    "	\\vspace{8cm}\n"
+    "	\\begin{center}\n"
+    "		г. Долгопрудный\\\\\n"
+    "		\\today\n"
+    "	\\end{center}\n"
+    "\\end{titlepage}\n"
+    );
 }
