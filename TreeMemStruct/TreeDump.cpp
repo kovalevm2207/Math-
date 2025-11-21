@@ -2,7 +2,7 @@
 
 FILE* StartHTMLfile(void)
 {
-    FILE* dump_file = fopen("dump.html", "w");
+    FILE* dump_file = fopen("dump.html", "a");
     if(dump_file == NULL) return NULL;
 
     time_t now = time(NULL);
@@ -195,13 +195,13 @@ void MakeArrows(const Node_t* node, int* node_count, FILE* file)
 
     if (node->left)
     {
-        fprintf(file, "    node%d:<l> -> node%d:n [dir=normal, color=\"#4d00a6ff\"];\n",
+        fprintf(file, "    node%d:<l>:s -> node%d:n [dir=normal, color=\"#4d00a6ff\"];\n",
                        cur_node_count, ++*node_count);
         MakeArrows(node->left, node_count, file);
     }
     if (node->right)
     {
-        fprintf(file, "    node%d:<r> -> node%d:n [dir=normal, color=\"#4d00a6ff\"];\n",
+        fprintf(file, "    node%d:<r>:s -> node%d:n [dir=normal, color=\"#4d00a6ff\"];\n",
                       cur_node_count, ++*node_count);
         MakeArrows(node->right, node_count, file);
     }
@@ -214,7 +214,7 @@ TreeErr_t WriteInHtmlFile(const Node_t* node, int count_img, const char* func, c
     assert(func != NULL);
     assert(file != NULL);
 
-    FILE* dump_file = fopen("dump.html", "w");
+    FILE* dump_file = fopen("dump.html", "a");
     CHECK_PTR(dump_file, FILE);
 
     fprintf(dump_file, "<pre><b>TreeDump from %s at %s:%d\n",

@@ -19,6 +19,7 @@ data_t* UnulyzeWord(char* word, data_t* data);
 bool FindOperator(char* word, Operator_t* op);
 void BeginLaTeXDocument(FILE* file);
 void WriteTreeNodeLaTeX(FILE* file, Node_t* node);
+bool NeedBraces(Node_t* node, Node_t* next_node);
 void PrintLog(FILE* file, Node_t* node);
 void PrintDiv(FILE* file, Node_t* node);
 void PrintPow(FILE* file, Node_t* node);

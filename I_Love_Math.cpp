@@ -9,10 +9,13 @@ int main()
 
     Node_t* user_tree = GetTreeNode(&cur_pos);
     FREE(user_file)
+
+    StartHTMLfile();
     TreeDump(user_tree, 1);
+    EndHTMLfile();
 
     // write in LaTeX
-    FILE* file = fopen("LaTeX.txt","w");
+    FILE* file = fopen("LaTeX.tex","w");
     assert(file);
     BeginLaTeXDocument(file);
     WriteTreeNodeLaTeX(file, user_tree);
@@ -172,7 +175,6 @@ void BeginLaTeXDocument(FILE* file)
     "\\pgfplotsset{compat=1.18}\n"
     "\\usepackage{tikz}\n"
     "\\usepackage{rotating}\n"
-    "\\usepackage[english,russian]{babel}\n"
     "\\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}\n"
     "\\usepackage{graphicx}\n"
     "\\usepackage{subcaption}\n"
@@ -308,6 +310,7 @@ void PrintDiv(FILE* file, Node_t* node)
     WriteTreeNodeLaTeX(file, node->right);
     fprintf(file, "}");
 }
+
 
 void PrintPow(FILE* file, Node_t* node)
 {
