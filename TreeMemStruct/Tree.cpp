@@ -1,6 +1,27 @@
 #include "Tree.h"
 
 
+Tree_t* TreeCtor(Node_t* root)
+{
+    assert(root);
+    Tree_t* tree = {};
+
+    Var_t* vars = (Var_t*) calloc(START_VARS_NUM, sizeof(Var_t));
+    assert(vars);
+    GetTreeVars(&vars);
+    assert(vars);
+
+    tree->vars = vars;
+    tree->max_vars_num = START_VARS_NUM;
+    tree->vars  = vars;
+    tree->root  = root;
+    tree->size  = CountTreeSize(root);
+    tree->depth = GetTreeDepth(root);
+
+    return tree;
+}
+
+
 Node_t* TreeNodeCtor(data_t* data, Node_t* left_som, Node_t* right_som)
 {
     assert(data && "NULL data, check GetWord or someone else func");
