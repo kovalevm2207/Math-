@@ -1,8 +1,9 @@
 #include "TreeDump.h"
 
+
 FILE* StartHTMLfile(void)
 {
-    FILE* dump_file = fopen("dump.html", "a");
+    FILE* dump_file = fopen("dump.html", "w");
     if(dump_file == NULL) return NULL;
 
     time_t now = time(NULL);

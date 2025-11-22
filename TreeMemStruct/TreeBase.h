@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+
+#include "color_print.h"
 // to do: struct Tree_s {ptr, max_size}
 
 typedef enum
@@ -23,6 +25,7 @@ typedef enum
     MUL,
     DIV,
     POW,
+    SQRT,
     SIN,
     COS,
     TG,
@@ -48,25 +51,26 @@ const struct
 } Operators[] =
 {
     {"ADD",    "+" ,    0},
-    {"SUB",    "-" ,    0},
-    {"MUL",    "*" ,    1},
-    {"DIV",    "/" ,    1},
+    {"SUB",    "-" ,    1},
+    {"MUL",    "*" ,    2},
+    {"DIV",    "/" ,    2},
     {"POW",    "^" ,    2},
-    {"SIN",    "sin",   2},
-    {"COS",    "cos",   2},
-    {"TG",     "tg",    2},
-    {"CTG",    "ctg",   2},
-    {"SH",     "sh",    2},
-    {"CH",     "ch",    2},
-    {"TH",     "th",    2},
-    {"CTH",    "cth",   2},
-    {"ARCSIN", "arcsin",2},
-    {"ARCCOS", "arccos",2},
-    {"ARCTG",  "arctg", 2},
-    {"ARCCTG", "arcctg",2},
-    {"LOG",    "log",   2},
-    {"LG",     "lg",    2},
-    {"LN",     "ln",    2},
+    {"SQRT",   "sqrt",  3},
+    {"SIN",    "sin",   3},
+    {"COS",    "cos",   3},
+    {"TG",     "tg",    3},
+    {"CTG",    "ctg",   3},
+    {"SH",     "sh",    3},
+    {"CH",     "ch",    3},
+    {"TH",     "th",    3},
+    {"CTH",    "cth",   3},
+    {"ARCSIN", "arcsin",3},
+    {"ARCCOS", "arccos",3},
+    {"ARCTG",  "arctg", 3},
+    {"ARCCTG", "arcctg",3},
+    {"LOG",    "log",   3},
+    {"LG",     "lg",    3},
+    {"LN",     "ln",    3},
 };
 
 typedef union

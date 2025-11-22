@@ -3,23 +3,17 @@
 
 Node_t* TreeNodeCtor(data_t* data, Node_t* left_som, Node_t* right_som)
 {
-    assert(data && "NULL data, check GetWord or somone else func");
+    assert(data && "NULL data, check GetWord or someone else func");
     Value_t value = {};
 
     switch(data->type)
     {
-        case NUM:
-            value.num = data->value.num;
-            return TreeNodeCtor_(data->type, value, left_som, right_som);
-        case VAR:
-            value.var = data->value.var;
-            return TreeNodeCtor_(data->type, value, left_som, right_som);
-        case OP:
-            value.op = data->value.op;
-            return TreeNodeCtor_(data->type, value, left_som, right_som);
-        default:
-            return NULL;
+        case NUM: value.num = data->value.num; break;
+        case VAR: value.var = data->value.var; break;
+        case OP:  value.op  = data->value.op;  break;
+        default: return NULL;
     }
+    return TreeNodeCtor_(data->type, value, left_som, right_som);
 }
 
 

@@ -46,7 +46,7 @@ ObjectFiles/TreeDump.o: TreeMemStruct/TreeDump.cpp TreeMemStruct/TreeDump.h Tree
 ObjectFiles/Test.o: Test.cpp Types.h
 	@ g++ $(FLAGS) $(MODE) -c Test.cpp -o ObjectFiles/Test.o
 
-ObjectFiles/I_Love_Math.o: I_Love_Math.cpp Types.h
+ObjectFiles/I_Love_Math.o: I_Love_Math.cpp Types.h UndefDerivativeDSL.h DerivativeDSL.h
 	@ g++ $(FLAGS) $(MODE) -c I_Love_Math.cpp -o ObjectFiles/I_Love_Math.o
 
 ObjectFiles/Instruments.o: Instruments.cpp Instruments.h
