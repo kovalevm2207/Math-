@@ -91,11 +91,8 @@ typedef struct Node_t
 
 const size_t START_VARS_NUM = 8;
 
-typedef struct
-{
-    size_t num;
-    char*  name;
-} Var_t;
+
+typedef char* Var_t;
 
 typedef struct
 {
@@ -103,6 +100,7 @@ typedef struct
     size_t  size;
     size_t  depth;
     size_t  max_vars_num;
+    size_t* vars_num;
     Var_t*  vars;
 } Tree_t;
 

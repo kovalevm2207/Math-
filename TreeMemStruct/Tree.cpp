@@ -8,7 +8,7 @@ Tree_t* TreeCtor(Node_t* root)
 
     Var_t* vars = (Var_t*) calloc(START_VARS_NUM, sizeof(Var_t));
     assert(vars);
-    GetTreeVars(&vars);
+    tree->vars_num = GetTreeVars(&vars, root, START_VARS_NUM);
     assert(vars);
 
     tree->vars = vars;
@@ -21,6 +21,42 @@ Tree_t* TreeCtor(Node_t* root)
     return tree;
 }
 
+
+size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* max_vars_num)
+{
+    assert(vars);
+    assert(*vars);
+    assert(node);
+    assert(max_vars_num);
+
+    Var_t* vars_ = *vars;
+    size_t vars_num = 0;
+
+    if(node->node_type == VAR)
+    {
+        if(!FindVar(node->value.var, *vars, *vars_num))
+        {
+            vars_[vars_num++] = node->value.var;
+        }
+    }
+    if(node->left)  vars_num += GetTreeVars(vars, node->left, max_vars_num);
+    if(node->right) vars_num += GetTreeVars(vars, node->left, max_vars_num);
+
+    return vars_num;
+}
+
+
+bool FindVar(const char* const var, const Var_t* const vars, const size_t vars_num)
+{
+    assert(var);
+    assert(vars);
+
+    for (size_t i = 0; i < vars_num; i++)
+    {
+        if(strcmp(var, vars[i]) == 0) return true;
+    }
+    return false;
+}
 
 Node_t* TreeNodeCtor(data_t* data, Node_t* left_som, Node_t* right_som)
 {
