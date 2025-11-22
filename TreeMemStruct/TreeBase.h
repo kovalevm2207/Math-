@@ -89,6 +89,21 @@ typedef struct Node_t
     struct Node_t*  right;
 } Node_t;
 
+typedef struct
+{
+    size_t num;
+    char*  name;
+} Var_t;
+
+typedef struct
+{
+    Node_t* root;
+    size_t  size;
+    size_t  depth;
+    Var_t*  vars;
+} Tree_t;
+
+
 typedef enum
 {
     TREE_OK                 = 1 << 0,
