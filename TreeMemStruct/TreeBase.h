@@ -100,7 +100,7 @@ typedef struct
     size_t  size;
     size_t  depth;
     size_t  max_vars_num;
-    size_t* vars_num;
+    size_t  vars_num;
     Var_t*  vars;
 } Tree_t;
 

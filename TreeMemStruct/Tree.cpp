@@ -8,7 +8,7 @@ Tree_t* TreeCtor(Node_t* root)
 
     Var_t* vars = (Var_t*) calloc(START_VARS_NUM, sizeof(Var_t));
     assert(vars);
-    tree->vars_num = GetTreeVars(&vars, root, START_VARS_NUM);
+    tree->vars_num = GetTreeVars(&vars, root, &START_VARS_NUM);
     assert(vars);
 
     tree->vars = vars;
@@ -48,7 +48,7 @@ size_t CountTreeSize(const Node_t* const node)
 }
 
 
-size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* max_vars_num)
+size_t GetTreeVars(Var_t** vars, const Node_t* const node, const size_t* max_vars_num)
 {
     assert(vars);
     assert(*vars);
@@ -60,7 +60,7 @@ size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* max_vars_num)
 
     if(node->node_type == VAR)
     {
-        if(!FindVar(node->value.var, *vars, *vars_num))
+        if(!FindVar(node->value.var, *vars, vars_num))
         {
             vars_[vars_num++] = node->value.var;
         }
