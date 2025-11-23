@@ -22,6 +22,18 @@ Tree_t* TreeCtor(Node_t* root)
 }
 
 
+size_t CountTreeSize(const Node_t* const node)
+{
+    assert(node);
+
+    size_t size = 1;
+    if(node->left)  size += CountTreeSize(node->left);
+    if(node->right) size += CountTreeSize(node->right);
+
+    return size;
+}
+
+
 size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* max_vars_num)
 {
     assert(vars);
@@ -57,6 +69,7 @@ bool FindVar(const char* const var, const Var_t* const vars, const size_t vars_n
     }
     return false;
 }
+
 
 Node_t* TreeNodeCtor(data_t* data, Node_t* left_som, Node_t* right_som)
 {

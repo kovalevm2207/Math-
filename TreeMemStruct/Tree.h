@@ -5,6 +5,7 @@
 #include "TreeDump.h"
 
 Tree_t* TreeCtor(Node_t* root);
+size_t CountTreeSize(const Node_t* const node);
 size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* max_vars_num);
 bool FindVar(const char* const var, const Var_t* const vars, const size_t vars_num);
 Node_t* TreeNodeCtor(data_t* data, Node_t* left_som, Node_t* right_som);
