@@ -22,6 +22,20 @@ Tree_t* TreeCtor(Node_t* root)
 }
 
 
+size_t GetTreeDepth(const Node_t* const node)
+{
+    if (node == NULL) {
+        return 0;
+    }
+
+    size_t left_depth  = GetTreeDepth(node->left);
+    size_t right_depth = 0;
+    if (node->right) right_depth = GetTreeDepth(node->right);
+
+    return 1 + (left_depth > right_depth ? left_depth : right_depth);
+}
+
+
 size_t CountTreeSize(const Node_t* const node)
 {
     assert(node);
