@@ -19,8 +19,8 @@ int main()
 
     //SECTION - calc tree:
 
-        size_t result = CalcTree(user_tree);
-        printf();
+        double result = CalcTree(user_tree);
+        printf("%lg\n", result);
 
     //SECTION - write in LaTeX
         srand((unsigned int) time(NULL));
@@ -534,4 +534,24 @@ bool FindVar(Node_t* node, const char* const var)
             assert(true);
             return false;
     }
+}
+
+//SECTION - calc
+double CalcTree(Tree_t* tree)
+{
+    GetVarsValues(tree);
+    TreeStructDump(tree);
+
+    return 0;
+}
+TreeErr_t GetVarsValues(Tree_t* tree)
+{
+    for(size_t i = 0; i < tree->vars_num; i++)
+    {
+        printf("Введите значение переменной %s:\n\n\t\t", tree->vars[i].name);
+        scanf("%lg", &tree->vars[i].data);
+        printf("\n\n");
+    }
+
+    return TREE_OK;
 }

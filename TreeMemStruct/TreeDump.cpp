@@ -108,7 +108,7 @@ void MakeNodes(const Node_t* node, int* node_count, FILE* file)
     switch(node->node_type)
     {
         case NUM:
-            fprintf(file, "%g ", node->value.num);
+            fprintf(file, "%lg ", node->value.num);
             break;
         case VAR:
             fprintf(file, "\"%s\" ", node->value.var);

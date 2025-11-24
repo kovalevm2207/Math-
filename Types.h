@@ -67,4 +67,8 @@ bool FindVar(Node_t* node, const char* const var);
 Node_t* PowDerivative(FILE* file, Node_t* node, const char* const var);
 Node_t* LogDerivative(FILE* file, Node_t* node, const char* const var);
 
+//SECTION - calc
+double CalcTree(Tree_t* tree);
+TreeErr_t GetVarsValues(Tree_t* tree);
+
 #endif // MATH_TYPES

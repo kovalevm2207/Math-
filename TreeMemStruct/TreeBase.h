@@ -92,7 +92,11 @@ typedef struct Node_t
 const size_t START_VARS_NUM = 8;
 
 
-typedef char* Var_t;
+typedef struct
+{
+    char*  name;
+    double data;
+} Var_t;
 
 typedef struct
 {
