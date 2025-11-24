@@ -4,16 +4,16 @@
 Tree_t* TreeCtor(Node_t* root)
 {
     assert(root);
-    Tree_t* tree = {};
+    Tree_t* tree = (Tree_t*) calloc(1, sizeof(Tree_t));
 
     Var_t* vars = (Var_t*) calloc(START_VARS_NUM, sizeof(Var_t));
     assert(vars);
-    tree->vars_num = GetTreeVars(&vars, root, &START_VARS_NUM);
+    tree->vars_num = 0;
+    GetTreeVars(&vars, root, &tree->vars_num, &START_VARS_NUM);
     assert(vars);
 
     tree->vars = vars;
     tree->max_vars_num = START_VARS_NUM;
-    tree->vars  = vars;
     tree->root  = root;
     tree->size  = CountTreeSize(root);
     tree->depth = GetTreeDepth(root);
@@ -48,7 +48,7 @@ size_t CountTreeSize(const Node_t* const node)
 }
 
 
-size_t GetTreeVars(Var_t** vars, const Node_t* const node, const size_t* max_vars_num)
+size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* cur_vars_num, const size_t* max_vars_num)
 {
     assert(vars);
     assert(*vars);
@@ -56,19 +56,18 @@ size_t GetTreeVars(Var_t** vars, const Node_t* const node, const size_t* max_var
     assert(max_vars_num);
 
     Var_t* vars_ = *vars;
-    size_t vars_num = 0;
 
     if(node->node_type == VAR)
     {
-        if(!FindVar(node->value.var, *vars, vars_num))
+        if(!FindVar(node->value.var, *vars, *cur_vars_num))
         {
-            vars_[vars_num++] = node->value.var;
+            vars_[(*cur_vars_num)++] = node->value.var;
         }
     }
-    if(node->left)  vars_num += GetTreeVars(vars, node->left, max_vars_num);
-    if(node->right) vars_num += GetTreeVars(vars, node->left, max_vars_num);
+    if(node->left)  GetTreeVars(vars, node->left,  cur_vars_num, max_vars_num);
+    if(node->right) GetTreeVars(vars, node->right, cur_vars_num, max_vars_num);
 
-    return vars_num;
+    return *cur_vars_num;
 }
 
 
@@ -82,6 +81,53 @@ bool FindVar(const char* const var, const Var_t* const vars, const size_t vars_n
         if(strcmp(var, vars[i]) == 0) return true;
     }
     return false;
+}
+
+
+TreeErr_t TreeDtor(Tree_t** tree)
+{
+    assert(tree);
+    assert(*tree);
+
+    (*tree)->max_vars_num = 0;
+    (*tree)->root = NULL;
+    (*tree)->size = 0;
+    (*tree)->depth = 0;
+
+    free((*tree)->vars);
+    (*tree)->vars = NULL;
+
+    free((*tree));
+    *tree = NULL;
+
+    return TREE_OK;
+}
+
+
+TreeErr_t TreeStructDumpF(FILE* stream, Tree_t* tree)
+{
+    assert(stream);
+    assert(tree);
+
+    fprintf(stream, "TreeDump:\n"
+                    "struct\n"
+                    "{\n"
+                    "\troot         = %p\n",  tree->root);
+    fprintf(stream, "\tsize         = %zu\n", tree->size);
+    fprintf(stream, "\tdepth        = %zu\n", tree->depth);
+    fprintf(stream, "\tmax_vars_num = %zu\n", tree->max_vars_num);
+    fprintf(stream, "\tvars_num     = %zu\n", tree->vars_num);
+    fprintf(stream, "\tvars\n"
+                    "\t{\n");
+
+    for(size_t i = 0; tree->vars[i] != NULL; i++)
+     fprintf(stream,"\t [%zu]\t%s\n", i + 1, tree->vars[i]);
+
+    fprintf(stream, "\t}\n"
+                    "}\n"
+                    "\n");
+
+    return TREE_OK;
 }
 
 

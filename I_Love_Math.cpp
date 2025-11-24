@@ -3,45 +3,59 @@
 int main()
 {
     //SECTION - reading from file
-    char* user_file = ReadFile("Expression.txt");
-    assert(user_file && "NULL user_file, check ReadFile func");
-    char* cur_pos = SkipSpaces(user_file);
+        char* user_file = ReadFile("Expression.txt");
+        assert(user_file && "NULL user_file, check ReadFile func");
+        char* cur_pos = SkipSpaces(user_file);
 
-    Node_t* user_tree = GetTreeNode(&cur_pos);
-    FREE(user_file)
+        Node_t* user_nodes = GetTreeNode(&cur_pos);
+        FREE(user_file)
 
-    StartHTMLfile();
-    TreeDump(user_tree, 1);
+        StartHTMLfile();
+        TreeDump(user_nodes, 1);
+
+    //SECTION - tree struct
+        Tree_t* user_tree = TreeCtor(user_nodes);
+        TreeStructDump(user_tree);
+
+    //SECTION - calc tree:
+
+        size_t result = CalcTree(user_tree);
+        printf();
 
     //SECTION - write in LaTeX
-    srand((unsigned int) time(NULL));
+        srand((unsigned int) time(NULL));
 
-    FILE* tex_file = fopen("LaTeX.tex","w");
-    assert(tex_file);
-    BeginLaTeXDocument(tex_file);
+        FILE* tex_file = fopen("LaTeX.tex","w");
+        assert(tex_file);
+        BeginLaTeXDocument(tex_file);
 
-    DumpLaTeX(tex_file, user_tree);
+        DumpLaTeX(tex_file, user_nodes);
 
-    Node_t* copy = DeepNodeCopy(user_tree);
+        Node_t* copy = DeepNodeCopy(user_nodes);
 
-    TreeDump(copy, 2);
-    DumpLaTeX(tex_file, copy);
+        TreeDump(copy, 2);
+        DumpLaTeX(tex_file, copy);
 
     //SECTION - derivative
-    Node_t* first_derivative = TakeDerivative(tex_file, user_tree, "x");
-    TreeDump(first_derivative, 3);
-    DumpLaTeX(tex_file, first_derivative);
+        Node_t* first_derivative = TakeDerivative(tex_file, user_nodes, "x");
+        TreeDump(first_derivative, 3);
+        DumpLaTeX(tex_file, first_derivative);
+
+    //SECTION - be simpleare ;)
+
 
     //SECTION - end of the program
-    EndLaTeXDocument(tex_file);
-    fclose(tex_file);
-    tex_file = NULL;
+        EndLaTeXDocument(tex_file);
+        fclose(tex_file);
+        tex_file = NULL;
 
-    EndHTMLfile();
+        EndHTMLfile();
 
-    DeleteTreeNode(&first_derivative);
-    DeleteTreeNode(&copy);
-    DeleteTreeNode(&user_tree);
+        TreeDtor(&user_tree);
+        DeleteTreeNode(&first_derivative);
+        DeleteTreeNode(&copy);
+        DeleteTreeNode(&user_nodes);
+
     return 0;
 }
 
