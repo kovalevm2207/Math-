@@ -30,6 +30,7 @@ int main()
         PrintCalcResult(tex_file, user_tree);
 
     //SECTION - derivative
+        PrintDerivativeBegining(tex_file);
         Node_t* first_derivative = TakeDerivative(tex_file, user_nodes, "x");
         TreeDump(first_derivative, 3);
 
@@ -37,8 +38,7 @@ int main()
         Tree_t* first_derivative_tree = TreeCtor(first_derivative);
         ON_DEBUG(TreeStructDump(first_derivative_tree));
 
-//    //SECTION - calc first_derivative_tree:
-//        double result_1 = CalcTree(first_derivative_tree);
+    //SECTION - simplify first_derivative_tree:
 
 
     //SECTION - be simpleare ;)
@@ -205,6 +205,7 @@ void BeginLaTeXDocument(FILE* file)
     "\\usepackage{graphicx}\n"
     "\\usepackage{subcaption}\n"
     "\\usepackage[normalem]{ulem}\n"
+    "\\usepackage{breqn}\n"
     "\n"
     "\\begin{document}\n"
     "\n"
@@ -303,11 +304,11 @@ void PrintOriginalTree(FILE* file, Node_t* root)
     "\\section*{Исходник:}\n"
     "\n"
     "Не смотря на все ваши попытки ввести самое сложное, на ваш взгляд уравнение, которое обязательно сломает здесь все, \n"
-    "мне все таки удалось (ну точнее просто пришлось на самом деле) считать ваше выражение, и собственно оно выглядит вот так:"
-    "\\[");
+    "мне все таки удалось (ну точнее просто пришлось на самом деле) считать ваше выражение, и собственно оно выглядит вот так:\n"
+    "\\begin{dmath}");
     WriteTreeNodeLaTeX(file, root);
     fprintf(file,
-    "\\]\n"
+    "\\end{dmath}\n"
     "(Знаете, мне нет разницы с чем я буду сейчас работать, но вы то хоть сами понимаете, что написали?)\n\n");
 }
 void PrintCalcBegining(FILE* file)
@@ -338,11 +339,23 @@ void PrintCalcResult(FILE* file, Tree_t* tree)
     fprintf(file,
     "%s:\n"
     "\n"
-    "\\[", phrases[(long unsigned int)rand() % PHRASES_NUM]);
+    "\\begin{dmath}", phrases[(long unsigned int)rand() % PHRASES_NUM]);
     WriteTreeNodeLaTeX(file, tree->root);
     fprintf(file,
-    "=%lg\\]\n"
+    "=%lg\\end{dmath}\n"
     "\n", CalcTreeNode(tree->root, tree->vars, tree->vars_num));
+}
+void PrintDerivativeBegining(FILE* file)
+{
+    assert(file);
+
+    fprintf(file,
+    "\\section{Вывод формулы первой производной}"
+    "Настала пора какой-то магии вне Хогвартса, потому что я просто не знаю , как из нашего такого маленького красивого уравнения мог получится такой страшный монстр...\\\n\n"
+    "Тем не менее нам предстоит все это пронаблюдать, только не увлекайтесь и не вздумайте разбираться в том, что здесь происходит,\n"
+    "а то рискуете в будущем попасть на кафедру вышмата...\n\n"
+    "\\subsection*{Прямой расчет по правилам, без упрощения:}\\\\\n"
+    "Давайте последовательно разберем каждый шаг:\n\n");
 }
 void WriteTreeNodeLaTeX(FILE* file, Node_t* node)
 {
@@ -391,9 +404,11 @@ void WriteTreeNodeLaTeX(FILE* file, Node_t* node)
 }
 void DumpLaTeX(FILE* file, Node_t* node)
 {
-    fprintf(file, "%s\\\\\n\n\\[", phrases[(long unsigned int)rand() % PHRASES_NUM]);
+    fprintf(file, "%s\\\\\n"
+    "\n"
+    "\\begin{dmath}", phrases[(long unsigned int)rand() % PHRASES_NUM]);
     WriteTreeNodeLaTeX(file, node);
-    fprintf(file, "\\]\n\n");
+    fprintf(file, "\\end{dmath}\n\n");
 }
 bool NeedBraces(Node_t* node, Node_t* next_node)
 {
@@ -544,11 +559,13 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var)
     }
 
     #include "UndefDerivativeDSL.h"
-    fprintf(file, "\\[\\frac{d}{d%s}\\left(", var);
+    fprintf(file, "%s\n", phrases[(long unsigned int)rand() % PHRASES_NUM]);
+    fprintf(file, "\\begin{dmath}"
+                  "\\frac{d}{d%s}\\left(", var);
     WriteTreeNodeLaTeX(file, node);
     fprintf(file, "\\right)=");
     WriteTreeNodeLaTeX(file, new_node);
-    fprintf(file, "\\]\n");
+    fprintf(file, "\\end{dmath}\n");
     return new_node;
 }
 Node_t* PowDerivative(FILE* file, Node_t* node, const char* const var)

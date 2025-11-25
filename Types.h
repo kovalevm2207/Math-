@@ -47,6 +47,7 @@ void DumpLaTeX(FILE* file, Node_t* node);
 void PrintOriginalTree(FILE* file, Node_t* root);
 void PrintCalcBegining(FILE* file);
 void PrintCalcResult(FILE* file, Tree_t* tree);
+void PrintDerivativeBegining(FILE* file);
 void WriteTreeNodeLaTeX(FILE* file, Node_t* node);
 bool NeedBraces(Node_t* node, Node_t* next_node);
 void PrintLog_(FILE* file, Node_t* node);

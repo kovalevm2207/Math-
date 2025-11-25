@@ -1,0 +1,37 @@
+(+
+    (/
+        (1 nil nil)
+        (+
+            (^
+                (sin
+                    (x nil nil)
+                    nil
+                )
+                (4 nil nil)
+            )
+            (1 nil nil)
+        )
+    )
+    (ln
+        (/
+            (^
+                (sin
+                    (x nil nil)
+                    nil
+                )
+                (4 nil nil)
+            )
+            (+
+                (^
+                    (sin
+                        (x nil nil)
+                        nil
+                    )
+                    (4 nil nil)
+                )
+                (1 nil nil)
+            )
+        )
+        nil
+    )
+)

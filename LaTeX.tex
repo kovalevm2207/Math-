@@ -13,10 +13,11 @@
 \pgfplotsset{compat=1.18}
 \usepackage{tikz}
 \usepackage{rotating}
-\usepackage[english,russian]{babel}
 \usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage[normalem]{ulem}
+\usepackage{breqn}
 
 \begin{document}
 
@@ -32,7 +33,8 @@
 	\vspace{4.5cm}
 	{\huge
 		\begin{center}
-			{\bf Отчёт о взятии производной произвольной функции}\
+			{\bf Отчёт о взятии производной произвольной функции}\\
+			\large {Или как я перестал бояться \sout{и полюбил} дифференцирование}
 		\end{center}
 	}
 	\vspace{2cm}
@@ -47,8 +49,126 @@
 		\today
 	\end{center}
 \end{titlepage}
-\section{Ваше исходное выражение}
 
-\[\frac{\left(x- (-4)\right)\cdot \left(y+ 6.72\cdot z\right)}{\operatorname{sin}\left(x^{x}\right) }\]
+\section*{Введение: \\Немного о производных для тех, кто в танке (или на паре)}
+\addcontentsline{toc}{section}{Введение}
 
+\subsection*{Что это вообще такое?}
+
+Если вы читаете этот отчёт, значит, вам тоже не удалось отмазаться от домашнего задания по матану. \\\textbf{Производная} — это такая магическая палочка для функций, которая показывает, как быстро они растут или падают.
+
+Представьте, что вы едете на самокате. Ваша координата — это функция от времени $S(t)$. Ваша скорость в какой-то момент — это и есть производная $S'(t)$. Резко затормозили? Поздравляю, вы только что почувствовали на себе вторую производную (ускорение) и, возможно, перелетели через руль.
+
+\textbf{Формально} (это слово заставляет звучать умнее), производная функции $f(x)$ в точке $x_0$ определяется как предел:
+
+\[
+f'(x_0) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}
+\]
+
+Если вы поняли это с первого раза, возможно, вы гений. Если нет — добро пожаловать в клуб! Все мы просто запоминаем, как брать производные от разных функций, и делаем вид, что понимаем, что такое предел. Главное — делать умное лицо и кивать, когда преподаватель говорит "дельта икс стремится к нулю".
+
+\subsection*{Зачем это нужно?}
+
+Помимо того, что это отличный способ потратить три часа субботнего вечера, производные используются:
+\begin{itemize}
+    \item \textbf{В физике:} чтобы найти скорость, ускорение и заодно оправдать, почему вы не смогли поймать мяч ("Я же рассчитывал траекторию через производную!").
+    \item \textbf{В экономике:} чтобы понять, когда пора прекращать производить очередную партию кринжовых чехлов для телефона.
+    \item \textbf{В жизни:} чтобы блеснуть умом на вечеринке (не рекомендуется, иначе придется объяснять, почему вас больше не зовут на вечеринки).
+    \item \textbf{В сессию:} чтобы понять, с какой скоростью растёт паника по мере приближения дедлайна (производная паники по времени — очень интересная функция!).
+\end{itemize}
+
+\subsection*{Памятка юного дифференцировщика (Шпаргалка по производных)}
+
+\textbf{Правила дифференцирования:}
+
+\begin{tabular}{p{0.45\textwidth}p{0.45\textwidth}}
+    $(u + v)' = u' + v'$ & $(u - v)' = u' - v'$ \\
+    $(u \cdot v)' = u' \cdot v + u \cdot v'$ & $\left(\dfrac{u}{v}\right)' = \dfrac{u' \cdot v - u \cdot v'}{v^2}$ \\
+    $(f(g(x)))' = f'(g(x)) \cdot g'(x)$ & \\
+\end{tabular}
+
+\vspace{5mm}
+
+\textbf{Производные классических функций:}
+
+\begin{tabular}{p{0.45\textwidth}p{0.45\textwidth}}
+    $(x^n)' = n \cdot x^{n-1}$ & $(e^x)' = e^x$ \\
+    $(a^x)' = a^x \cdot \ln a$ & $(\ln x)' = \dfrac{1}{x}$ \\
+    $(\log_a x)' = \dfrac{1}{x \cdot \ln a}$ & $(\lg x)' = \dfrac{1}{x \cdot \ln 10}$ \\
+    $(\sin x)' = \cos x$ & $(\cos x)' = -\sin x$ \\
+    $(\tan x)' = \dfrac{1}{\cos^2 x}$ & $(\cot x)' = -\dfrac{1}{\sin^2 x}$ \\
+    $(\arcsin x)' = \dfrac{1}{\sqrt{1 - x^2}}$ & $(\arccos x)' = -\dfrac{1}{\sqrt{1 - x^2}}$ \\
+    $(\arctan x)' = \dfrac{1}{1 + x^2}$ & $(\text{arccot } x)' = -\dfrac{1}{1 + x^2}$ \\
+    $(\sinh x)' = \cosh x$ & $(\cosh x)' = \sinh x$ \\
+    $(\tanh x)' = \dfrac{1}{\cosh^2 x}$ & $(\coth x)' = -\dfrac{1}{\sinh^2 x}$ \\
+    $(\sqrt{x})' = \dfrac{1}{2\sqrt{x}}$ & \\
+\end{tabular}
+
+\subsection*{О чём этот отчёт?}
+
+В этом эпическом труде будет подробно, с матами (математическими, конечно же), разобрано взятие производной от конкретной функции. Мы пройдём весь путь от невинного взгляда на условие до триумфального финального ответа, обходя все подводные камни вроде забытых минусов и неправильно применённого цепного правила.
+
+Цель: выжить и найти $y'$. Поехали! И помните: если вы не сделали ни одной ошибки в знаке — вы, вероятно, спите и это всего лишь сон.
+\section*{Исходник:}
+
+Не смотря на все ваши попытки ввести самое сложное, на ваш взгляд уравнение, которое обязательно сломает здесь все, 
+мне все таки удалось (ну точнее просто пришлось на самом деле) считать ваше выражение, и собственно оно выглядит вот так:
+\begin{dmath}\frac{1}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}+ \operatorname{ln}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right) \end{dmath}
+(Знаете, мне нет разницы с чем я буду сейчас работать, но вы то хоть сами понимаете, что написали?)
+
+\section{Вычисление исходного выражения}
+Наверняка вам было бы интересно узнать (вы же у нас тут все такие любопытные), чему будет равняться ваше выражение, которое даже Пе*****чу либо вообще никогда в жизни не встречалось, либо снится в ночных кошмарах:\
+приступим:
+\begin{align*}
+	x = 1,	&&	\end{align*}
+
+
+Как вы помните еще с рождения::
+
+\begin{dmath}\frac{1}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}+ \operatorname{ln}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right) =-0.430732\end{dmath}
+
+\section{Вывод формулы первой производной}Настала пора какой-то магии вне Хогвартса, потому что я просто не знаю , как из нашего такого маленького красивого уравнения мог получится такой страшный монстр...\
+
+Тем не менее нам предстоит все это пронаблюдать, только не увлекайтесь и не вздумайте разбираться в том, что здесь происходит,
+а то рискуете в будущем попасть на кафедру вышмата...
+
+\subsection*{Прямой расчет по правилам, без упрощения:}\\
+Давайте последовательно разберем каждый шаг:
+
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(1\right)=0\end{dmath}
+Вопросы есть откуда это взялось?:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x\right) \right)=\operatorname{cos}\left(x\right) \cdot 1\end{dmath}
+Собственно из этого уже мы легко получаем, что:
+\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\end{dmath}
+Вопросы есть откуда это взялось?:
+\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\end{dmath}
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+Не трудно заметить, что:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x\right) \right)=\operatorname{cos}\left(x\right) \cdot 1\end{dmath}
+Вопросы есть откуда это взялось?:
+\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\end{dmath}
+Ээээээээээ... ну тут короче так:
+\begin{dmath}\frac{d}{dx}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right)=\frac{4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- \left(\operatorname{sin}\left(x\right) \right)^{4}\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
+Это достаточно просто преобразуется в следующее выражение:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{ln}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right) \right)=\frac{1}{\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}}\cdot \frac{4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- \left(\operatorname{sin}\left(x\right) \right)^{4}\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
+Собственно из этого уже мы легко получаем, что:
+\begin{dmath}\frac{d}{dx}\left(1\right)=0\end{dmath}
+Теперь по известным всем вам правилам переходим к следующему выражению
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x\right) \right)=\operatorname{cos}\left(x\right) \cdot 1\end{dmath}
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\end{dmath}
+Ээээээээээ... ну тут короче так:
+\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\end{dmath}
+Ээээээээээ... ну тут короче так:
+\begin{dmath}\frac{d}{dx}\left(1\right)=0\end{dmath}
+Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
+\begin{dmath}\frac{d}{dx}\left(\frac{1}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right)=\frac{0\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- 1\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
+Это достаточно просто преобразуется в следующее выражение:
+\begin{dmath}\frac{d}{dx}\left(\frac{1}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}+ \operatorname{ln}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right) \right)=\frac{0\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- 1\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}+ \frac{1}{\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}}\cdot \frac{4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- \left(\operatorname{sin}\left(x\right) \right)^{4}\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
 \end{document}
