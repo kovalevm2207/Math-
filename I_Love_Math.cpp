@@ -15,11 +15,7 @@ int main()
 
     //SECTION - user_tree struct
         Tree_t* user_tree = TreeCtor(user_nodes);
-        TreeStructDump(user_tree);
-
-    //SECTION - calc user_tree:
-        double result = CalcTree(user_tree);
-        printf("user_tree = %lg\n", result);
+        ON_DEBUG(TreeStructDump(user_tree));
 
     //SECTION - write in LaTeX
         srand((unsigned int) time(NULL));
@@ -27,26 +23,22 @@ int main()
         FILE* tex_file = fopen("LaTeX.tex","w");
         assert(tex_file);
         BeginLaTeXDocument(tex_file);
+        PrintOriginalTree(tex_file, user_nodes);
 
-        DumpLaTeX(tex_file, user_nodes);
-
-        Node_t* copy = DeepNodeCopy(user_nodes);
-
-        TreeDump(copy, 2);
-        DumpLaTeX(tex_file, copy);
+    //SECTION - calc user_tree:
+        PrintCalcBegining(tex_file);
+        PrintCalcResult(tex_file, user_tree);
 
     //SECTION - derivative
         Node_t* first_derivative = TakeDerivative(tex_file, user_nodes, "x");
         TreeDump(first_derivative, 3);
-        DumpLaTeX(tex_file, first_derivative);
 
     //SECTION - first_derivative_tree struct
         Tree_t* first_derivative_tree = TreeCtor(first_derivative);
-        TreeStructDump(first_derivative_tree);
+        ON_DEBUG(TreeStructDump(first_derivative_tree));
 
-    //SECTION - calc user_tree:
-        double result_1 = CalcTree(first_derivative_tree);
-        printf("first_derivative_tree = %lg\n", result_1);
+//    //SECTION - calc first_derivative_tree:
+//        double result_1 = CalcTree(first_derivative_tree);
 
 
     //SECTION - be simpleare ;)
@@ -62,7 +54,6 @@ int main()
         TreeDtor(&user_tree);
         TreeDtor(&first_derivative_tree);
         DeleteTreeNode(&first_derivative);
-        DeleteTreeNode(&copy);
         DeleteTreeNode(&user_nodes);
 
     return 0;
@@ -306,6 +297,53 @@ void BeginLaTeXDocument(FILE* file)
     "\n"
     "Цель: выжить и найти $y'$. Поехали! И помните: если вы не сделали ни одной ошибки в знаке — вы, вероятно, спите и это всего лишь сон.\n");
 }
+void PrintOriginalTree(FILE* file, Node_t* root)
+{
+    fprintf(file,
+    "\\section*{Исходник:}\n"
+    "\n"
+    "Не смотря на все ваши попытки ввести самое сложное, на ваш взгляд уравнение, которое обязательно сломает здесь все, \n"
+    "мне все таки удалось (ну точнее просто пришлось на самом деле) считать ваше выражение, и собственно оно выглядит вот так:"
+    "\\[");
+    WriteTreeNodeLaTeX(file, root);
+    fprintf(file,
+    "\\]\n"
+    "(Знаете, мне нет разницы с чем я буду сейчас работать, но вы то хоть сами понимаете, что написали?)\n\n");
+}
+void PrintCalcBegining(FILE* file)
+{
+    fprintf(file,
+    "\\section{Вычисление исходного выражения}\n"
+    "Наверняка вам было бы интересно узнать (вы же у нас тут все такие любопытные), чему будет равняться ваше выражение, которое даже Пе*****чу "
+    "либо вообще никогда в жизни не встречалось, либо снится в ночных кошмарах:\\\n"
+    "приступим:\n");
+}
+void PrintCalcResult(FILE* file, Tree_t* tree)
+{
+    if(tree->vars_num != 0)
+    {
+        GetVarsValues(tree);
+        fprintf(file,
+        "\\begin{align*}\n\t");
+        for (size_t i = 0; i < tree->vars_num; i++)
+        {
+            fprintf(file, "%s = %lg,", tree->vars[i].name, tree->vars[i].data);
+            if(((i + 1) % 3) == 0) fprintf(file, "\\\\\n\t");
+            else                   fprintf(file, "\t&&\t");
+        }
+        fprintf(file,
+        "\\end{align*}\n\n"
+        "\n");
+    }
+    fprintf(file,
+    "%s:\n"
+    "\n"
+    "\\[", phrases[(long unsigned int)rand() % PHRASES_NUM]);
+    WriteTreeNodeLaTeX(file, tree->root);
+    fprintf(file,
+    "=%lg\\]\n"
+    "\n", CalcTreeNode(tree->root, tree->vars, tree->vars_num));
+}
 void WriteTreeNodeLaTeX(FILE* file, Node_t* node)
 {
     assert(file);
@@ -506,7 +544,11 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var)
     }
 
     #include "UndefDerivativeDSL.h"
-    DumpLaTeX(file, new_node);
+    fprintf(file, "\\[\\frac{d}{d%s}\\left(", var);
+    WriteTreeNodeLaTeX(file, node);
+    fprintf(file, "\\right)=");
+    WriteTreeNodeLaTeX(file, new_node);
+    fprintf(file, "\\]\n");
     return new_node;
 }
 Node_t* PowDerivative(FILE* file, Node_t* node, const char* const var)
