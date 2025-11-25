@@ -70,5 +70,7 @@ Node_t* LogDerivative(FILE* file, Node_t* node, const char* const var);
 //SECTION - calc
 double CalcTree(Tree_t* tree);
 TreeErr_t GetVarsValues(Tree_t* tree);
+double CalcTreeNode(const Node_t* node, const Var_t* vars, size_t vars_num  );
+size_t FindVarPos(const char* const name, const Var_t* const vars, size_t vars_num);
 
 #endif // MATH_TYPES

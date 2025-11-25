@@ -7,7 +7,7 @@
 Tree_t* TreeCtor(Node_t* root);
 size_t GetTreeDepth(const Node_t* const node);
 size_t CountTreeSize(const Node_t* const node);
-size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* cur_vars_num, const size_t* max_vars_num);
+size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* cur_vars_num, size_t* max_vars_num);
 bool FindVar(const char* const var, const Var_t* const vars, const size_t vars_num);
 TreeErr_t TreeDtor(Tree_t** tree);
 TreeErr_t TreeStructDumpF(FILE* stdout, Tree_t* tree);

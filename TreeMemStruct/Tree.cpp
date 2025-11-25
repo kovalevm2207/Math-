@@ -9,19 +9,17 @@ Tree_t* TreeCtor(Node_t* root)
     Var_t* vars = (Var_t*) calloc(START_VARS_NUM, sizeof(Var_t));
     assert(vars);
     tree->vars_num = 0;
-    GetTreeVars(&vars, root, &tree->vars_num, &START_VARS_NUM);
+    tree->max_vars_num = START_VARS_NUM;
+    GetTreeVars(&vars, root, &tree->vars_num, &tree->max_vars_num);
     assert(vars);
 
     tree->vars = vars;
-    tree->max_vars_num = START_VARS_NUM;
     tree->root  = root;
     tree->size  = CountTreeSize(root);
     tree->depth = GetTreeDepth(root);
 
     return tree;
 }
-
-
 size_t GetTreeDepth(const Node_t* const node)
 {
     if (node == NULL) {
@@ -34,8 +32,6 @@ size_t GetTreeDepth(const Node_t* const node)
 
     return 1 + (left_depth > right_depth ? left_depth : right_depth);
 }
-
-
 size_t CountTreeSize(const Node_t* const node)
 {
     assert(node);
@@ -46,22 +42,26 @@ size_t CountTreeSize(const Node_t* const node)
 
     return size;
 }
-
-
-size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* cur_vars_num, const size_t* max_vars_num)
+size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* cur_vars_num, size_t* max_vars_num)
 {
     assert(vars);
     assert(*vars);
     assert(node);
     assert(max_vars_num);
 
-    Var_t* vars_ = *vars;
-
     if(node->node_type == VAR)
     {
         if(!FindVar(node->value.var, *vars, *cur_vars_num))
         {
-            vars_[(*cur_vars_num)++] = node->value.var;
+            if(*cur_vars_num == *max_vars_num)
+            {
+                Var_t* new_vars = (Var_t*) realloc(*vars, (*max_vars_num * 2) * sizeof(Var_t));
+                assert(new_vars);
+                memset(new_vars + *max_vars_num, 0, *max_vars_num * sizeof(Var_t));
+                *vars = new_vars;
+                *max_vars_num *= 2;
+            }
+            (*vars)[(*cur_vars_num)++].name = node->value.var;
         }
     }
     if(node->left)  GetTreeVars(vars, node->left,  cur_vars_num, max_vars_num);
@@ -69,8 +69,6 @@ size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* cur_vars_num,
 
     return *cur_vars_num;
 }
-
-
 bool FindVar(const char* const var, const Var_t* const vars, const size_t vars_num)
 {
     assert(var);
@@ -78,12 +76,10 @@ bool FindVar(const char* const var, const Var_t* const vars, const size_t vars_n
 
     for (size_t i = 0; i < vars_num; i++)
     {
-        if(strcmp(var, vars[i]) == 0) return true;
+        if(strcmp(var, vars[i].name) == 0) return true;
     }
     return false;
 }
-
-
 TreeErr_t TreeDtor(Tree_t** tree)
 {
     assert(tree);
@@ -102,8 +98,6 @@ TreeErr_t TreeDtor(Tree_t** tree)
 
     return TREE_OK;
 }
-
-
 TreeErr_t TreeStructDumpF(FILE* stream, Tree_t* tree)
 {
     assert(stream);
@@ -120,9 +114,14 @@ TreeErr_t TreeStructDumpF(FILE* stream, Tree_t* tree)
     fprintf(stream, "\tvars\n"
                     "\t{\n");
 
-    for(size_t i = 0; tree->vars[i] != NULL; i++)
-     fprintf(stream,"\t [%zu]\t%s\n", i + 1, tree->vars[i]);
-
+    for(size_t i = 0; i < tree->max_vars_num; i++)
+    {
+        if(tree->vars[i].name)
+            fprintf(stream, ORANGE_COLOR "\t [%zu]*\t%s = %lg\n", i + 1, tree->vars[i].name, tree->vars[i].data);
+        else
+            fprintf(stream, CYAN_COLOR   "\t [%zu] \t%p = %lg\n", i + 1, tree->vars[i].name, tree->vars[i].data);
+        fprintf(stream, RESET);
+    }
     fprintf(stream, "\t}\n"
                     "}\n"
                     "\n");
@@ -145,8 +144,6 @@ Node_t* TreeNodeCtor(data_t* data, Node_t* left_som, Node_t* right_som)
     }
     return TreeNodeCtor_(data->type, value, left_som, right_som);
 }
-
-
 Node_t* TreeNodeCtor_(NodeType_t type, Value_t value, Node_t* left_som, Node_t* right_som)
 {
     Node_t* node = (Node_t*) calloc(1, sizeof(Node_t));
@@ -163,8 +160,6 @@ Node_t* TreeNodeCtor_(NodeType_t type, Value_t value, Node_t* left_som, Node_t* 
 
     return node;
 }
-
-
 TreeErr_t TreeInsertLeft(Node_t* base_node, Node_t* inserting_node)
 {
     assert(base_node != NULL);
@@ -175,8 +170,6 @@ TreeErr_t TreeInsertLeft(Node_t* base_node, Node_t* inserting_node)
 
     return TREE_OK;
 }
-
-
 TreeErr_t TreeInsertRight(Node_t* base_node, Node_t* inserting_node)
 {
     assert(base_node != NULL);
@@ -187,8 +180,6 @@ TreeErr_t TreeInsertRight(Node_t* base_node, Node_t* inserting_node)
 
     return TREE_OK;
 }
-
-
 TreeErr_t TreeSortInsert(Node_t* root, Node_t* node)
 {
     assert(root != NULL);
@@ -213,8 +204,6 @@ TreeErr_t TreeSortInsert(Node_t* root, Node_t* node)
 
     return TREE_OK;
 }
-
-
 TreeErr_t DeleteTreeNode(Node_t** node)
 {
     assert(node != NULL);
@@ -248,8 +237,6 @@ TreeErr_t DeleteTreeNode(Node_t** node)
 
     return TREE_OK;
 }
-
-
 TreeErr_t PrintTreeNode(FILE* stream, const Node_t* node, TraverseMode_t mode)
 {
     assert(mode == PREORDER || mode == INORDER || mode == POSTORDER);
@@ -284,8 +271,6 @@ TreeErr_t PrintTreeNode(FILE* stream, const Node_t* node, TraverseMode_t mode)
 
     return TREE_OK;
 }
-
-
 TreeErr_t PrintTreeData(FILE* stream, const Node_t* node)
 {
     assert(stream != NULL);
@@ -308,8 +293,6 @@ TreeErr_t PrintTreeData(FILE* stream, const Node_t* node)
 
     return TREE_OK;
 }
-
-
 TreeErr_t TreeDump_(const Node_t* node, int count_img, const char* func, const char* file, int line)
 {
     ON_DEBUG(printf("node ptr = %p\n", node));

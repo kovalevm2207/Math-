@@ -13,14 +13,13 @@ int main()
         StartHTMLfile();
         TreeDump(user_nodes, 1);
 
-    //SECTION - tree struct
+    //SECTION - user_tree struct
         Tree_t* user_tree = TreeCtor(user_nodes);
         TreeStructDump(user_tree);
 
-    //SECTION - calc tree:
-
+    //SECTION - calc user_tree:
         double result = CalcTree(user_tree);
-        printf("%lg\n", result);
+        printf("user_tree = %lg\n", result);
 
     //SECTION - write in LaTeX
         srand((unsigned int) time(NULL));
@@ -41,6 +40,15 @@ int main()
         TreeDump(first_derivative, 3);
         DumpLaTeX(tex_file, first_derivative);
 
+    //SECTION - first_derivative_tree struct
+        Tree_t* first_derivative_tree = TreeCtor(first_derivative);
+        TreeStructDump(first_derivative_tree);
+
+    //SECTION - calc user_tree:
+        double result_1 = CalcTree(first_derivative_tree);
+        printf("first_derivative_tree = %lg\n", result_1);
+
+
     //SECTION - be simpleare ;)
 
 
@@ -52,6 +60,7 @@ int main()
         EndHTMLfile();
 
         TreeDtor(&user_tree);
+        TreeDtor(&first_derivative_tree);
         DeleteTreeNode(&first_derivative);
         DeleteTreeNode(&copy);
         DeleteTreeNode(&user_nodes);
@@ -539,13 +548,17 @@ bool FindVar(Node_t* node, const char* const var)
 //SECTION - calc
 double CalcTree(Tree_t* tree)
 {
+    assert(tree);
+
     GetVarsValues(tree);
     TreeStructDump(tree);
 
-    return 0;
+    return CalcTreeNode(tree->root, tree->vars, tree->vars_num);
 }
 TreeErr_t GetVarsValues(Tree_t* tree)
 {
+    assert(tree);
+
     for(size_t i = 0; i < tree->vars_num; i++)
     {
         printf("Введите значение переменной %s:\n\n\t\t", tree->vars[i].name);
@@ -554,4 +567,76 @@ TreeErr_t GetVarsValues(Tree_t* tree)
     }
 
     return TREE_OK;
+}
+double CalcTreeNode(const Node_t* node, const Var_t* vars, size_t vars_num)
+{
+    assert(node);
+    assert(vars);
+
+    switch(node->node_type)
+    {
+        default:
+            assert(true);
+            return 0;
+        case NUM:
+            return node->value.num;
+        case VAR:
+            return vars[FindVarPos(node->value.var, vars, vars_num)].data;
+        case OP:
+            double result = 0;
+
+            #define LC CalcTreeNode(node->left,  vars, vars_num)
+            #define RC CalcTreeNode(node->right, vars, vars_num)
+
+            switch(node->value.op)
+            {
+                default:
+                    assert(true);
+                    return 0;
+                case ADD:       result = LC + RC;           break;
+                case SUB:       result = LC - RC;           break;
+                case MUL:       result = LC * RC;           break;
+                case DIV:       result = LC / RC;           break;
+                case SQRT:      result = sqrt(LC);          break;
+                case SIN:       result = sin(LC);           break;
+                case COS:       result = cos(LC);           break;
+                case TG:        result = tan(LC);           break;
+                case CTG:       result = 1/tan(LC);         break;
+                case SH:        result = sinh(LC);          break;
+                case CH:        result = cosh(LC);          break;
+                case TH:        result = tanh(LC);          break;
+                case CTH:       result = 1/tanh(LC);        break;
+                case ARCSIN:    result = asin(LC);          break;
+                case ARCCOS:    result = acos(LC);          break;
+                case ARCTG:     result = atan(LC);          break;
+                case ARCCTG:    result = M_PI_2 - atan(LC); break;
+                case LG:        result = log10(LC);         break;
+                case LN:        result = log(LC);           break;
+                case LOG:       result = log(LC)/log(RC);   break;
+                case POW:       result = pow(LC, RC);       break;
+            }
+
+            #undef LC
+            #undef RC
+
+            return result;
+
+            break;
+    }
+
+    assert(true);
+    return 0;
+}
+size_t FindVarPos(const char* const name, const Var_t* const vars, size_t vars_num)
+{
+    assert(name);
+    assert(vars);
+
+    for(size_t pos = 0; pos < vars_num; pos++)
+    {
+        if(strcmp(name, vars[pos].name) == 0) return pos;
+    }
+
+    assert(true);
+    return 0;
 }

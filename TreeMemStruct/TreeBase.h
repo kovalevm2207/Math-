@@ -89,7 +89,7 @@ typedef struct Node_t
     struct Node_t*  right;
 } Node_t;
 
-const size_t START_VARS_NUM = 8;
+const size_t START_VARS_NUM = 4;
 
 
 typedef struct
