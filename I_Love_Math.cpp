@@ -40,6 +40,10 @@ int main()
     //SECTION - simplify first_derivative_tree:
         PrintBeginSimplify(tex_file);
         ConstantFolding(first_derivative);
+        TreeDump(first_derivative, 4);
+        PrintConstantFolding(tex_file, user_nodes, first_derivative, "x");
+        first_derivative = NeutralElementElimination(first_derivative);
+        TreeDump(first_derivative, 5);
         PrintConstantFolding(tex_file, user_nodes, first_derivative, "x");
 
     //SECTION - end of the program
@@ -351,7 +355,7 @@ void PrintCalcResult(FILE* file, Tree_t* tree)
         "\n");
     }
     fprintf(file,
-    "%s:\n"
+    "%s\n"
     "\n"
     "\\begin{dmath}", TakeDerivativePhrases[(long unsigned int)rand() % TAKE_DERIVATIVE_PHRASES_NUM]);
     WriteTreeNodeLaTeX(file, tree->root);
@@ -817,10 +821,9 @@ TreeErr_t SimplifyExpression(Tree_t* tree)
     {
         new_size = tree->size;
         tree->root = ConstantFolding(tree->root);
-        assert(tree->root);
-        //NeutralElementElimination(tree);
-       // tree->depth = GetTreeDepth(tree->root);
-       // tree->size = CountTreeSize(tree->root);
+        NeutralElementElimination(tree->root);
+        tree->depth = GetTreeDepth(tree->root);
+        tree->size = CountTreeSize(tree->root);
     }
     while(tree->size != new_size);
 
@@ -942,4 +945,78 @@ Node_t* BinaryConstantFolding(Node_t* node, Node_t* new_left, Node_t* new_right)
     #undef RS
 
     return new_node;
+}
+Node_t* NeutralElementElimination(Node_t* node)
+{
+    assert(node);
+
+    switch(node->node_type)
+    {
+        default: assert(true); return NULL;
+        case NUM:
+        case VAR:
+            return NULL;
+        case OP:
+        {
+            switch(node->value.op)
+            {
+                default: assert(true); return NULL;
+                case ADD: // simplify --> (expression) + 0 = (expression) or  0 + (expression) = (expression)
+                {
+                    return SimplifyTerms(&node, node->left, node->right) ?: SimplifyTerms(&node, node->right, node->left);
+                }
+                case SUB: // simplify --> (expression) - 0 = (expression) or  0 - (expression) = (expression)
+                case MUL:
+                case DIV:    case POW:    case LOG:
+                case TG:     case SH:     case CH:
+                case TH:     case LG:     case LN:
+                case SIN:    case COS:    case CTG:
+                case CTH:    case SQRT:   case ARCTG:
+                case ARCSIN: case ARCCOS: case ARCCTG:
+                return NULL;
+            }
+        }
+    }
+}
+Node_t* SimplifyTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node)
+{
+    assert(node);
+    assert(simple_node);
+    assert(complex_node);
+
+    switch(simple_node->node_type)
+    {
+        case NUM:
+        {
+            Node_t* complex_node_copy = NULL;
+            if(DoubleCompare(simple_node->value.num, 0) == 0)
+            {
+                complex_node_copy = DeepNodeCopy(complex_node);
+                if((*node)->prev_node) *((*node)->prev_node) = complex_node_copy;
+                MakePrevNode(complex_node_copy);
+                DeleteTreeNode(node);
+            }
+            return complex_node_copy;
+        }
+        case OP:
+        {
+            Node_t* simple_result = NeutralElementElimination(simple_node);
+            Node_t* simple_result_copy = NULL;
+            if(simple_result)
+            {
+                simple_result_copy = DeepNodeCopy(simple_result);
+                if((*node)->prev_node) *((*node)->prev_node) = simple_result_copy;
+                MakePrevNode(simple_result_copy);
+                DeleteTreeNode(node);
+            }
+            return simple_result_copy;
+        }
+        case VAR:              return NULL;
+        default: assert(true); return NULL;
+    }
+}
+int DoubleCompare(double a, double b)
+{
+    if(fabs(a - b) < PRECISION) return 0;
+    return a < b ? -1 : 1;
 }

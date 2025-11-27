@@ -29,13 +29,12 @@ const char* const TakeDerivativePhrases[] =
     "Па па па па па папапапапа па:",
     "Теперь по известным всем вам правилам переходим к следующему выражению",
     "Тыры-пыры, шуры-муры и вот оно:",
-     "Дифференцируем как боги:",
+    "Дифференцируем как боги:",
     "Производная? Легко! Смотрите:",
     "Берем производную на скорость:",
     "Так, тут производная будет... эээ... ну вот:",
     "По правилам дифференцирования, которые вы все знаете наизусть:",
     "Дифференцируем не глядя:",
-    "Вот что делает с функцией небольшая прогулка с оператором d/dx:",
     "Производная как с конвейера:",
     "Дифференцируем по-быстрому:",
     "Ну это же элементарно, Ватсон:",
@@ -77,8 +76,7 @@ const char* const ConstantFoldingPhrases[] =
 
 const long unsigned int TAKE_DERIVATIVE_PHRASES_NUM = sizeof(TakeDerivativePhrases)/sizeof(TakeDerivativePhrases[0]);
 const long unsigned int CONST_FOLDING_PHRASES_NUM   = sizeof(ConstantFoldingPhrases)/sizeof(ConstantFoldingPhrases[0]);
-
-#define FREE(ptr) if(ptr) {free(ptr); ptr = NULL;}
+const double PRECISION = 1e-12;
 
 //SECTION -  reading
 Node_t* GetTreeNode(char** cur_pos);
@@ -130,5 +128,10 @@ TreeErr_t SimplifyExpression(Tree_t* tree);
 Node_t* ConstantFolding(Node_t* node);
 Node_t* UnaryConstantFolding(Node_t* node, Node_t* new_left);
 Node_t* BinaryConstantFolding(Node_t* node, Node_t* new_left, Node_t* new_right);
+Node_t* NeutralElementElimination(Node_t* node);
+Node_t* SimplifyTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node);
+int DoubleCompare(double a, double b);
+
+#define FREE(ptr) if(ptr) {free(ptr); ptr = NULL;}
 
 #endif // MATH_TYPES
