@@ -120,12 +120,12 @@ f'(x_0) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}
 Наверняка вам было бы интересно узнать (вы же у нас тут все такие любопытные), чему будет равняться ваше выражение, которое даже Пе*****чу либо вообще никогда в жизни не встречалось, либо снится в ночных кошмарах:\
 приступим:
 \begin{align*}
-	x = 1,	&&	\end{align*}
+	x = 22,	&&	\end{align*}
 
 
-Как вы помните еще с рождения::
+Ну это же элементарно, Ватсон::
 
-\begin{dmath}\frac{1}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}+ \operatorname{ln}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right) =-0.430732\end{dmath}
+\begin{dmath}\frac{1}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}+ \operatorname{ln}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right) =-17.9088\end{dmath}
 
 \section{Вывод формулы первой производной}Настала пора какой-то магии вне Хогвартса, потому что я просто не знаю , как из нашего такого маленького красивого уравнения мог получится такой страшный монстр...\
 
@@ -135,40 +135,45 @@ f'(x_0) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}
 \subsection*{Прямой расчет по правилам, без упрощения:}\\
 Давайте последовательно разберем каждый шаг:
 
-И любому ёжику понятно что здесь получится:
+Ну это же элементарно, Ватсон:
 \begin{dmath}\frac{d}{dx}\left(1\right)=0\end{dmath}
-Вопросы есть откуда это взялось?:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x\right) \right)=\operatorname{cos}\left(x\right) \cdot 1\end{dmath}
-Собственно из этого уже мы легко получаем, что:
-\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\end{dmath}
-Вопросы есть откуда это взялось?:
-\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\end{dmath}
-И любому ёжику понятно что здесь получится:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Не трудно заметить, что:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x\right) \right)=\operatorname{cos}\left(x\right) \cdot 1\end{dmath}
-Вопросы есть откуда это взялось?:
-\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\end{dmath}
-Ээээээээээ... ну тут короче так:
-\begin{dmath}\frac{d}{dx}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right)=\frac{4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- \left(\operatorname{sin}\left(x\right) \right)^{4}\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{ln}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right) \right)=\frac{1}{\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}}\cdot \frac{4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- \left(\operatorname{sin}\left(x\right) \right)^{4}\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
-Собственно из этого уже мы легко получаем, что:
-\begin{dmath}\frac{d}{dx}\left(1\right)=0\end{dmath}
-Теперь по известным всем вам правилам переходим к следующему выражению
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
 Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+Па па па па па папапапапа па:
 \begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x\right) \right)=\operatorname{cos}\left(x\right) \cdot 1\end{dmath}
-И любому ёжику понятно что здесь получится:
+Ну это же элементарно, Ватсон:
 \begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\end{dmath}
-Ээээээээээ... ну тут короче так:
+Я надеюсь, что вы все поняли, но в общем вот:
 \begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\end{dmath}
+Не трудно заметить, что:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+Секундочку... вычисляем... готово:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x\right) \right)=\operatorname{cos}\left(x\right) \cdot 1\end{dmath}
 Ээээээээээ... ну тут короче так:
+\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\end{dmath}
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right)=\frac{4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- \left(\operatorname{sin}\left(x\right) \right)^{4}\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
+По правилам дифференцирования, которые вы все знаете наизусть:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{ln}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right) \right)=\frac{1}{\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}}\cdot \frac{4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- \left(\operatorname{sin}\left(x\right) \right)^{4}\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
+Тыры-пыры, шуры-муры и вот оно:
 \begin{dmath}\frac{d}{dx}\left(1\right)=0\end{dmath}
-Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
+Вопросы есть откуда это взялось?:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+Не спрашивайте вообще, как это у нас получилось:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x\right) \right)=\operatorname{cos}\left(x\right) \cdot 1\end{dmath}
+Я надеюсь, что вы все поняли, но в общем вот:
+\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\end{dmath}
+Так, щас быстренько продифференцировать... вжух:
+\begin{dmath}\frac{d}{dx}\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)=4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\end{dmath}
+Секундочку... вычисляем... готово:
+\begin{dmath}\frac{d}{dx}\left(1\right)=0\end{dmath}
+Производная как с конвейера:
 \begin{dmath}\frac{d}{dx}\left(\frac{1}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right)=\frac{0\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- 1\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
+Дифференцируем как боги:
 \begin{dmath}\frac{d}{dx}\left(\frac{1}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}+ \operatorname{ln}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right) \right)=\frac{0\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- 1\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}+ \frac{1}{\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}}\cdot \frac{4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- \left(\operatorname{sin}\left(x\right) \right)^{4}\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{4- 1}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
+\subsection*{Попробуем упростить полученное выражение}
+\\Сокращаем-сокращаем... и вот:\\
+\begin{dmath}
+	\frac{d}{dx}\left(\frac{1}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}+ \operatorname{ln}\left(\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}\right) \right) = \frac{0\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- 1\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{3}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}+ \frac{1}{\frac{\left(\operatorname{sin}\left(x\right) \right)^{4}}{\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1}}\cdot \frac{4\cdot \left(\operatorname{sin}\left(x\right) \right)^{3}\cdot \operatorname{cos}\left(x\right) \cdot 1\cdot \left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)- \left(\operatorname{sin}\left(x\right) \right)^{4}\cdot \left(4\cdot \left(\operatorname{sin}\left(x\right) \right)^{3}\cdot \operatorname{cos}\left(x\right) \cdot 1+ 0\right)}{\left(\left(\operatorname{sin}\left(x\right) \right)^{4}+ 1\right)^{2}}\end{dmath}
+
 \end{document}

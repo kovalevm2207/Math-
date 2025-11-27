@@ -1,6 +1,5 @@
 #include "Tree.h"
 
-
 Tree_t* TreeCtor(Node_t* root)
 {
     assert(root);
@@ -230,7 +229,7 @@ TreeErr_t DeleteTreeNode(Node_t** node)
             return INCORRECT_TYPE;
     }
 
-    if (cur_node->prev_node) *(cur_node->prev_node) = NULL;
+    cur_node->prev_node = NULL;
 
     free(cur_node);
     *node = NULL;

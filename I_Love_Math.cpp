@@ -8,6 +8,7 @@ int main()
         char* cur_pos = SkipSpaces(user_file);
 
         Node_t* user_nodes = GetTreeNode(&cur_pos);
+        MakePrevNode(user_nodes);
         FREE(user_file)
 
         StartHTMLfile();
@@ -15,7 +16,6 @@ int main()
 
     //SECTION - user_tree struct
         Tree_t* user_tree = TreeCtor(user_nodes);
-        ON_DEBUG(TreeStructDump(user_tree));
 
     //SECTION - write in LaTeX
         srand((unsigned int) time(NULL));
@@ -32,17 +32,15 @@ int main()
     //SECTION - derivative
         PrintDerivativeBegining(tex_file);
         Node_t* first_derivative = TakeDerivative(tex_file, user_nodes, "x");
+        MakePrevNode(first_derivative);
         TreeDump(first_derivative, 3);
 
-    //SECTION - first_derivative_tree struct
         Tree_t* first_derivative_tree = TreeCtor(first_derivative);
-        ON_DEBUG(TreeStructDump(first_derivative_tree));
 
     //SECTION - simplify first_derivative_tree:
-
-
-    //SECTION - be simpleare ;)
-
+        PrintBeginSimplify(tex_file);
+        ConstantFolding(first_derivative);
+        PrintConstantFolding(tex_file, user_nodes, first_derivative, "x");
 
     //SECTION - end of the program
         EndLaTeXDocument(tex_file);
@@ -165,6 +163,22 @@ data_t* AnalyzeWord(char* word, data_t* data)
     }
 
     return NULL;
+}
+TreeErr_t MakePrevNode(Node_t* node)
+{
+    if(!node) return TREE_OK;
+    if(node->left)
+    {
+        node->left->prev_node = &node->left;
+        MakePrevNode(node->left);
+    }
+    if(node->right)
+    {
+        node->right->prev_node = &node->right;
+        MakePrevNode(node->right);
+    }
+
+    return TREE_OK;
 }
 
 //SECTION - write LaTeX
@@ -339,7 +353,7 @@ void PrintCalcResult(FILE* file, Tree_t* tree)
     fprintf(file,
     "%s:\n"
     "\n"
-    "\\begin{dmath}", phrases[(long unsigned int)rand() % PHRASES_NUM]);
+    "\\begin{dmath}", TakeDerivativePhrases[(long unsigned int)rand() % TAKE_DERIVATIVE_PHRASES_NUM]);
     WriteTreeNodeLaTeX(file, tree->root);
     fprintf(file,
     "=%lg\\end{dmath}\n"
@@ -404,9 +418,15 @@ void WriteTreeNodeLaTeX(FILE* file, Node_t* node)
 }
 void DumpLaTeX(FILE* file, Node_t* node)
 {
+    assert(file);
+    if(!node)
+    {
+        fprintf(file, "На данном этапе свертку констант произвести невозможно\\\\\n");
+        return;
+    }
     fprintf(file, "%s\\\\\n"
     "\n"
-    "\\begin{dmath}", phrases[(long unsigned int)rand() % PHRASES_NUM]);
+    "\\begin{dmath}", TakeDerivativePhrases[(long unsigned int)rand() % TAKE_DERIVATIVE_PHRASES_NUM]);
     WriteTreeNodeLaTeX(file, node);
     fprintf(file, "\\end{dmath}\n\n");
 }
@@ -500,6 +520,32 @@ void PrintUnaryOperator_(FILE* file, const char* const op, Node_t* node)
     WriteTreeNodeLaTeX(file, node->left);
     fprintf(file, "\\right) ");
 }
+void PrintBeginSimplify(FILE* file)
+{
+    assert(file);
+
+    fprintf(file, "\\subsection*{Попробуем упростить полученное выражение}\n\\\\");
+}
+void PrintConstantFolding(FILE* file, Node_t* base_node, Node_t* simple_node, const char* const var)
+{
+    assert(file);
+    assert(base_node);
+    assert(simple_node);
+    assert(var);
+
+    fprintf(file,
+    "%s\\\\\n", ConstantFoldingPhrases[(long unsigned int)rand() % CONST_FOLDING_PHRASES_NUM]);
+    fprintf(file,
+    "\\begin{dmath}\n\t"
+    "\\frac{d}{d%s}\\left(", var);
+    WriteTreeNodeLaTeX(file, base_node);
+    fprintf(file,
+    "\\right) = ");
+    WriteTreeNodeLaTeX(file, simple_node);
+    fprintf(file,
+    "\\end{dmath}\n\n");
+
+}
 void EndLaTeXDocument(FILE* file)
 {
     assert(file);
@@ -559,7 +605,7 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var)
     }
 
     #include "UndefDerivativeDSL.h"
-    fprintf(file, "%s\n", phrases[(long unsigned int)rand() % PHRASES_NUM]);
+    fprintf(file, "%s\n", TakeDerivativePhrases[(long unsigned int)rand() % TAKE_DERIVATIVE_PHRASES_NUM]);
     fprintf(file, "\\begin{dmath}"
                   "\\frac{d}{d%s}\\left(", var);
     WriteTreeNodeLaTeX(file, node);
@@ -757,4 +803,143 @@ size_t FindVarPos(const char* const name, const Var_t* const vars, size_t vars_n
 
     assert(true);
     return 0;
+}
+
+
+//SECTION - simplify expression
+TreeErr_t SimplifyExpression(Tree_t* tree)
+{
+    assert(tree);
+
+    size_t new_size = 0;
+
+    do
+    {
+        new_size = tree->size;
+        tree->root = ConstantFolding(tree->root);
+        assert(tree->root);
+        //NeutralElementElimination(tree);
+       // tree->depth = GetTreeDepth(tree->root);
+       // tree->size = CountTreeSize(tree->root);
+    }
+    while(tree->size != new_size);
+
+    return TREE_OK;
+}
+Node_t* ConstantFolding(Node_t* node)
+{
+    if(!node) return NULL;
+
+    Node_t* new_node = NULL;
+
+    switch(node->node_type)
+    {
+        default:
+            assert(true);
+            return NULL;
+        case VAR: return NULL;
+        case NUM: return node;
+        case OP:
+        {
+            Node_t* new_left  = ConstantFolding(node->left);
+            Node_t* new_right = ConstantFolding(node->right);
+
+            switch(node->value.op)
+            {
+                default: assert(true); return NULL;
+                case ADD: case SUB: case MUL:
+                case DIV: case POW: case LOG:
+                {
+                    new_node = BinaryConstantFolding(node, new_left, new_right);
+                    break;
+                }
+                case TG:     case SH:     case CH:
+                case TH:     case LG:     case LN:
+                case SIN:    case COS:    case CTG:
+                case CTH:    case SQRT:   case ARCTG:
+                case ARCSIN: case ARCCOS: case ARCCTG:
+                {
+                    new_node = UnaryConstantFolding(node, new_left);
+                    break;
+                }
+            }
+            return new_node;
+        }
+    }
+}
+Node_t* UnaryConstantFolding(Node_t* node, Node_t* new_left)
+{
+    assert(node);
+
+    #define LS new_left->value.num
+    #define RS new_right->value.num
+
+    Node_t* new_node = NULL;
+
+    if(new_left)
+    {
+        switch(node->value.op)
+        {
+            case SQRT:   new_node = TreeNodeCtor_(NUM, {.num = sqrt(LS)       }, NULL, NULL); break;
+            case SIN:    new_node = TreeNodeCtor_(NUM, {.num = sin(LS)        }, NULL, NULL); break;
+            case COS:    new_node = TreeNodeCtor_(NUM, {.num = cos(LS)        }, NULL, NULL); break;
+            case TG:     new_node = TreeNodeCtor_(NUM, {.num = tan(LS)        }, NULL, NULL); break;
+            case CTG:    new_node = TreeNodeCtor_(NUM, {.num = 1/tan(LS)      }, NULL, NULL); break;
+            case SH:     new_node = TreeNodeCtor_(NUM, {.num = sinh(LS)       }, NULL, NULL); break;
+            case CH:     new_node = TreeNodeCtor_(NUM, {.num = cosh(LS)       }, NULL, NULL); break;
+            case TH:     new_node = TreeNodeCtor_(NUM, {.num = tanh(LS)       }, NULL, NULL); break;
+            case CTH:    new_node = TreeNodeCtor_(NUM, {.num = 1/tanh(LS)     }, NULL, NULL); break;
+            case ARCSIN: new_node = TreeNodeCtor_(NUM, {.num = asin(LS)       }, NULL, NULL); break;
+            case ARCCOS: new_node = TreeNodeCtor_(NUM, {.num = acos(LS)       }, NULL, NULL); break;
+            case ARCTG:  new_node = TreeNodeCtor_(NUM, {.num = atan(LS)       }, NULL, NULL); break;
+            case ARCCTG: new_node = TreeNodeCtor_(NUM, {.num = M_PI_2-atan(LS)}, NULL, NULL); break;
+            case LG:     new_node = TreeNodeCtor_(NUM, {.num = log10(LS)      }, NULL, NULL); break;
+            case LN:     new_node = TreeNodeCtor_(NUM, {.num = log(LS)        }, NULL, NULL); break;
+            case ADD: case SUB: case MUL:
+            case DIV: case POW: case LOG:
+            default: assert(true); return NULL;
+        }
+        if(node->prev_node) *(node->prev_node) = new_node;
+        DeleteTreeNode(&node);
+    }
+
+    #undef LS
+    #undef RS
+
+    return new_node;
+}
+Node_t* BinaryConstantFolding(Node_t* node, Node_t* new_left, Node_t* new_right)
+{
+    assert(node);
+
+    #define LS new_left->value.num
+    #define RS new_right->value.num
+
+    Node_t* new_node = NULL;
+
+    if(new_left && new_right)
+    {
+        switch(node->value.op)
+        {
+            case ADD: new_node = TreeNodeCtor_(NUM, {.num = LS + RS        }, NULL, NULL); break;
+            case SUB: new_node = TreeNodeCtor_(NUM, {.num = LS - RS        }, NULL, NULL); break;
+            case MUL: new_node = TreeNodeCtor_(NUM, {.num = LS * RS        }, NULL, NULL); break;
+            case DIV: new_node = TreeNodeCtor_(NUM, {.num = LS / RS        }, NULL, NULL); break;
+            case POW: new_node = TreeNodeCtor_(NUM, {.num = pow(LS,RS)     }, NULL, NULL); break;
+            case LOG: new_node = TreeNodeCtor_(NUM, {.num = log(LS)/log(RS)}, NULL, NULL); break;
+            case TG:     case SH:     case CH:
+            case TH:     case LG:     case LN:
+            case SIN:    case COS:    case CTG:
+            case CTH:    case SQRT:   case ARCTG:
+            case ARCSIN: case ARCCOS: case ARCCTG:
+            default: assert(true); return NULL;
+        }
+        if(node->prev_node) *(node->prev_node) = new_node;
+        DeleteTreeNode(&node);
+    }
+
+    #undef LS
+    #undef RS
+
+    return new_node;
 }
