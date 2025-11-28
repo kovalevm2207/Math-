@@ -124,12 +124,16 @@ double CalcTreeNode(const Node_t* node, const Var_t* vars, size_t vars_num  );
 size_t FindVarPos(const char* const name, const Var_t* const vars, size_t vars_num);
 
 //SECTION - simplify expression
-TreeErr_t SimplifyExpression(Tree_t* tree);
+TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* count_img);
 Node_t* ConstantFolding(Node_t* node);
 Node_t* UnaryConstantFolding(Node_t* node, Node_t* new_left);
 Node_t* BinaryConstantFolding(Node_t* node, Node_t* new_left, Node_t* new_right);
 Node_t* NeutralElementElimination(Node_t* node);
 Node_t* SimplifyTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node);
+Node_t* SimplifyMinusTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node);
+Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node);
+Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node);
+Node_t* SimplifyLPow(Node_t** node, Node_t* simple_node, Node_t* complex_node);
 int DoubleCompare(double a, double b);
 
 #define FREE(ptr) if(ptr) {free(ptr); ptr = NULL;}
