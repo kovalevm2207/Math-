@@ -27,7 +27,7 @@ const char* const TakeDerivativePhrases[] =
     "Я надеюсь, что вы все поняли, но в общем вот:",
     "Так, ну тут вообще ничего интересного:",
     "Па па па па па папапапапа па:",
-    "Теперь по известным всем вам правилам переходим к следующему выражению",
+    "Теперь по известным всем вам правилам переходим к следующему выражению:",
     "Тыры-пыры, шуры-муры и вот оно:",
     "Дифференцируем как боги:",
     "Производная? Легко! Смотрите:",
@@ -46,13 +46,12 @@ const char* const TakeDerivativePhrases[] =
 
 const char* const ConstantFoldingPhrases[] =
 {
-    "Ну наконец-то хоть что-то посчиталось",
-    "Опа, а тут числа сами посчитались!",
-    "Вот это да! Калькулятор сработал!",
-    "Сюрприз-сюрприз - можно было и не писать столько кода",
-    "Долго ли, коротко ли, но посчиталось",
-    "Вы не поверите, но это считается именно так",
-    "Шок-контент: 2+2=4",
+    "Ну наконец-то хоть что-то посчиталось:",
+    "Опа, а тут числа сами посчитались!:",
+    "Вот это да! Калькулятор сработал!:",
+    "Surprise можно было и не писать столько:",
+    "Долго ли, коротко ли, но посчиталось:",
+    "Вы не поверите, но это упрощается именно так:",
     "Секретная техника вычислений раскрыта:",
     "Вот что бывает, когда числа подчиняются законам математики",
     "Смотрите-ка, а тут можно посчитать!",
@@ -67,7 +66,7 @@ const char* const ConstantFoldingPhrases[] =
     "Магия! Исчезли лишние действия:",
     "Так-так-так, что тут у нас... ага:",
     "Сокращаем-сокращаем... и вот:",
-    "Вычисляем без регистрации и СМС:",
+    "Вычисляем без регистрации и СМС, мамка не запалит:",
     "Ну тут всё очевидно, даже комментировать не буду:",
     "Вжух-вжух и готово:",
     "Как по маслу пошло:"
@@ -77,6 +76,7 @@ const char* const ConstantFoldingPhrases[] =
 const long unsigned int TAKE_DERIVATIVE_PHRASES_NUM = sizeof(TakeDerivativePhrases)/sizeof(TakeDerivativePhrases[0]);
 const long unsigned int CONST_FOLDING_PHRASES_NUM   = sizeof(ConstantFoldingPhrases)/sizeof(ConstantFoldingPhrases[0]);
 const double PRECISION = 1e-12;
+const size_t ST_W_LEN = 5;
 
 //SECTION -  reading
 Node_t* GetTreeNode(char** cur_pos);
@@ -101,7 +101,7 @@ void PrintSqrt_(FILE* file, Node_t* node);
 void PrintBinaryOperator_(FILE* file, const char* const op, Node_t* node);
 void PrintUnaryOperator_(FILE* file, const char* const op, Node_t* node);
 void PrintBeginSimplify(FILE* file);
-void PrintConstantFolding(FILE* file, Node_t* base_node, Node_t* simple_node, const char* const var);
+void PrintSimplifyRes(FILE* file, Node_t* base_node, Node_t* simple_node, const char* const var, bool flag);
 void EndLaTeXDocument(FILE* file);
 #define PrintLog()  PrintLog_(file, node)
 #define PrintDiv()  PrintDiv_(file, node)
@@ -125,17 +125,30 @@ size_t FindVarPos(const char* const name, const Var_t* const vars, size_t vars_n
 
 //SECTION - simplify expression
 TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* count_img);
-Node_t* ConstantFolding(Node_t* node);
+Node_t* ConstantFolding(Node_t* node, bool* is_change);
 Node_t* UnaryConstantFolding(Node_t* node, Node_t* new_left);
 Node_t* BinaryConstantFolding(Node_t* node, Node_t* new_left, Node_t* new_right);
-Node_t* NeutralElementElimination(Node_t* node);
-Node_t* SimplifyTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node);
-Node_t* SimplifyMinusTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node);
-Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node);
-Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node);
-Node_t* SimplifyLPow(Node_t** node, Node_t* simple_node, Node_t* complex_node);
+Node_t* NeutralElementElimination(Node_t* node, bool* is_change);
+Node_t* SimplifyTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change);
+Node_t* SimplifyMinusTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change);
+Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change);
+Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change);
+Node_t* SimplifyLPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change);
 int DoubleCompare(double a, double b);
 
+Node_t* GetG( char** s);
+Node_t* GetE( char** s);
+Node_t* GetT( char** s);
+Node_t* GetS( char** s);
+Node_t* GetP( char** s);
+Node_t* GetN( char** s);
+char* GetW(char** s);
+Operator_t FindOp(char* const word);
+
+double SkipSpaces(char** s);
+size_t CheckLen(char** word, size_t word_len, const size_t letter);
+
 #define FREE(ptr) if(ptr) {free(ptr); ptr = NULL;}
+#define ERR_PRINT(text) fprintf(stderr, RED_COLOR text RESET)
 
 #endif // MATH_TYPES

@@ -40,7 +40,8 @@ typedef enum
     ARCCTG,
     LOG,
     LG,
-    LN
+    LN,
+    NOT_OP
 } Operator_t;
 
 const struct
@@ -72,6 +73,8 @@ const struct
     {"LG",     "lg",    3},
     {"LN",     "ln",    3},
 };
+
+const size_t operators_num = sizeof(Operators)/sizeof(Operators[0]);
 
 typedef union
 {

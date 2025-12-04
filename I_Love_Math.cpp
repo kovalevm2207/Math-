@@ -9,7 +9,8 @@ int main()
         assert(user_file && "NULL user_file, check ReadFile func");
         char* cur_pos = SkipSpaces(user_file);
 
-        Node_t* user_nodes = GetTreeNode(&cur_pos);
+        //Node_t* user_nodes = GetTreeNode(&cur_pos);
+        Node_t* user_nodes = GetG(&cur_pos);
         MakePrevNode(user_nodes);
         FREE(user_file)
 
@@ -388,6 +389,7 @@ void WriteTreeNodeLaTeX(FILE* file, Node_t* node)
         case OP:
             switch(node->value.op)
             {
+                case NOT_OP:
                 default: return;
                 case ADD    : PrintBinaryOperator ("+"     ); break;
                 case SUB    : PrintBinaryOperator ("-"     ); break;
@@ -526,25 +528,27 @@ void PrintBeginSimplify(FILE* file)
 
     fprintf(file, "\\subsection*{Попробуем упростить полученное выражение}\n\\\\");
 }
-void PrintConstantFolding(FILE* file, Node_t* base_node, Node_t* simple_node, const char* const var)
+void PrintSimplifyRes(FILE* file, Node_t* base_node, Node_t* simple_node, const char* const var, bool flag)
 {
     assert(file);
     assert(base_node);
     assert(simple_node);
     assert(var);
 
-    fprintf(file,
-    "%s\\\\\n", ConstantFoldingPhrases[(long unsigned int)rand() % CONST_FOLDING_PHRASES_NUM]);
-    fprintf(file,
-    "\\begin{dmath}\n\t"
-    "\\frac{d}{d%s}\\left(", var);
-    WriteTreeNodeLaTeX(file, base_node);
-    fprintf(file,
-    "\\right) = ");
-    WriteTreeNodeLaTeX(file, simple_node);
-    fprintf(file,
-    "\\end{dmath}\n\n");
-
+    if(flag)
+    {
+        fprintf(file,
+        "%s\\\\\n", ConstantFoldingPhrases[(long unsigned int)rand() % CONST_FOLDING_PHRASES_NUM]);
+        fprintf(file,
+        "\\begin{dmath}\n\t"
+        "\\frac{d}{d%s}\\left(", var);
+        WriteTreeNodeLaTeX(file, base_node);
+        fprintf(file,
+        "\\right) = ");
+        WriteTreeNodeLaTeX(file, simple_node);
+        fprintf(file,
+        "\\end{dmath}\n\n");
+    }
 }
 void EndLaTeXDocument(FILE* file)
 {
@@ -578,6 +582,7 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var)
         case  OP:
             switch(node->value.op)
             {
+                case NOT_OP:
                 default: return NULL;
                 case ADD:       new_node = ADD_(d(L), d(R));                                                   break;  //  d(a) + d(b)
                 case SUB:       new_node = SUB_(d(L), d(R));                                                   break;  //  d(a) - d(b)
@@ -754,6 +759,7 @@ double CalcTreeNode(const Node_t* node, const Var_t* vars, size_t vars_num)
 
             switch(node->value.op)
             {
+                case NOT_OP:
                 default:
                     assert(true);
                     return 0;
@@ -813,32 +819,35 @@ TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* c
     assert(count_img);
 
     PrintBeginSimplify(file);
-    Node_t* simple_first_derivative = NULL;
-    size_t new_size = 0;
+    Node_t* simple_result = NULL;
+    bool is_change = false;
 
     do
     {
-        new_size = tree->size;
+        is_change = false;
 
-        simple_first_derivative = ConstantFolding(tree->root);
-        if(simple_first_derivative) tree->root = simple_first_derivative;
+        simple_result = ConstantFolding(tree->root, &is_change);
+        if(simple_result) tree->root = simple_result;
         TreeDump(tree->root, (*count_img)++);
-        PrintConstantFolding(file, base_tree->root, tree->root, "x");
+        PrintSimplifyRes(file, base_tree->root, tree->root, "x", is_change);
 
-        simple_first_derivative = NeutralElementElimination(tree->root);
-        if(simple_first_derivative) tree->root = simple_first_derivative;
+        simple_result = NeutralElementElimination(tree->root, &is_change);
+        if(simple_result) tree->root = simple_result;
         TreeDump(tree->root, (*count_img)++);
-        PrintConstantFolding(file, base_tree->root, tree->root, "x");
+        PrintSimplifyRes(file, base_tree->root, tree->root, "x", is_change);
 
         tree->depth = GetTreeDepth(tree->root);
         tree->size = CountTreeSize(tree->root);
     }
-    while(tree->size != new_size);
+    while(is_change);
+
+    fprintf(file, "На этом я все, все остальное упрощайте сами, все равно на письмаке вам в задании скажут все это не упрощать...\\\\\n");
 
     return TREE_OK;
 }
-Node_t* ConstantFolding(Node_t* node)
+Node_t* ConstantFolding(Node_t* node, bool* is_change)
 {
+    assert(is_change);
     if(!node) return NULL;
 
     Node_t* new_node = NULL;
@@ -846,17 +855,18 @@ Node_t* ConstantFolding(Node_t* node)
     switch(node->node_type)
     {
         default:
-            assert(true);
+            assert(false); // todo assert false
             return NULL;
         case VAR: return NULL;
         case NUM: return node;
         case OP:
         {
-            Node_t* new_left  = ConstantFolding(node->left);
-            Node_t* new_right = ConstantFolding(node->right);
+            Node_t* new_left  = ConstantFolding(node->left, is_change);
+            Node_t* new_right = ConstantFolding(node->right, is_change);
 
             switch(node->value.op)
             {
+                case NOT_OP:
                 default: assert(true); return NULL;
                 case ADD: case SUB: case MUL:
                 case DIV: case POW: case LOG:
@@ -874,6 +884,7 @@ Node_t* ConstantFolding(Node_t* node)
                     break;
                 }
             }
+            if(new_node) *is_change = true;
             return new_node;
         }
     }
@@ -887,7 +898,7 @@ Node_t* UnaryConstantFolding(Node_t* node, Node_t* new_left)
 
     Node_t* new_node = NULL;
 
-    if(new_left)
+    if(new_left) // todo invert condition
     {
         switch(node->value.op)
         {
@@ -908,6 +919,7 @@ Node_t* UnaryConstantFolding(Node_t* node, Node_t* new_left)
             case LN:     new_node = TreeNodeCtor_(NUM, {.num = log(LS)        }, NULL, NULL); break;
             case ADD: case SUB: case MUL:
             case DIV: case POW: case LOG:
+            case NOT_OP:
             default: assert(true); return NULL;
         }
         if(node->prev_node) *(node->prev_node) = new_node;
@@ -923,6 +935,7 @@ Node_t* BinaryConstantFolding(Node_t* node, Node_t* new_left, Node_t* new_right)
 {
     assert(node);
 
+    // todo copypaste w/ defines
     #define LS new_left->value.num
     #define RS new_right->value.num
 
@@ -943,6 +956,7 @@ Node_t* BinaryConstantFolding(Node_t* node, Node_t* new_left, Node_t* new_right)
             case SIN:    case COS:    case CTG:
             case CTH:    case SQRT:   case ARCTG:
             case ARCSIN: case ARCCOS: case ARCCTG:
+            case NOT_OP:
             default: assert(true); return NULL;
         }
         if(node->prev_node) *(node->prev_node) = new_node;
@@ -955,9 +969,11 @@ Node_t* BinaryConstantFolding(Node_t* node, Node_t* new_left, Node_t* new_right)
     return new_node;
 }
 
-Node_t* NeutralElementElimination(Node_t* node)
+Node_t* NeutralElementElimination(Node_t* node, bool* is_change)
 {
     assert(node);
+    assert(is_change);
+//   assert(node->node_type == OP);  todo
 
     switch(node->node_type)
     {
@@ -967,40 +983,45 @@ Node_t* NeutralElementElimination(Node_t* node)
             return NULL;
         case OP:
         {
+            Node_t* result = NULL;
             switch(node->value.op)
             {
+                case NOT_OP:
                 default: assert(true); return NULL;
-                case ADD:    return      SimplifyTerms(&node, node->left, node->right) ?: SimplifyTerms(&node, node->right, node->left);
-                case SUB:    return SimplifyMinusTerms(&node, node->left, node->right) ?: SimplifyTerms(&node, node->right, node->left);
-                case MUL:    return        SimplifyMul(&node, node->left, node->right) ?:   SimplifyMul(&node, node->right, node->left);
-                case POW:    return       SimplifyLPow(&node, node->left, node->right) ?:  SimplifyRPow(&node, node->right, node->left);
-                case LOG:    return NeutralElementElimination(node->left) ?: NeutralElementElimination(node->right);
-                case DIV:    return NeutralElementElimination(node->left) ?: NeutralElementElimination(node->right);
-                case TG:     return NeutralElementElimination(node->left);
-                case SH:     return NeutralElementElimination(node->left);
-                case CH:     return NeutralElementElimination(node->left);
-                case TH:     return NeutralElementElimination(node->left);
-                case LG:     return NeutralElementElimination(node->left);
-                case LN:     return NeutralElementElimination(node->left);
-                case SIN:    return NeutralElementElimination(node->left);
-                case COS:    return NeutralElementElimination(node->left);
-                case CTG:    return NeutralElementElimination(node->left);
-                case CTH:    return NeutralElementElimination(node->left);
-                case SQRT:   return NeutralElementElimination(node->left);
-                case ARCTG:  return NeutralElementElimination(node->left);
-                case ARCSIN: return NeutralElementElimination(node->left);
-                case ARCCOS: return NeutralElementElimination(node->left);
-                case ARCCTG: return NeutralElementElimination(node->left);
-                return NULL;
+                case ADD:    result =      SimplifyTerms(&node, node->left, node->right, is_change) ?: SimplifyTerms(&node, node->right, node->left, is_change); break;
+                case SUB:    result = SimplifyMinusTerms(&node, node->left, node->right, is_change) ?: SimplifyTerms(&node, node->right, node->left, is_change); break;
+                case MUL:    result =        SimplifyMul(&node, node->left, node->right, is_change) ?:   SimplifyMul(&node, node->right, node->left, is_change); break;
+                case POW:    result =       SimplifyLPow(&node, node->left, node->right, is_change) ?:  SimplifyRPow(&node, node->right, node->left, is_change); break;
+                case LOG:    result = NeutralElementElimination(node->left, is_change)   ?: NeutralElementElimination(node->right, is_change); break;
+                case DIV:    result = NeutralElementElimination(node->left, is_change)   ?: NeutralElementElimination(node->right, is_change); break;
+                case TG:     result = NeutralElementElimination(node->left, is_change); break;
+                case SH:     result = NeutralElementElimination(node->left, is_change); break;
+                case CH:     result = NeutralElementElimination(node->left, is_change); break;
+                case TH:     result = NeutralElementElimination(node->left, is_change); break;
+                case LG:     result = NeutralElementElimination(node->left, is_change); break;
+                case LN:     result = NeutralElementElimination(node->left, is_change); break;
+                case SIN:    result = NeutralElementElimination(node->left, is_change); break;
+                case COS:    result = NeutralElementElimination(node->left, is_change); break;
+                case CTG:    result = NeutralElementElimination(node->left, is_change); break;
+                case CTH:    result = NeutralElementElimination(node->left, is_change); break;
+                case SQRT:   result = NeutralElementElimination(node->left, is_change); break;
+                case ARCTG:  result = NeutralElementElimination(node->left, is_change); break;
+                case ARCSIN: result = NeutralElementElimination(node->left, is_change); break;
+                case ARCCOS: result = NeutralElementElimination(node->left, is_change); break;
+                case ARCCTG: result = NeutralElementElimination(node->left, is_change); break; // todo use cases fallthrough
             }
+            if(result) *is_change = true;
+            return result;
         }
     }
 }
-Node_t* SimplifyTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node)
+// todo get rid of simple_node and complex_node
+Node_t* SimplifyTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
 {
     assert(node);
     assert(simple_node);
     assert(complex_node);
+    assert(is_change);
 
     switch(simple_node->node_type)
     {
@@ -1018,18 +1039,19 @@ Node_t* SimplifyTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node)
         }
         case OP:
         {
-            NeutralElementElimination(simple_node);
+            NeutralElementElimination(simple_node, is_change);
             return NULL;
         }
         case VAR:              return NULL;
         default: assert(true); return NULL;
     }
 }
-Node_t* SimplifyMinusTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node)
+Node_t* SimplifyMinusTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
 {
     assert(node);
     assert(simple_node);
     assert(complex_node);
+    assert(is_change);
 
     switch(simple_node->node_type)
     {
@@ -1039,7 +1061,7 @@ Node_t* SimplifyMinusTerms(Node_t** node, Node_t* simple_node, Node_t* complex_n
             if(DoubleCompare(simple_node->value.num, 0) == 0)
             {
                 mul= TreeNodeCtor_(OP,  {.op = MUL}, TreeNodeCtor_(NUM, {.num = -1}, NULL, NULL),
-                                                     DeepNodeCopy(complex_node));
+                                                     DeepNodeCopy(complex_node)); // todo reuse DSL (MUL_(N_(-1)...)
                 if((*node)->prev_node) *((*node)->prev_node) = mul;
                 MakePrevNode(mul);
                 DeleteTreeNode(node);
@@ -1048,18 +1070,19 @@ Node_t* SimplifyMinusTerms(Node_t** node, Node_t* simple_node, Node_t* complex_n
         }
         case OP:
         {
-            NeutralElementElimination(simple_node);
+            NeutralElementElimination(simple_node, is_change);
             return NULL;
         }
         case VAR:              return NULL;
         default: assert(true); return NULL;
     }
 }
-Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node)
+Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
 {
     assert(node);
     assert(simple_node);
     assert(complex_node);
+    assert(is_change);
 
     switch(simple_node->node_type)
     {
@@ -1084,18 +1107,19 @@ Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node)
         }
         case OP:
         {
-            NeutralElementElimination(simple_node);
+            NeutralElementElimination(simple_node, is_change);
             return NULL;
         }
         case VAR:              return NULL;
         default: assert(true); return NULL;
     }
 }
-Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node)
+Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
 {
     assert(node);
     assert(simple_node);
     assert(complex_node);
+    assert(is_change);
 
     switch(simple_node->node_type)
     {
@@ -1120,18 +1144,19 @@ Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node)
         }
         case OP:
         {
-            NeutralElementElimination(simple_node);
+            NeutralElementElimination(simple_node, is_change);
             return NULL;
         }
         case VAR:              return NULL;
         default: assert(true); return NULL;
     }
 }
-Node_t* SimplifyLPow(Node_t** node, Node_t* simple_node, Node_t* complex_node)
+Node_t* SimplifyLPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
 {
     assert(node);
     assert(simple_node);
     assert(complex_node);
+    assert(is_change);
 
     switch(simple_node->node_type)
     {
@@ -1148,7 +1173,7 @@ Node_t* SimplifyLPow(Node_t** node, Node_t* simple_node, Node_t* complex_node)
         }
         case OP:
         {
-            NeutralElementElimination(simple_node);
+            NeutralElementElimination(simple_node, is_change);
             return NULL;
         }
         case VAR:              return NULL;
@@ -1160,3 +1185,266 @@ int DoubleCompare(double a, double b)
     if(fabs(a - b) < PRECISION) return 0;
     return a < b ? -1 : 1;
 }
+
+
+Node_t* GetG(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    SkipSpaces(s);
+    Node_t* root = GetE(s);
+    SkipSpaces(s);
+
+    if((**s) != '\0')
+    {
+        DeleteTreeNode(&root);
+        ERR_PRINT("SyntaxErr\n");
+        return NULL;
+    }
+    return root;
+}
+Node_t* GetE(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    SkipSpaces(s);
+    Node_t* node = GetT(s);
+    while((**s) == '+' || (**s) == '-')
+    {
+        int op = (**s);
+        (*s)++;
+        Node_t* r_node = GetT(s);
+        if(!r_node)
+        {
+            DeleteTreeNode(&node);
+            return NULL;
+        }
+        node = TreeNodeCtor_(OP, {.op = (op == '+') ? ADD : SUB}, node, r_node);
+    }
+    return node;
+}
+Node_t* GetT(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    SkipSpaces(s);
+    Node_t* node = GetS(s);
+
+    SkipSpaces(s);
+    while((**s) == '*' || (**s) == '/')
+    {
+        int op = (**s);
+        (*s)++;
+        Node_t* r_node = GetS(s);
+        if(!r_node)
+        {
+            DeleteTreeNode(&node);
+            return NULL;
+        }
+        node = TreeNodeCtor_(OP, {.op = (op == '*') ? MUL : DIV}, node, r_node);
+    }
+    return node;
+}
+Node_t* GetS(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    SkipSpaces(s);
+    Node_t* l_node = GetP(s);
+    SkipSpaces(s);
+
+    if(**s == '^')
+    {
+        (*s)++;
+        SkipSpaces(s);
+        Node_t* r_node = GetS(s);
+        if(r_node == NULL)
+        {
+            DeleteTreeNode(&l_node);
+            return NULL;
+        }
+        return TreeNodeCtor_(OP, {.op = POW}, l_node, r_node);
+    }
+    return l_node;
+}
+Node_t* GetP(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    SkipSpaces(s);
+
+    if((**s) == '(')
+    {
+        (*s)++;
+        SkipSpaces(s);
+        Node_t* node = GetE(s);
+
+        SkipSpaces(s);
+        if((**s) == ')')
+        {
+            (*s)++;
+            SkipSpaces(s);
+            return node;
+        }
+        else
+        {
+            ERR_PRINT("SyntaxErr\n");
+            DeleteTreeNode(&node);
+        }
+    }
+    else if(**s == '-' || ('0' <= **s && **s <= '9')) return GetN(s);
+    else
+    {
+        char* word = GetW(s);
+        Operator_t op = FindOp(word);
+        if(op == NOT_OP) return TreeNodeCtor_(VAR, {.var = word}, NULL, NULL);
+        else
+        {
+            FREE(word);
+            if(**s == '(')
+            {
+                (*s)++;
+                Node_t* arg = GetE(s);
+                SkipSpaces(s);
+                if(**s == ')')
+                {
+                    (*s)++;
+                    return TreeNodeCtor_(OP, {.op = op}, arg, NULL);
+                }
+                ERR_PRINT("SyntaxErr\n");
+                DeleteTreeNode(&arg);
+            }
+        }
+    }
+
+    return NULL;
+}
+Node_t* GetN(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    SkipSpaces(s);
+    double sign = 1;
+    if(**s == '-')
+    {
+        sign = -1;
+        (*s)++;
+    }
+    if(!('0'<=(**s) && (**s)<='9'))
+    {
+        ERR_PRINT("SyntaxErr\n");
+        return NULL;
+    }
+
+    double val = 0;
+    while('0'<=(**s) && (**s)<='9')
+    {
+        val = val*10 + ((**s) - '0');
+        (*s)++;
+    }
+
+    if(**s == '.')
+    {
+        (*s)++;
+
+        double frac_part = 0;
+        double order = 1;
+        while('0'<=(**s) && (**s)<='9')
+        {
+            frac_part += ((**s) - '0') / pow(10, order++);
+            (*s)++;
+        }
+
+        val += frac_part;
+    }
+    return TreeNodeCtor_(NUM, {.num = val * sign}, NULL, NULL);
+}
+char* GetW(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    char* word = (char*) calloc(ST_W_LEN, sizeof(char));
+    assert(word && "mem alloc err (calloc)");
+
+    size_t letter = 0;
+    size_t word_len = ST_W_LEN;
+
+    SkipSpaces(s);
+    while(('A' <= (**s) && (**s) <= 'Z') ||
+          ('a' <= (**s) && (**s) <= 'z'))
+    {
+        word[letter++] = **s;
+        (*s)++;
+
+        word_len = CheckLen(&word, word_len, letter);
+        assert(word_len);
+    }
+    if(letter == 0)
+    {
+        free(word);
+        return NULL;
+    }
+
+    while(('A' <= (**s) && (**s) <= 'Z') ||
+          ('a' <= (**s) && (**s) <= 'z') ||
+          ('0' <= (**s) && (**s) <= '9') ||
+          (**s) == '_')
+    {
+        word[letter++] = **s;
+        (*s)++;
+
+        word_len = CheckLen(&word, word_len, letter);
+        assert(word_len);
+    }
+
+    word[letter] = '\0';
+
+    return word;
+}
+Operator_t FindOp(char* const word)
+{
+    assert(word);
+
+    for(size_t i = 0; i < operators_num; i++)
+    {
+        if(strcmp(word, Operators[i].name) == 0)
+            return (Operator_t) i;
+    }
+
+    return NOT_OP;
+}
+
+double SkipSpaces(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    while(isspace(**s)) ++*s;
+
+    return 0;
+}
+size_t CheckLen(char** word, size_t word_len, const size_t letter)
+{
+    assert(word);
+    assert(*word);
+    assert(letter <= word_len);
+
+    if(letter == word_len)
+    {
+        char* new_word = (char*) realloc(*word, (word_len * 2) * sizeof(char));
+        assert(new_word);
+        *word = new_word;
+        memset(*word + word_len, 0, word_len);
+        word_len *= 2;
+    }
+
+    return word_len;
+}
+// todo rename file

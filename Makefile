@@ -29,7 +29,7 @@ else
 	FLAGS = $(DED_FLAGS_LINUX) -ITreeMemStruct
 endif
 
-all: test math++
+all: math++
 
 math++: ObjectFiles/I_Love_Math.o ObjectFiles/Tree.o ObjectFiles/TreeDump.o ObjectFiles/Instruments.o
 	@ g++ $(FLAGS) $(MODE) ObjectFiles/I_Love_Math.o ObjectFiles/Tree.o ObjectFiles/TreeDump.o ObjectFiles/Instruments.o -o math++
