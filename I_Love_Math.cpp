@@ -699,7 +699,7 @@ bool FindVar(Node_t* node, const char* const var)
             }
             else
             {
-                assert(true);
+                assert(false);
                 return false;
             }
 
@@ -709,7 +709,7 @@ bool FindVar(Node_t* node, const char* const var)
             }
             return false;
         default:
-            assert(true);
+            assert(false);
             return false;
     }
 }
@@ -745,7 +745,7 @@ double CalcTreeNode(const Node_t* node, const Var_t* vars, size_t vars_num)
     switch(node->node_type)
     {
         default:
-            assert(true);
+            assert(false);
             return 0;
         case NUM:
             return node->value.num;
@@ -761,7 +761,7 @@ double CalcTreeNode(const Node_t* node, const Var_t* vars, size_t vars_num)
             {
                 case NOT_OP:
                 default:
-                    assert(true);
+                    assert(false);
                     return 0;
                 case ADD:       result = LC + RC;           break;
                 case SUB:       result = LC - RC;           break;
@@ -794,7 +794,7 @@ double CalcTreeNode(const Node_t* node, const Var_t* vars, size_t vars_num)
             break;
     }
 
-    assert(true);
+    assert(false);
     return 0;
 }
 size_t FindVarPos(const char* const name, const Var_t* const vars, size_t vars_num)
@@ -807,7 +807,7 @@ size_t FindVarPos(const char* const name, const Var_t* const vars, size_t vars_n
         if(strcmp(name, vars[pos].name) == 0) return pos;
     }
 
-    assert(true);
+    assert(false);
     return 0;
 }
 
@@ -867,7 +867,7 @@ Node_t* ConstantFolding(Node_t* node, bool* is_change)
             switch(node->value.op)
             {
                 case NOT_OP:
-                default: assert(true); return NULL;
+                default: assert(false); return NULL;
                 case ADD: case SUB: case MUL:
                 case DIV: case POW: case LOG:
                 {
@@ -920,7 +920,7 @@ Node_t* UnaryConstantFolding(Node_t* node, Node_t* new_left)
             case ADD: case SUB: case MUL:
             case DIV: case POW: case LOG:
             case NOT_OP:
-            default: assert(true); return NULL;
+            default: assert(false); return NULL;
         }
         if(node->prev_node) *(node->prev_node) = new_node;
         DeleteTreeNode(&node);
@@ -957,7 +957,7 @@ Node_t* BinaryConstantFolding(Node_t* node, Node_t* new_left, Node_t* new_right)
             case CTH:    case SQRT:   case ARCTG:
             case ARCSIN: case ARCCOS: case ARCCTG:
             case NOT_OP:
-            default: assert(true); return NULL;
+            default: assert(false); return NULL;
         }
         if(node->prev_node) *(node->prev_node) = new_node;
         DeleteTreeNode(&node);
@@ -977,7 +977,7 @@ Node_t* NeutralElementElimination(Node_t* node, bool* is_change)
 
     switch(node->node_type)
     {
-        default: assert(true); return NULL;
+        default: assert(false); return NULL;
         case NUM:
         case VAR:
             return NULL;
@@ -987,7 +987,7 @@ Node_t* NeutralElementElimination(Node_t* node, bool* is_change)
             switch(node->value.op)
             {
                 case NOT_OP:
-                default: assert(true); return NULL;
+                default: assert(false); return NULL;
                 case ADD:    result =      SimplifyTerms(&node, node->left, node->right, is_change) ?: SimplifyTerms(&node, node->right, node->left, is_change); break;
                 case SUB:    result = SimplifyMinusTerms(&node, node->left, node->right, is_change) ?: SimplifyTerms(&node, node->right, node->left, is_change); break;
                 case MUL:    result =        SimplifyMul(&node, node->left, node->right, is_change) ?:   SimplifyMul(&node, node->right, node->left, is_change); break;
@@ -1043,7 +1043,7 @@ Node_t* SimplifyTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node, 
             return NULL;
         }
         case VAR:              return NULL;
-        default: assert(true); return NULL;
+        default: assert(false); return NULL;
     }
 }
 Node_t* SimplifyMinusTerms(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
@@ -1074,7 +1074,7 @@ Node_t* SimplifyMinusTerms(Node_t** node, Node_t* simple_node, Node_t* complex_n
             return NULL;
         }
         case VAR:              return NULL;
-        default: assert(true); return NULL;
+        default: assert(false); return NULL;
     }
 }
 Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
@@ -1111,7 +1111,7 @@ Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node, bo
             return NULL;
         }
         case VAR:              return NULL;
-        default: assert(true); return NULL;
+        default: assert(false); return NULL;
     }
 }
 Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
@@ -1148,7 +1148,7 @@ Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, b
             return NULL;
         }
         case VAR:              return NULL;
-        default: assert(true); return NULL;
+        default: assert(false); return NULL;
     }
 }
 Node_t* SimplifyLPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
@@ -1177,7 +1177,7 @@ Node_t* SimplifyLPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, b
             return NULL;
         }
         case VAR:              return NULL;
-        default: assert(true); return NULL;
+        default: assert(false); return NULL;
     }
 }
 int DoubleCompare(double a, double b)
@@ -1414,7 +1414,7 @@ Operator_t FindOp(char* const word)
 
     for(size_t i = 0; i < operators_num; i++)
     {
-        if(strcmp(word, Operators[i].name) == 0)
+        if(strcmp(word, Operators[i].symbol) == 0)
             return (Operator_t) i;
     }
 
