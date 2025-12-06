@@ -136,12 +136,13 @@ Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, b
 Node_t* SimplifyLPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change);
 int DoubleCompare(double a, double b);
 
-Node_t* GetG( char** s);
-Node_t* GetE( char** s);
-Node_t* GetT( char** s);
-Node_t* GetS( char** s);
-Node_t* GetP( char** s);
-Node_t* GetN( char** s);
+Node_t* GetG(char** s);
+Node_t* GetE(char** s);
+Node_t* GetT(char** s);
+Node_t* GetS(char** s);
+Node_t* GetP(char** s);
+Node_t* GetA(char** s);
+Node_t* GetN(char** s);
 char* GetW(char** s);
 Operator_t FindOp(char* const word);
 

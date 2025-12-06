@@ -1301,7 +1301,7 @@ Node_t* GetP(char** s)
         else
         {
             ERR_PRINT("SyntaxErr\n");
-        //    DeleteTreeNode(&node);
+            DeleteTreeNode(&node);
         }
     }
     else if(**s == '-' || ('0' <= **s && **s <= '9')) return GetN(s);
@@ -1316,20 +1316,59 @@ Node_t* GetP(char** s)
             if(**s == '(')
             {
                 (*s)++;
-                Node_t* arg = GetE(s);
+                Node_t* args = GetA(s);
+                assert(args && "SyntaxErr");
                 SkipSpaces(s);
                 if(**s == ')')
                 {
                     (*s)++;
-                    return TreeNodeCtor_(OP, {.op = op}, arg, NULL);
+                    fprintf(stderr, "Before: left->prev_node = %p\n", args->left->prev_node);
+                    Node_t* node = TreeNodeCtor_(OP, {.op = op}, args->left, args->right);
+                    fprintf(stderr, "After: left->prev_node = %p (should be &node->left = %p)\n",
+       args->left->prev_node, &node->left);
+                    args->left->prev_node = NULL;
+                    if(args->right) args->right->prev_node = NULL;
+                    args->left = args->right = NULL;
+                    DeleteTreeNode(&args);
+                    return node;
                 }
                 ERR_PRINT("SyntaxErr\n");
-        //        DeleteTreeNode(&arg);
+                DeleteTreeNode(&args);
             }
         }
     }
 
     return NULL;
+}
+Node_t* GetA(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    SkipSpaces(s);
+
+    Node_t* first_arg = GetE(s);
+    if(!first_arg)
+    {
+        ERR_PRINT("SyntaxErr\n");
+        return NULL;
+    }
+    SkipSpaces(s);
+
+    Node_t* sec_arg = NULL;
+    if(**s == ',')
+    {
+        (*s)++;
+        SkipSpaces(s);
+        sec_arg = GetE(s);
+        if(!sec_arg)
+        {
+            ERR_PRINT("SyntaxErr\n");
+            return NULL;
+        }
+    }
+
+    return TreeNodeCtor_(OP, {.op = NOT_OP}, first_arg, sec_arg);
 }
 Node_t* GetN(char** s)
 {

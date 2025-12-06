@@ -155,8 +155,8 @@ Node_t* TreeNodeCtor_(NodeType_t type, Value_t value, Node_t* left_som, Node_t* 
     node->left = left_som;
     node->right = right_som;
 
-    if (left_som)  left_som->prev_node  = &node;
-    if (right_som) right_som->prev_node = &node;
+    if (left_som)  left_som->prev_node  = &node->left;
+    if (right_som) right_som->prev_node = &node->right;
 
     return node;
 }
@@ -166,7 +166,7 @@ TreeErr_t TreeInsertLeft(Node_t* base_node, Node_t* inserting_node)
     if (base_node->left != NULL)  return TREE_ERR_NODE_NOT_EMPTY;
 
     base_node->left = inserting_node;
-    if (inserting_node) inserting_node->prev_node = &base_node;  // root = prev_node
+    if (inserting_node) inserting_node->prev_node = &base_node->left;
 
     return TREE_OK;
 }
@@ -176,7 +176,7 @@ TreeErr_t TreeInsertRight(Node_t* base_node, Node_t* inserting_node)
     if (base_node->right != NULL) return TREE_ERR_NODE_NOT_EMPTY;
 
     base_node->right = inserting_node;
-    if (inserting_node) inserting_node->prev_node = &base_node;
+    if (inserting_node) inserting_node->prev_node = &base_node->right;
 
     return TREE_OK;
 }
