@@ -831,20 +831,17 @@ TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* c
     {
         is_change = false;
 
-        fprintf(stderr, "before CF tree->root = %p (Node_t*),\n", tree->root);
         result = ConstantFolding(&tree->root, &is_change);
-        fprintf(stderr, "CF result = %p (Node_t*),\n", result);
-        fprintf(stderr, "after CF tree->root = %p (Node_t*),\n", tree->root);
+        assert(result);
         tree->root = result;
-        fprintf(stderr, "after update tree->root = %p (Node_t*),\n\n", tree->root);
         TreeDump(tree->root, (*count_img)++);
         PrintSimplifyRes(file, base_tree->root, tree->root, "x", is_change);
-/*
+
         result = NeutralElementElimination(tree->root, &is_change);
         if(result) tree->root = result;
         TreeDump(tree->root, (*count_img)++);
         PrintSimplifyRes(file, base_tree->root, tree->root, "x", is_change);
-*/
+
         tree->depth = GetTreeDepth(tree->root);
         tree->size = CountTreeSize(tree->root);
     }
@@ -856,11 +853,6 @@ TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* c
     return TREE_OK;
 }
 
-//возвращает либо указатель на новый узел, удаляя старый,
-//либо указатель на старый узел
-//т.е. либо узел  числом, либо узел с оператором/переменной
-//вернется NULL только в том случае
-//если:     if(!node) return NULL;
 Node_t* ConstantFolding(Node_t** node_, bool* is_change)
 {
     assert(is_change);
@@ -902,6 +894,7 @@ Node_t* ConstantFolding(Node_t** node_, bool* is_change)
             break;
         }
     }
+    assert(new_node);
     return new_node;
 }
 Node_t* UnaryConstantFolding(Node_t** node_, bool* is_change)
@@ -1006,74 +999,84 @@ Node_t* BinaryConstantFolding(Node_t** node_, bool* is_change)
     return new_node;
 }
 
-//возвращает не нулевой узел только в том случае ,если удалось упростить именно его и его поддеревья
-Node_t* NeutralElementElimination(Node_t* node, bool* is_change)
+//возвращает либо указатель на новый узел, удаляя старый,
+//либо указатель на старый узел
+//т.е. либо узел  числом, либо узел с оператором/переменной
+//вернется NULL только в том случае
+//если:     if(!node) return NULL;
+Node_t* NeutralElementElimination(Node_t** node_, bool* is_change)
 {
-    assert(node);
     assert(is_change);
+    assert(node_);
+    Node_t* node = *node_;
+    if(!node) return NULL;
 
-    if(node->node_type != OP) return NULL; // если это число или переменная, то упрощать точно нечего...
+    if(node->node_type == NUM || node->node_type == VAR) return node;
+    assert(node->node_type == OP);
 
     Node_t* result = NULL;
     switch(node->value.op)
     {
         case NOT_OP:
         default:
+            ERR_PRINT("InvalidOperatorType\n");
             return NULL;
-        case ADD:    result = SimplifyPositiveAddend(&node, node->left, node->right, is_change) ?:
+        case ADD:    result = SimplifyAdd(node_, is_change); break;
+        case SUB:    result = SimplifySub(&node, node->left, node->right, is_change) ?:
                               SimplifyPositiveAddend(&node, node->right, node->left, is_change);
-                              break;
-        case SUB:    result = SimplifyNegativeAddend(&node, node->left, node->right, is_change) ?:
-                              SimplifyPositiveAddend(&node, node->right, node->left, is_change);
-                              break;
+                              break;*/
         case MUL:    /*result = SimplifyMul(&node, node->left, node->right, is_change) ?:
                               SimplifyMul(&node, node->right, node->left, is_change);
                               break;*/
         case POW:    /*result = SimplifyLPow(&node, node->left, node->right, is_change) ?:
                               SimplifyRPow(&node, node->right, node->left, is_change);
                               break;*/
-        case LOG:    case DIV:/*
+        case LOG:    case DIV:
             result = NeutralElementElimination(node->left, is_change) ?:
                      NeutralElementElimination(node->right, is_change);
-                     break;*/
+                     break;
         case TG:     case SH:      case CH:
         case TH:     case LG:      case LN:
         case SIN:    case COS:     case CTG:
         case CTH:    case SQRT:    case ARCTG:
         case ARCSIN: case ARCCOS:  case ARCCTG:
-            NeutralElementElimination(node->left, is_change);
+            result = NeutralElementElimination(node->left, is_change);
             if(node->right) NeutralElementElimination(node->right, is_change);
             break;
     }
-    if(result) *is_change = true;
+
     return result;
 }
-Node_t* SimplifyPositiveAddend(Node_t** node, Node_t* target_node, Node_t* const_node, bool* is_change)
+Node_t* SimplifyAdd(Node_t** node_, bool* is_change)
 {
-    assert(node);
-    assert(target_node);
-    assert(const_node);
-    assert(is_change);
+    assert(node_); assert(*node_); assert(is_change);
 
-    switch(target_node->node_type)
+    Node_t* node= *node_;
+    assert(node->node_type == OP); assert(node->value.op == ADD);
+
+    TreeInsertLeft (node, NeutralElementElimination(&node->left,  is_change));
+    TreeInsertRight(node, NeutralElementElimination(&node->right, is_change));
+
+    Node_t* left = node->left, *right= node->right;
+    assert(node->left); assert(node->right);
+
+    Node_t* const_node = NULL;
+    if(node->left->node_type == NUM)
     {
-        case OP:
-            NeutralElementElimination(target_node, is_change); // т.е. не вышло упростить именно этот узел
-            return NULL;
-        case NUM:
-        {
-            if(DoubleCompare(target_node->value.num, 0) == 0)
-            {
-                Node_t* const_node_copy = DeepNodeCopy(const_node);
-                if((*node)->prev_node) *((*node)->prev_node) = const_node_copy;
-                DeleteTreeNode(node);
-                return const_node_copy;
-            }
-            return NULL;
-        }
-        case VAR:
-        default:  return NULL;
+        if(DoubleCompare(node->left->value.num, 0) == 0)  const_node = node->right;
+        else return node;
     }
+    else if(node->right->node_type == NUM)
+    {
+        if(DoubleCompare(node->right->value.num, 0) == 0) const_node = node->left;
+        else return node;
+    }
+    else return node;
+
+    Node_t* const_node_copy = DeepNodeCopy(const_node);
+    assert(const_node_copy);
+    DeleteTreeNode(node_);
+    return const_node_copy;
 }
 Node_t* SimplifyNegativeAddend(Node_t** node, Node_t* target_node, Node_t* const_node, bool* is_change)
 {

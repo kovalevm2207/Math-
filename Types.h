@@ -128,8 +128,8 @@ TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* c
 Node_t* ConstantFolding(Node_t** node_, bool* is_change);
 Node_t* UnaryConstantFolding(Node_t** node_, bool* is_change);
 Node_t* BinaryConstantFolding(Node_t** node_, bool* is_change);
-Node_t* NeutralElementElimination(Node_t* node, bool* is_change);
-Node_t* SimplifyPositiveAddend(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change);
+Node_t* NeutralElementElimination(Node_t** node, bool* is_change);
+Node_t* SimplifyAdd(Node_t** node_, bool* is_change);
 Node_t* SimplifyNegativeAddend(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change);
 Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change);
 Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change);
