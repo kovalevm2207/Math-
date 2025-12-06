@@ -28,13 +28,18 @@ int main()
         BeginLaTeXDocument(tex_file);
         PrintOriginalTree(tex_file, user_nodes);
 
+        Node_t* user_nodes_copy = DeepNodeCopy(user_nodes);
+        Tree_t* user_tree_copy = TreeCtor(user_nodes_copy);
+        SimplifyExpression(tex_file, user_tree_copy, user_tree, &count_img);
+        TreeDtor(&user_tree_copy);
+
     //SECTION - calc user_tree:
         PrintCalcBegining(tex_file);
         PrintCalcResult(tex_file, user_tree);
 
     //SECTION - derivative
         PrintDerivativeBegining(tex_file);
-        Node_t* first_derivative = TakeDerivative(tex_file, user_nodes, "x");
+        Node_t* first_derivative = TakeDerivative(tex_file, user_tree->root, "x");
         MakePrevNode(first_derivative);
         TreeDump(first_derivative, count_img++);
 
@@ -816,6 +821,8 @@ TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* c
     assert(tree);
     assert(count_img);
 
+    fprintf(stderr , "Before SE tree->root = %p (Node_t*)\n\n", tree->root);
+
     PrintBeginSimplify(file);
     Node_t* result = NULL;
     bool is_change = false;
@@ -824,8 +831,12 @@ TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* c
     {
         is_change = false;
 
+        fprintf(stderr, "before CF tree->root = %p (Node_t*),\n", tree->root);
         result = ConstantFolding(&tree->root, &is_change);
-        if(result) tree->root = result;
+        fprintf(stderr, "CF result = %p (Node_t*),\n", result);
+        fprintf(stderr, "after CF tree->root = %p (Node_t*),\n", tree->root);
+        tree->root = result;
+        fprintf(stderr, "after update tree->root = %p (Node_t*),\n\n", tree->root);
         TreeDump(tree->root, (*count_img)++);
         PrintSimplifyRes(file, base_tree->root, tree->root, "x", is_change);
 /*
@@ -839,6 +850,7 @@ TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* c
     }
     while(is_change);
 
+    fprintf(stderr , "After SE tree->root = %p (Node_t*)\n\n", tree->root);
     fprintf(file, "На этом я все, все остальное упрощайте сами, все равно на письмаке вам в задании скажут все это не упрощать...\\\\\n");
 
     return TREE_OK;
@@ -894,14 +906,19 @@ Node_t* ConstantFolding(Node_t** node_, bool* is_change)
 }
 Node_t* UnaryConstantFolding(Node_t** node_, bool* is_change)
 {
+    assert(is_change);
     assert(node_);
+    assert(*node_);
+    assert((*node_)->node_type == OP);
+
     Node_t* node = *node_;
-    if(!node) return NULL;
+    Node_t* left = node->left;
+    assert(left);
 
-    if(node->node_type == VAR || node->node_type == NUM) return node;
-    assert(node->node_type == OP);
+    if(left->node_type == VAR || left->node_type == OP) return node;
+    assert(left->node_type == NUM);
 
-    #define LS node->left->value.num
+    #define LS left->value.num
     #include "DerivativeDSL.h"
 
     Node_t* new_node = NULL;
@@ -931,24 +948,31 @@ Node_t* UnaryConstantFolding(Node_t** node_, bool* is_change)
     #include "UndefDerivativeDSL.h"
     #undef LS
 
-    if(new_node)
-    {
-        if(node->prev_node) *(node->prev_node) = new_node;
-        DeleteTreeNode(node_);
-        *is_change = true;
-        return new_node;
-    }
-    else return node;
+    assert(new_node);
+    DeleteTreeNode(node_);
+    *is_change = true;
+
+    return new_node;
 }
 Node_t* BinaryConstantFolding(Node_t** node_, bool* is_change)
 {
+    assert(is_change);
     assert(node_);
     assert(*node_);
+    assert((*node_)->node_type == OP);
 
     Node_t* node = *node_;
+    Node_t* left = node->left, *right = node->right;
+    assert(left); assert(right);
 
-    #define LS node->left->value.num
-    #define RS node->right->value.num
+    if(left->node_type == VAR || left->node_type == OP) return node;
+    assert(left->node_type == NUM);
+
+    if(right->node_type == VAR || right->node_type == OP) return node;
+    assert(right->node_type == NUM);
+
+    #define LS left->value.num
+    #define RS right->value.num
     #include "DerivativeDSL.h"
 
     if(node->node_type == VAR || node->node_type == NUM) return node;
@@ -976,14 +1000,10 @@ Node_t* BinaryConstantFolding(Node_t** node_, bool* is_change)
     #undef LS
     #undef RS
 
-    if(new_node)
-    {
-        if(node->prev_node) *(node->prev_node) = new_node;
-        DeleteTreeNode(node_);
-        *is_change = true;
-        return new_node;
-    }
-    else return node;
+    assert(new_node);
+    DeleteTreeNode(node_);
+    *is_change = true;
+    return new_node;
 }
 
 //возвращает не нулевой узел только в том случае ,если удалось упростить именно его и его поддеревья
@@ -1322,10 +1342,7 @@ Node_t* GetP(char** s)
                 if(**s == ')')
                 {
                     (*s)++;
-                    fprintf(stderr, "Before: left->prev_node = %p\n", args->left->prev_node);
                     Node_t* node = TreeNodeCtor_(OP, {.op = op}, args->left, args->right);
-                    fprintf(stderr, "After: left->prev_node = %p (should be &node->left = %p)\n",
-       args->left->prev_node, &node->left);
                     args->left->prev_node = NULL;
                     if(args->right) args->right->prev_node = NULL;
                     args->left = args->right = NULL;
