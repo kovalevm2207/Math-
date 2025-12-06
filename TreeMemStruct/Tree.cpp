@@ -85,12 +85,13 @@ TreeErr_t TreeDtor(Tree_t** tree)
     assert(*tree);
 
     (*tree)->max_vars_num = 0;
-    (*tree)->root = NULL;
     (*tree)->size = 0;
     (*tree)->depth = 0;
 
     free((*tree)->vars);
     (*tree)->vars = NULL;
+
+    DeleteTreeNode(&(*tree)->root);
 
     free((*tree));
     *tree = NULL;
