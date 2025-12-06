@@ -885,8 +885,8 @@ Node_t* ConstantFolding(Node_t** node_, bool* is_change)
         case CTH:    case SQRT:   case ARCTG:
         case ARCSIN: case ARCCOS: case ARCCTG:
         {
-            //TreeInsertLeft(node, new_left);
-            //new_node = UnaryConstantFolding(node, new_left);
+            TreeInsertLeft(node, new_left);
+            new_node = UnaryConstantFolding(node_, is_change);
             break;
         }
     }
@@ -900,6 +900,9 @@ Node_t* UnaryConstantFolding(Node_t** node_, bool* is_change)
 
     if(node->node_type == VAR || node->node_type == NUM) return node;
     assert(node->node_type == OP);
+
+    #define LS node->left->value.num
+    #include "DerivativeDSL.h"
 
     Node_t* new_node = NULL;
     switch(node->value.op)
@@ -924,9 +927,19 @@ Node_t* UnaryConstantFolding(Node_t** node_, bool* is_change)
         case NOT_OP:
         default: return NULL;
     }
-    if(node->prev_node) *(node->prev_node) = new_node;
-    return new_node;
-}*/
+
+    #include "UndefDerivativeDSL.h"
+    #undef LS
+
+    if(new_node)
+    {
+        if(node->prev_node) *(node->prev_node) = new_node;
+        DeleteTreeNode(node_);
+        *is_change = true;
+        return new_node;
+    }
+    else return node;
+}
 Node_t* BinaryConstantFolding(Node_t** node_, bool* is_change)
 {
     assert(node_);
