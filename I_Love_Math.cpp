@@ -639,8 +639,8 @@ Node_t* PowDerivative(FILE* file, Node_t* node, const char* const var)
     else if(!left_flag && right_flag) return MUL_(MUL_(POW_(c(L), c(R)), LN_(c(L))), d(R));  //  n^a * ln(n) * d(a)
     else if(left_flag && right_flag)
     {
-        Node_t* auxiliary_transformation = POW_(n(M_E), MUL_(LN_(c(L)), c(R)));  // d(e^(ln(a) * b))
-        Node_t* new_node = d(auxiliary_transformation);
+        Node_t* auxiliary_transformation = MUL_(LN_(c(L)), c(R));  // ln(a) * b) =
+        Node_t* new_node = MUL_(c(node), d(auxiliary_transformation)); // a^b * d(ln(a) * b)
         DeleteTreeNode(&auxiliary_transformation);
         return new_node;
     }
