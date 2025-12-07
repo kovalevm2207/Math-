@@ -1026,10 +1026,8 @@ Node_t* NeutralElementElimination(Node_t** node_, bool* is_change)
             ERR_PRINT("InvalidOperatorType\n");
             return NULL;
         case ADD:    result = SimplifyAdd(node_, is_change); break;
-        case SUB:    result = SimplifySub(&node, is_change); break;
-        case MUL:    /*result = SimplifyMul(&node, node->left, node->right, is_change) ?:
-                              SimplifyMul(&node, node->right, node->left, is_change);
-                              break;*/
+        case SUB:    result = SimplifySub(node_, is_change); break;
+        case MUL:    result = SimplifyMul(node_, is_change); break;
         case POW:    /*result = SimplifyLPow(&node, node->left, node->right, is_change) ?:
                               SimplifyRPow(&node, node->right, node->left, is_change);
                               break;*/
@@ -1096,7 +1094,7 @@ Node_t* SimplifySub(Node_t** node_, bool* is_change)
 
     #include "DerivativeDSL.h"
     Node_t* simple_res = NULL;
-    if(node->left->node_type == NUM) // 0 - expr = (-1) * expr
+    if(left->node_type == NUM) // 0 - expr = (-1) * expr
     {
         if(DoubleCompare(left->value.num, 0) == 0) simple_res = MUL_(n(-1), c(R));
         else return node;
@@ -1114,42 +1112,40 @@ Node_t* SimplifySub(Node_t** node_, bool* is_change)
     *is_change = true;
     return simple_res;
 }
-Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
+Node_t* SimplifyMul(Node_t** node_, bool* is_change)
 {
-    assert(node);
-    assert(simple_node);
-    assert(complex_node);
-    assert(is_change);
+    assert(node_); assert(*node_); assert(is_change);
 
-    switch(simple_node->node_type)
+    Node_t* node= *node_;
+    assert(node->node_type == OP); assert(node->value.op == MUL);
+
+    TreeInsertLeft (node, NeutralElementElimination(&node->left,  is_change));
+    TreeInsertRight(node, NeutralElementElimination(&node->right, is_change));
+
+    Node_t* left = node->left, *right= node->right;
+    assert(node->left); assert(node->right);
+
+    #include "DerivativeDSL.h"
+    Node_t* simple_res = NULL;
+    if(left->node_type == NUM)
     {
-        case NUM:
-        {
-            Node_t* new_node = NULL;
-            if(DoubleCompare(simple_node->value.num, 1) == 0)
-            {
-                new_node = DeepNodeCopy(complex_node);
-                if((*node)->prev_node) *((*node)->prev_node) = new_node;
-                MakePrevNode(new_node);
-                DeleteTreeNode(node);
-            }
-            else if(DoubleCompare(simple_node->value.num, 0) == 0)
-            {
-                new_node = TreeNodeCtor_(NUM, {.num = 0}, NULL, NULL);
-                if((*node)->prev_node) *((*node)->prev_node) = new_node;
-                MakePrevNode(new_node);
-                DeleteTreeNode(node);
-            }
-            return new_node;
-        }
-        case OP:
-        {
-            NeutralElementElimination(simple_node, is_change);
-            return NULL;
-        }
-        case VAR:              return NULL;
-        default: assert(false); return NULL;
+             if(DoubleCompare(left->value.num, 0) == 0) simple_res = n(0); // 0 * expr
+        else if(DoubleCompare(left->value.num, 1) == 0) simple_res = c(R); // 1 * expr
+        else return node;
     }
+    else if(right->node_type == NUM)
+    {
+             if(DoubleCompare(right->value.num, 0) == 0) simple_res = n(0); // expr * 0
+        else if(DoubleCompare(right->value.num, 1) == 0) simple_res = c(L); // expr * 1
+        else return node;
+    }
+    else return node;
+    #include "UndefDerivativeDSL.h"
+
+    assert(simple_res);
+    DeleteTreeNode(node_);
+    *is_change = true;
+    return simple_res;
 }
 Node_t* SimplifyRPow(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
 {
