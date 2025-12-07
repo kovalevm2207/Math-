@@ -2,8 +2,8 @@
     #define DERIVATIVE_DSL
     #undef  UNDEF_DERIVATIVE_DSL
 
-    #define        L node->left
-    #define        R node->right
+    #define        L left
+    #define        R right
     #define        d(sub_tree) TakeDerivative(file, sub_tree, var)
     #define        c(sub_tree) DeepNodeCopy(sub_tree)
     #define        n(number)   TreeNodeCtor_(NUM, {.num = number}, NULL, NULL)

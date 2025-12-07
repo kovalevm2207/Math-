@@ -583,6 +583,7 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var)
             else                                  new_node = n(0);
             break;
         case  OP:
+            Node_t* left = node->left, *right = node->right;
             switch(node->value.op)
             {
                 case NOT_OP:
@@ -611,8 +612,8 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var)
             }
             break;
     }
-
     #include "UndefDerivativeDSL.h"
+
     fprintf(file, "%s\n", TakeDerivativePhrases[(long unsigned int)rand() % TAKE_DERIVATIVE_PHRASES_NUM]);
     fprintf(file, "\\begin{dmath}"
                   "\\frac{d}{d%s}\\left(", var);
@@ -620,6 +621,7 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var)
     fprintf(file, "\\right)=");
     WriteTreeNodeLaTeX(file, new_node);
     fprintf(file, "\\end{dmath}\n");
+
     return new_node;
 }
 Node_t* PowDerivative(FILE* file, Node_t* node, const char* const var)
@@ -628,9 +630,10 @@ Node_t* PowDerivative(FILE* file, Node_t* node, const char* const var)
     assert(node);
     assert(var);
 
+    Node_t* left = node->left, *right = node->right;
     #include "DerivativeDSL.h"
-    bool left_flag  = FindVar(node->left,  var);
-    bool right_flag = FindVar(node->right, var);
+    bool left_flag  = FindVar(left,  var);
+    bool right_flag = FindVar(right, var);
 
          if(left_flag && !right_flag) return COMP_FUNC(MUL_(c(R), POW_(c(L), SUB_(c(R), n(1)))));  //  n * a^(n - 1) * d(a)
     else if(!left_flag && right_flag) return MUL_(MUL_(POW_(c(L), c(R)), LN_(c(L))), d(R));  //  n^a * ln(n) * d(a)
@@ -649,9 +652,10 @@ Node_t* LogDerivative(FILE* file, Node_t* node, const char* const var)
     assert(node);
     assert(var);
 
+    Node_t* left = node->left, *right = node->right;
     #include "DerivativeDSL.h"
-    bool left_flag  = FindVar(node->left,  var);
-    bool right_flag = FindVar(node->right, var);
+    bool left_flag  = FindVar(left,  var);
+    bool right_flag = FindVar(right, var);
 
     if (left_flag && !right_flag) return COMP_FUNC(DIV_(n(1), MUL_(LN_(c(R)), c(L)))); //  1/(ln(b) * a) * d(a)
     else if(!left_flag && right_flag)
@@ -911,27 +915,27 @@ Node_t* UnaryConstantFolding(Node_t** node_, bool* is_change)
     if(left->node_type == VAR || left->node_type == OP) return node;
     assert(left->node_type == NUM);
 
-    #define LS left->value.num
+    #define LV left->value.num
     #include "DerivativeDSL.h"
 
     Node_t* new_node = NULL;
     switch(node->value.op)
     {
-        case SQRT:   new_node = n(sqrt(LS));        break;
-        case SIN:    new_node = n(sin(LS));         break;
-        case COS:    new_node = n(cos(LS));         break;
-        case TG:     new_node = n(tan(LS));         break;
-        case CTG:    new_node = n(1/tan(LS));       break;
-        case SH:     new_node = n(sinh(LS));        break;
-        case CH:     new_node = n(cosh(LS));        break;
-        case TH:     new_node = n(tanh(LS));        break;
-        case CTH:    new_node = n(1/tanh(LS));      break;
-        case ARCSIN: new_node = n(asin(LS));        break;
-        case ARCCOS: new_node = n(acos(LS));        break;
-        case ARCTG:  new_node = n(atan(LS));        break;
-        case ARCCTG: new_node = n(M_PI_2-atan(LS)); break;
-        case LG:     new_node = n(log10(LS));       break;
-        case LN:     new_node = n(log(LS));         break;
+        case SQRT:   new_node = n(sqrt(LV));        break;
+        case SIN:    new_node = n(sin(LV));         break;
+        case COS:    new_node = n(cos(LV));         break;
+        case TG:     new_node = n(tan(LV));         break;
+        case CTG:    new_node = n(1/tan(LV));       break;
+        case SH:     new_node = n(sinh(LV));        break;
+        case CH:     new_node = n(cosh(LV));        break;
+        case TH:     new_node = n(tanh(LV));        break;
+        case CTH:    new_node = n(1/tanh(LV));      break;
+        case ARCSIN: new_node = n(asin(LV));        break;
+        case ARCCOS: new_node = n(acos(LV));        break;
+        case ARCTG:  new_node = n(atan(LV));        break;
+        case ARCCTG: new_node = n(M_PI_2-atan(LV)); break;
+        case LG:     new_node = n(log10(LV));       break;
+        case LN:     new_node = n(log(LV));         break;
         case ADD: case SUB: case MUL:
         case DIV: case POW: case LOG:
         case NOT_OP:
@@ -939,7 +943,7 @@ Node_t* UnaryConstantFolding(Node_t** node_, bool* is_change)
     }
 
     #include "UndefDerivativeDSL.h"
-    #undef LS
+    #undef LV
 
     assert(new_node);
     DeleteTreeNode(node_);
@@ -964,8 +968,8 @@ Node_t* BinaryConstantFolding(Node_t** node_, bool* is_change)
     if(right->node_type == VAR || right->node_type == OP) return node;
     assert(right->node_type == NUM);
 
-    #define LS left->value.num
-    #define RS right->value.num
+    #define LV left->value.num
+    #define RV right->value.num
     #include "DerivativeDSL.h"
 
     if(node->node_type == VAR || node->node_type == NUM) return node;
@@ -974,12 +978,12 @@ Node_t* BinaryConstantFolding(Node_t** node_, bool* is_change)
     Node_t* new_node = NULL;
     switch(node->value.op)
     {
-        case ADD: new_node = n(LS + RS);         break;
-        case SUB: new_node = n(LS - RS);         break;
-        case MUL: new_node = n(LS * RS);         break;
-        case DIV: new_node = n(LS / RS);         break;
-        case POW: new_node = n(pow(LS,RS));      break;
-        case LOG: new_node = n(log(LS)/log(RS)); break;
+        case ADD: new_node = n(LV + RV);         break;
+        case SUB: new_node = n(LV - RV);         break;
+        case MUL: new_node = n(LV * RV);         break;
+        case DIV: new_node = n(LV / RV);         break;
+        case POW: new_node = n(pow(LV,RV));      break;
+        case LOG: new_node = n(log(LV)/log(RV)); break;
         case TG:     case SH:     case CH:
         case TH:     case LG:     case LN:
         case SIN:    case COS:    case CTG:
@@ -990,8 +994,8 @@ Node_t* BinaryConstantFolding(Node_t** node_, bool* is_change)
     }
 
     #include "UndefDerivativeDSL.h"
-    #undef LS
-    #undef RS
+    #undef LV
+    #undef RV
 
     assert(new_node);
     DeleteTreeNode(node_);
@@ -1022,9 +1026,7 @@ Node_t* NeutralElementElimination(Node_t** node_, bool* is_change)
             ERR_PRINT("InvalidOperatorType\n");
             return NULL;
         case ADD:    result = SimplifyAdd(node_, is_change); break;
-        case SUB:    result = SimplifySub(&node, node->left, node->right, is_change) ?:
-                              SimplifyPositiveAddend(&node, node->right, node->left, is_change);
-                              break;*/
+        case SUB:    result = SimplifySub(&node, is_change); break;
         case MUL:    /*result = SimplifyMul(&node, node->left, node->right, is_change) ?:
                               SimplifyMul(&node, node->right, node->left, is_change);
                               break;*/
@@ -1061,51 +1063,56 @@ Node_t* SimplifyAdd(Node_t** node_, bool* is_change)
     assert(node->left); assert(node->right);
 
     Node_t* const_node = NULL;
-    if(node->left->node_type == NUM)
+    if(left->node_type == NUM)
     {
-        if(DoubleCompare(node->left->value.num, 0) == 0)  const_node = node->right;
+        if(DoubleCompare(left->value.num, 0) == 0)  const_node = right;
         else return node;
     }
-    else if(node->right->node_type == NUM)
+    else if(right->node_type == NUM)
     {
-        if(DoubleCompare(node->right->value.num, 0) == 0) const_node = node->left;
+        if(DoubleCompare(right->value.num, 0) == 0) const_node = left;
         else return node;
     }
     else return node;
 
-    Node_t* const_node_copy = DeepNodeCopy(const_node);
-    assert(const_node_copy);
+    Node_t* const_cpy = DeepNodeCopy(const_node);
+    assert(const_cpy);
     DeleteTreeNode(node_);
-    return const_node_copy;
+    *is_change = true;
+    return const_cpy;
 }
-Node_t* SimplifyNegativeAddend(Node_t** node, Node_t* target_node, Node_t* const_node, bool* is_change)
+Node_t* SimplifySub(Node_t** node_, bool* is_change)
 {
-    assert(node);
-    assert(target_node);
-    assert(const_node);
-    assert(is_change);
+    assert(node_); assert(*node_); assert(is_change);
 
-    switch(target_node->node_type)
+    Node_t* node= *node_;
+    assert(node->node_type == OP); assert(node->value.op == SUB);
+
+    TreeInsertLeft (node, NeutralElementElimination(&node->left,  is_change));
+    TreeInsertRight(node, NeutralElementElimination(&node->right, is_change));
+
+    Node_t* left = node->left, *right= node->right;
+    assert(node->left); assert(node->right);
+
+    #include "DerivativeDSL.h"
+    Node_t* simple_res = NULL;
+    if(node->left->node_type == NUM) // 0 - expr = (-1) * expr
     {
-        case OP:
-            NeutralElementElimination(target_node, is_change);
-            return NULL;
-        case NUM:
-        {
-            if(DoubleCompare(target_node->value.num, 0) == 0)
-            {
-                #include "DerivativeDSL.h"
-                Node_t* mul = MUL_(n(-1), c(const_node));
-                if((*node)->prev_node) *((*node)->prev_node) = mul;
-                DeleteTreeNode(node);
-                #include "UndefDerivativeDSL.h"
-                return mul;
-            }
-            return NULL;
-        }
-        case VAR:
-        default: return NULL;
+        if(DoubleCompare(left->value.num, 0) == 0) simple_res = MUL_(n(-1), c(R));
+        else return node;
     }
+    else if(right->node_type == NUM) // expr - 0 = expr
+    {
+        if(DoubleCompare(right->value.num, 0) == 0) simple_res = c(L);
+        else return node;
+    }
+    else return node;
+    #include "UndefDerivativeDSL.h"
+
+    assert(simple_res);
+    DeleteTreeNode(node_);
+    *is_change = true;
+    return simple_res;
 }
 Node_t* SimplifyMul(Node_t** node, Node_t* simple_node, Node_t* complex_node, bool* is_change)
 {
