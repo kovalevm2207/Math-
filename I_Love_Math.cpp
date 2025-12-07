@@ -1029,10 +1029,8 @@ Node_t* NeutralElementElimination(Node_t** node_, bool* is_change)
         case SUB:    result = SimplifySub(node_, is_change); break;
         case MUL:    result = SimplifyMul(node_, is_change); break;
         case POW:    result = SimplifyPow(node_, is_change); break;
-        case LOG:    case DIV:
-            result = NeutralElementElimination(node->left, is_change) ?:
-                     NeutralElementElimination(node->right, is_change);
-                     break;
+        case LOG:    result = SimplifyLog(node_, is_change); break;
+        case DIV: break;
         case TG:     case SH:      case CH:
         case TH:     case LG:      case LN:
         case SIN:    case COS:     case CTG:
@@ -1169,6 +1167,33 @@ Node_t* SimplifyPow(Node_t** node_, bool* is_change)
     {
              if(DoubleCompare(right->value.num, 0) == 0) simple_res = n(1); // expr ^ 0 = 1
         else if(DoubleCompare(right->value.num, 1) == 0) simple_res = c(L); // expr ^ 1 = expr
+        else return node;
+    }
+    else return node;
+    #include "UndefDerivativeDSL.h"
+
+    assert(simple_res);
+    DeleteTreeNode(node_);
+    *is_change = true;
+    return simple_res;
+}
+Node_t* SimplifyLog(Node_t** node_, bool* is_change)
+{
+    assert(node_); assert(*node_); assert(is_change);
+
+    Node_t* node= *node_;
+    assert(node->node_type == OP); assert(node->value.op == LOG);
+
+    TreeInsertLeft (node, NeutralElementElimination(&node->left,  is_change));
+    TreeInsertRight(node, NeutralElementElimination(&node->right, is_change));
+
+    Node_t* left = node->left; assert(node->left);
+
+    #include "DerivativeDSL.h"
+    Node_t* simple_res = NULL;
+    if(left->node_type == NUM)
+    {
+        if(DoubleCompare(left->value.num, 1) == 0) simple_res = n(0); // log(1, expr) = 0
         else return node;
     }
     else return node;
