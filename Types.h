@@ -134,6 +134,7 @@ Node_t* SimplifySub(Node_t** node_, bool* is_change);
 Node_t* SimplifyMul(Node_t** node_, bool* is_change);
 Node_t* SimplifyPow(Node_t** node_, bool* is_change);
 Node_t* SimplifyLog(Node_t** node_, bool* is_change);
+Node_t* SimplifyDiv(Node_t** node_, bool* is_change);
 int DoubleCompare(double a, double b);
 
 Node_t* GetG(char** s);

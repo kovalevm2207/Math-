@@ -1025,12 +1025,12 @@ Node_t* NeutralElementElimination(Node_t** node_, bool* is_change)
         default:
             ERR_PRINT("InvalidOperatorType\n");
             return NULL;
-        case ADD:    result = SimplifyAdd(node_, is_change); break;
-        case SUB:    result = SimplifySub(node_, is_change); break;
-        case MUL:    result = SimplifyMul(node_, is_change); break;
-        case POW:    result = SimplifyPow(node_, is_change); break;
-        case LOG:    result = SimplifyLog(node_, is_change); break;
-        case DIV: break;
+        case ADD: result = SimplifyAdd(node_, is_change); break;
+        case SUB: result = SimplifySub(node_, is_change); break;
+        case MUL: result = SimplifyMul(node_, is_change); break;
+        case POW: result = SimplifyPow(node_, is_change); break;
+        case LOG: result = SimplifyLog(node_, is_change); break;
+        case DIV: result = SimplifyLog(node_, is_change); break;
         case TG:     case SH:      case CH:
         case TH:     case LG:      case LN:
         case SIN:    case COS:     case CTG:
@@ -1194,6 +1194,39 @@ Node_t* SimplifyLog(Node_t** node_, bool* is_change)
     if(left->node_type == NUM)
     {
         if(DoubleCompare(left->value.num, 1) == 0) simple_res = n(0); // log(1, expr) = 0
+        else return node;
+    }
+    else return node;
+    #include "UndefDerivativeDSL.h"
+
+    assert(simple_res);
+    DeleteTreeNode(node_);
+    *is_change = true;
+    return simple_res;
+}
+Node_t* SimplifyDiv(Node_t** node_, bool* is_change)
+{
+    assert(node_); assert(*node_); assert(is_change);
+
+    Node_t* node= *node_;
+    assert(node->node_type == OP); assert(node->value.op == DIV);
+
+    TreeInsertLeft (node, NeutralElementElimination(&node->left,  is_change));
+    TreeInsertRight(node, NeutralElementElimination(&node->right, is_change));
+
+    Node_t* left = node->left, *right= node->right;
+    assert(node->left); assert(node->right);
+
+    #include "DerivativeDSL.h"
+    Node_t* simple_res = NULL;
+    if(left->node_type == NUM)
+    {
+        if(DoubleCompare(left->value.num, 0) == 0) simple_res = n(0); // 0 / expr
+        else return node;
+    }
+    else if(right->node_type == NUM)
+    {
+        if(DoubleCompare(right->value.num, 1) == 0) simple_res = c(L); // expr / 1
         else return node;
     }
     else return node;
