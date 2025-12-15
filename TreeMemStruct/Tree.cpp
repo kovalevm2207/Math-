@@ -41,6 +41,22 @@ size_t CountTreeSize(const Node_t* const node)
 
     return size;
 }
+TreeErr_t MakePrevNode(Node_t* node)
+{
+    if(!node) return TREE_OK;
+    if(node->left)
+    {
+        node->left->prev_node = &node->left;
+        MakePrevNode(node->left);
+    }
+    if(node->right)
+    {
+        node->right->prev_node = &node->right;
+        MakePrevNode(node->right);
+    }
+
+    return TREE_OK;
+}
 size_t GetTreeVars(Var_t** vars, const Node_t* const node, size_t* cur_vars_num, size_t* max_vars_num)
 {
     assert(vars);
@@ -159,6 +175,19 @@ Node_t* TreeNodeCtor_(NodeType_t type, Value_t value, Node_t* left_som, Node_t* 
     if (right_som) right_som->prev_node = &node->right;
 
     return node;
+}
+Node_t* DeepNodeCopy(Node_t* node)
+{
+    if(node)
+    {
+        Value_t value = node->value;
+        if(node->node_type == VAR)
+        {
+            value.var = strdup(value.var);
+        }
+        return TreeNodeCtor_(node->node_type, value, DeepNodeCopy(node->left), DeepNodeCopy(node->right));
+    }
+    return NULL;
 }
 TreeErr_t TreeInsertLeft(Node_t* base_node, Node_t* inserting_node)
 {

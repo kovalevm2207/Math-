@@ -13,7 +13,7 @@ typedef enum
     NUM,
     VAR,
     OP
-} NodeType_t; // да я знаю что это Node type type, и что
+} NodeType_t;
 
 const char* const NodeTypes[] = {"NUM", "VAR", "OP"};
 

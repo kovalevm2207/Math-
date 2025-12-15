@@ -31,26 +31,40 @@ endif
 
 all: math++
 
-math++: ObjectFiles/I_Love_Math.o ObjectFiles/Tree.o ObjectFiles/TreeDump.o ObjectFiles/Instruments.o
-	@ g++ $(FLAGS) $(MODE) ObjectFiles/I_Love_Math.o ObjectFiles/Tree.o ObjectFiles/TreeDump.o ObjectFiles/Instruments.o -o math++
-
-test: ObjectFiles/Tree.o ObjectFiles/Test.o ObjectFiles/TreeDump.o
-	@ g++ $(FLAGS) $(MODE) ObjectFiles/Tree.o ObjectFiles/Test.o ObjectFiles/TreeDump.o -o test
+math++: ObjectFiles/Main.o        ObjectFiles/Tree.o            ObjectFiles/TreeDump.o \
+		ObjectFiles/Instruments.o ObjectFiles/ReadingUserFile.o ObjectFiles/PrintFunctions.o \
+		ObjectFiles/Derivative.o  ObjectFiles/Graph.o           ObjectFiles/SimplifyExpression.o
+	@ g++ $(FLAGS) $(MODE) ObjectFiles/Main.o        ObjectFiles/Tree.o            ObjectFiles/TreeDump.o \
+						   ObjectFiles/Instruments.o ObjectFiles/ReadingUserFile.o ObjectFiles/PrintFunctions.o \
+						   ObjectFiles/Derivative.o  ObjectFiles/Graph.o           ObjectFiles/SimplifyExpression.o -o math++
 
 ObjectFiles/Tree.o: TreeMemStruct/Tree.cpp TreeMemStruct/Tree.h TreeMemStruct/TreeBase.h
 	@ g++ $(FLAGS) $(MODE) -c TreeMemStruct/Tree.cpp -o ObjectFiles/Tree.o
 
-ObjectFiles/TreeDump.o: TreeMemStruct/TreeDump.cpp TreeMemStruct/TreeDump.h TreeMemStruct/Tree.h TreeMemStruct/TreeBase.h
+ObjectFiles/TreeDump.o: TreeMemStruct/TreeDump.cpp TreeMemStruct/TreeDump.h \
+						TreeMemStruct/Tree.h TreeMemStruct/TreeBase.h
 	@ g++ $(FLAGS) $(MODE) -c TreeMemStruct/TreeDump.cpp -o ObjectFiles/TreeDump.o
 
-ObjectFiles/Test.o: Test.cpp Types.h
-	@ g++ $(FLAGS) $(MODE) -c Test.cpp -o ObjectFiles/Test.o
-
-ObjectFiles/I_Love_Math.o: I_Love_Math.cpp Types.h UndefDerivativeDSL.h DerivativeDSL.h
-	@ g++ $(FLAGS) $(MODE) -c I_Love_Math.cpp -o ObjectFiles/I_Love_Math.o
+ObjectFiles/Main.o: Main.cpp Math_PP.h UndefDerivativeDSL.h DerivativeDSL.h
+	@ g++ $(FLAGS) $(MODE) -c Main.cpp -o ObjectFiles/Main.o
 
 ObjectFiles/Instruments.o: Instruments.cpp Instruments.h
 	@ g++ $(FLAGS) $(MODE) -c Instruments.cpp -o ObjectFiles/Instruments.o
 
+ObjectFiles/ReadingUserFile.o: ReadingUserFile.cpp ReadingUserFile.h Instruments.h
+	@ g++ $(FLAGS) $(MODE) -c ReadingUserFile.cpp -o ObjectFiles/ReadingUserFile.o
+
+ObjectFiles/PrintFunctions.o: PrintFunctions.cpp PrintFunctions.h Instruments.h
+	@ g++ $(FLAGS) $(MODE) -c PrintFunctions.cpp -o ObjectFiles/PrintFunctions.o
+
+ObjectFiles/Derivative.o: Derivative.cpp Derivative.h Instruments.h
+	@ g++ $(FLAGS) $(MODE) -c Derivative.cpp -o ObjectFiles/Derivative.o
+
+ObjectFiles/Graph.o: Graph.cpp Graph.h Instruments.h
+	@ g++ $(FLAGS) $(MODE) -c Graph.cpp -o ObjectFiles/Graph.o
+
+ObjectFiles/SimplifyExpression.o: SimplifyExpression.cpp SimplifyExpression.h Instruments.h
+	@ g++ $(FLAGS) $(MODE) -c SimplifyExpression.cpp -o ObjectFiles/SimplifyExpression.o
+
 clean:
-	rm *.o ObjectFiles/*.o test
+	rm ObjectFiles/*.o
