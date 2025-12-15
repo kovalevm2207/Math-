@@ -1,5 +1,7 @@
 #include "Types.h"
 
+const int TEYLOR_ORDER = 2;
+
 int main()
 {
     int count_img = 0;
@@ -37,16 +39,25 @@ int main()
         PrintCalcBegining(tex_file);
         PrintCalcResult(tex_file, user_tree);
 
-    //SECTION - derivative
+    Node_t* exp = user_tree->root;
+    Tree_t* derivatives[TEYLOR_ORDER] = {};
+    for(int i = 0; i < TEYLOR_ORDER; i++)
+    {
         PrintDerivativeBegining(tex_file);
-        Node_t* first_derivative = TakeDerivative(tex_file, user_tree->root, "x");
-        MakePrevNode(first_derivative);
-        TreeDump(first_derivative, count_img++);
+        Node_t* derivative = TakeDerivative(tex_file, exp, "x");
+        MakePrevNode(derivative);
+        TreeDump(derivative, count_img++);
 
-        Tree_t* first_derivative_tree = TreeCtor(first_derivative);
+        derivatives[i] = TreeCtor(derivative);
 
-    //SECTION - simplify first_derivative_tree:
-        SimplifyExpression(tex_file, user_tree, first_derivative_tree, &count_img);
+        SimplifyExpression(tex_file, user_tree, derivatives[i], &count_img);
+        char* img_name = (char*) calloc(8, sizeof(char));
+        sprintf(img_name, "graph%d", i);
+
+        DrawGraph(tex_file, img_name, user_tree->root, derivatives[i]->root);
+        exp = derivatives[i]->root;
+        free(img_name);
+    }
 
     //SECTION - end of the program
         EndLaTeXDocument(tex_file);
@@ -56,7 +67,8 @@ int main()
         EndHTMLfile();
 
         TreeDtor(&user_tree);
-        TreeDtor(&first_derivative_tree);
+        for(int i = 0; i < TEYLOR_ORDER; i++)
+            TreeDtor(&(derivatives[i]));
 
     return 0;
 }
@@ -368,7 +380,7 @@ void PrintDerivativeBegining(FILE* file)
     assert(file);
 
     fprintf(file,
-    "\\section{Вывод формулы первой производной}"
+    "\\section{Вывод производной}"
     "Настала пора какой-то магии вне Хогвартса, потому что я просто не знаю , как из нашего такого маленького красивого уравнения мог получится такой страшный монстр...\\\n\n"
     "Тем не менее нам предстоит все это пронаблюдать, только не увлекайтесь и не вздумайте разбираться в том, что здесь происходит,\n"
     "а то рискуете в будущем попасть на кафедру вышмата...\n\n"
@@ -448,10 +460,11 @@ bool NeedBraces(Node_t* node, Node_t* next_node)
         case VAR:
             return false;
         case OP:
+            if(node->value.op == POW && node->left->node_type == OP && node->left->value.op == POW)
+                   return true;
             if(Operators[next_node->value.op].priority < Operators[node->value.op].priority)
                 return true;
-            else
-                return false;
+            return false;
         default:
             return false;
     }
@@ -483,9 +496,11 @@ void PrintPow_(FILE* file, Node_t* node)
 {
     assert(file);
     assert(node);
-    fprintf(file, "\\left(");
+    bool need_left = NeedBraces(node, node->left);
+    if(need_left) fprintf(file, "\\left(");
     WriteTreeNodeLaTeX(file, node->left);
-    fprintf(file, "\\right)^{");
+    if(need_left) fprintf(file, "\\right)");
+    fprintf(file, "^{");
     WriteTreeNodeLaTeX(file, node->right);
     fprintf(file, "}");
 }
@@ -1224,7 +1239,6 @@ int DoubleCompare(double a, double b)
     return a < b ? -1 : 1;
 }
 
-
 Node_t* GetG(char** s)
 {
     assert(s);
@@ -1521,4 +1535,138 @@ size_t CheckLen(char** word, size_t word_len, const size_t letter)
 
     return word_len;
 }
-// todo rename file
+
+int DrawGraph(FILE* file, const char* const img_name, Node_t* first_func, Node_t* sec_func)
+{
+    assert(first_func);
+    fprintf(file,
+    "\\section{Построение графиков функций:}\n"
+    "Построим график функции :\\\\\n\n"
+    "\\begin{dmath} f(x)=");
+    WriteTreeNodeLaTeX(file, first_func);
+    fprintf(file, "\\end{dmath}\n\n");
+    if(sec_func)
+    {
+        fprintf(file, "\\begin{dmath} g(x)=");
+        WriteTreeNodeLaTeX(file, sec_func);
+        fprintf(file, "\\end{dmath}\n\n");
+    }
+    MakeGraphScript(first_func, sec_func, img_name);
+
+    system("gnuplot script_plot1.gp");
+    fprintf(file, "\\includegraphics[width=1\\textwidth]{%s.pdf}\n\n", img_name);
+
+    return 0;
+}
+int MakeGraphScript(Node_t* first_func, Node_t* sec_func, const char* const img_name)
+{
+    assert(first_func); assert(img_name);
+
+    FILE* script = fopen("script_plot1.gp", "w");
+    assert(script);
+
+    fprintf(script,
+    "set terminal pdfcairo enhanced color size 18cm,9cm font \"Arial,12\"\n"
+    "set output \"%s.pdf\"\n"
+    "set xrange [-0.5:0.5]\n"
+    "set yrange [-6:6]\n"
+    "set samples 10000\n"
+    "set xtics 1\n"
+    "set ytics 1\n"
+    "set mxtics 10\n"
+    "set mytics 10\n"
+    "set arrow from graph 0, first 0 to graph 1, first 0 nohead lw 2 lc \"black\" front\n"
+    "set arrow from first 0, graph 0 to first 0, graph 1 nohead lw 2 lc \"black\" front\n"
+    "set grid xtics ytics mxtics mytics lt 1 lc rgb \"#777a7b\" lw 1, lt 0 lc rgb \"#777a7b\" lw 0.5\n"
+    "set key right top\n"
+    "set arrow from 9.5, 0 to 10, 0 head size 0.08,20 lw 2 lc \"black\" front\n"
+    "set arrow from 0, 4.5 to 0, 5 head size 0.08,20 lw 2 lc \"black\" front\n", img_name);
+
+    fprintf(script, "plot ");
+    WriteTreeNodeGnuPlot(script, first_func);
+    fprintf(script,  " with lines lw 2 lc rgb \"%s\" title \"f(x)\"", GenerateColor(first_func));
+    if(sec_func)
+    {
+        fprintf(script, ", ");
+        WriteTreeNodeGnuPlot(script, sec_func);
+        fprintf(script,  " with lines lw 2 lc rgb \"%s\"  title \"g(x)\"", GenerateColor(sec_func));
+    }
+    fprintf(script, "\n");
+
+    fclose(script);
+    return 0;
+}
+void WriteTreeNodeGnuPlot(FILE* file, Node_t* node)
+{
+    assert(file);
+    assert(node);
+
+    switch(node->node_type)
+    {
+        case NUM:
+            if(node->value.num < 0) fprintf(file, "(%lg)", node->value.num);
+            else                    fprintf(file,  "%lg", node->value.num);
+            return;
+        case VAR:
+            fprintf(file, "%s", node->value.var);
+            return;
+        case OP:
+            switch(node->value.op)
+            {
+                case NOT_OP:
+                default: return;
+                case ADD    : PrintPlotBinaryOperator(file, "+",             node); break;
+                case SUB    : PrintPlotBinaryOperator(file, "-",             node); break;
+                case MUL    : PrintPlotBinaryOperator(file, "*",             node); break;
+                case DIV    : PrintPlotBinaryOperator(file, "/",             node); break;
+                case POW    : PrintPlotBinaryOperator(file, "**",            node); break;
+                case SQRT   : PrintPlotBinaryOperator(file, "sqrt",          node); break;
+                case SIN    : PrintPlotUnaryOperator (file, "sin",           node); break;
+                case COS    : PrintPlotUnaryOperator (file, "cos",           node); break;
+                case TG     : PrintPlotUnaryOperator (file, "tan",           node); break;
+                case CTG    : PrintPlotUnaryOperator (file, "1/tan",         node); break;
+                case SH     : PrintPlotUnaryOperator (file, "sh",            node); break;
+                case CH     : PrintPlotUnaryOperator (file, "ch",            node); break;
+                case TH     : PrintPlotUnaryOperator (file, "th",            node); break;
+                case CTH    : PrintPlotUnaryOperator (file, "cth",           node); break;
+                case ARCSIN : PrintPlotUnaryOperator (file, "asin",          node); break;
+                case ARCCOS : PrintPlotUnaryOperator (file, "acos",          node); break;
+                case ARCTG  : PrintPlotUnaryOperator (file, "atan" ,         node); break;
+                case ARCCTG : PrintPlotUnaryOperator (file, "pi/2.0 - atan", node); break;
+                case LOG    : //PrintPlotLogOperator   (file, /*log /log*/     node); break;
+                case LG     : PrintPlotUnaryOperator (file, "lg",            node); break;
+                case LN     : PrintPlotUnaryOperator (file, "log",            node); break;
+            }
+        default:
+            return;
+    }
+    return;
+}
+void PrintPlotBinaryOperator(FILE* file, const char* const op, Node_t* node)
+{
+    assert(file);
+    assert(op);
+    assert(node);
+
+    bool left_braces_marker = NeedBraces(node, node->left);
+    if(left_braces_marker) fprintf(file, "(");
+    WriteTreeNodeGnuPlot(file, node->left);
+    if(left_braces_marker) fprintf(file, ")");
+
+    fprintf(file, "%s", op);
+    bool right_braces_marker = NeedBraces(node, node->right);
+    if(right_braces_marker) fprintf(file, "(");
+    WriteTreeNodeGnuPlot(file, node->right);
+    if(right_braces_marker) fprintf(file, ")");
+}
+void PrintPlotUnaryOperator(FILE* file, const char* const op, Node_t* node)
+{
+    assert(file);
+    assert(op);
+    assert(node);
+
+    fprintf(file, "%s(", op);
+    WriteTreeNodeGnuPlot(file, node->left);
+    fprintf(file, ")");
+}
+

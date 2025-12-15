@@ -7,7 +7,6 @@
 #include <string.h>
 
 #include "color_print.h"
-// to do: struct Tree_s {ptr, max_size}
 
 typedef enum
 {
@@ -59,16 +58,16 @@ const struct
     {"SQRT",   "sqrt",  3},
     {"SIN",    "sin",   3},
     {"COS",    "cos",   3},
-    {"TG",     "tg",    3},
-    {"CTG",    "ctg",   3},
-    {"SH",     "sh",    3},
-    {"CH",     "ch",    3},
-    {"TH",     "th",    3},
-    {"CTH",    "cth",   3},
-    {"ARCSIN", "arcsin",3},
-    {"ARCCOS", "arccos",3},
-    {"ARCTG",  "arctg", 3},
-    {"ARCCTG", "arcctg",3},
+    {"TG",     "tan",   3},
+    {"CTG",    "ctan",  3},
+    {"SH",     "sinh",  3},
+    {"CH",     "cosh",  3},
+    {"TH",     "tanh",  3},
+    {"CTH",    "ctanh", 3},
+    {"ARCSIN", "asin",  3},
+    {"ARCCOS", "acos",  3},
+    {"ARCTG",  "atan",  3},
+    {"ARCCTG", "actan", 3},
     {"LOG",    "log",   3},
     {"LG",     "lg",    3},
     {"LN",     "ln",    3},
@@ -141,9 +140,9 @@ typedef struct
 #ifdef DEBUG
     #define ON_DEBUG(func) func
     #define CHECK_PTR(param, name) if (param == NULL)        \
-                                    {                        \
-                                        return NULL_##name;  \
-                                    }
+                                   {                         \
+                                       return NULL_##name;   \
+                                   }
 #else
     #define ON_DEBUG(func)
     #define CHECK_PTR(param, name)

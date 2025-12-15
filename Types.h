@@ -150,6 +150,14 @@ Operator_t FindOp(char* const word);
 double SkipSpaces(char** s);
 size_t CheckLen(char** word, size_t word_len, const size_t letter);
 
+int MakeGraphScript(Node_t* first_func, Node_t* sec_func, const char* const img_name);
+int DrawGraph(FILE* file, const char* const img_name, Node_t* first_func, Node_t* sec_func);
+void PrintPlotUnaryOperator(FILE* file, const char* const op, Node_t* node);
+void WriteTreeNodeGnuPlot(FILE* file, Node_t* node);
+void PrintPlotBinaryOperator(FILE* file, const char* const op, Node_t* node);
+
+
+
 #define FREE(ptr) if(ptr) {free(ptr); ptr = NULL;}
 #define ERR_PRINT(text) fprintf(stderr, RED_COLOR text RESET)
 
