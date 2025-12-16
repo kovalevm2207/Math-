@@ -1,11 +1,14 @@
 #include "SimplifyExpression.h"
 
-TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* count_img)
+TreeErr_t SimplifyExpression(FILE* file, Node_t* base_tree, Node_t** tree, int* count_img, bool* is_print)
 {
     assert(tree);
+    assert(*tree);
+    assert(base_tree);
     assert(count_img);
+    assert(file);
+    assert(is_print);
 
-    PrintBeginSimplify(file);
     Node_t* result = NULL;
     bool is_change_CF = false;
     bool is_change_NEE = false;
@@ -15,30 +18,31 @@ TreeErr_t SimplifyExpression(FILE* file, Tree_t* base_tree, Tree_t* tree, int* c
         is_change_CF = false;
         is_change_NEE = false;
 
-        result = ConstantFolding(&tree->root, &is_change_CF);
+        result = ConstantFolding(tree, &is_change_CF);
         assert(result);
-        tree->root = result;
+        *tree = result;
         if(is_change_CF)
         {
-            TreeDump(tree->root, (*count_img)++);
-            PrintSimplifyRes(file, base_tree->root, tree->root, "x", is_change_CF);
+            TreeDump(*tree, (*count_img)++);
+            if(CountTreeSize(base_tree) < MAX_DUMP_SIZE && *is_print == true)
+                PrintSimplifyRes(file, base_tree, *tree, "x", is_change_NEE);
+            else *is_print = false;
         }
 
-        result = NeutralElementElimination(&tree->root, &is_change_NEE);
-        assert(result);;
-        tree->root = result;
+        result = NeutralElementElimination(tree, &is_change_NEE);
+        assert(result);
+        *tree = result;
         if(is_change_NEE)
         {
-            TreeDump(tree->root, (*count_img)++);
-            PrintSimplifyRes(file, base_tree->root, tree->root, "x", is_change_NEE);
+            TreeDump(*tree, (*count_img)++);
+            if(CountTreeSize(base_tree) < MAX_DUMP_SIZE && *is_print == true)
+                PrintSimplifyRes(file, base_tree, *tree, "x", is_change_NEE);
+            else *is_print = false;
         }
     }
     while(is_change_NEE || is_change_CF);
 
-    tree->depth = GetTreeDepth(tree->root);
-    tree->size = CountTreeSize(tree->root);
-    fprintf(file, "На этом я все, все остальное упрощайте сами, все равно на письмаке вам в задании скажут все это не упрощать...\\\\\n");
-
+    if(*is_print == true) fprintf(file, "%s\n\n", CanNotSimplifyPhrases[(long unsigned int)rand() % CAN_NOT_SIMPLIFY_PHRASES_NUM]);
     return TREE_OK;
 }
 Node_t* ConstantFolding(Node_t** node_, bool* is_change)

@@ -14,4 +14,7 @@
 #include "Graph.h"
 #include "SimplifyExpression.h"
 
+Tree_t* GetExpression(int* count_img);
+void EndProgram(FILE* tex_file, Tree_t* user_tree, Tree_t** derivatives);
+
 #endif // MATH_PP

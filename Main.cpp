@@ -1,73 +1,87 @@
 #include "Math_PP.h"
 
-const int TEYLOR_ORDER = 2;
+const int TEYLOR_ORDER = 4;
+const int MAX_DUMP_DERIVATIVE_ORDER = 3;
 
 int main()
 {
     int count_img = 0;
+    srand((unsigned int) time(NULL));
+    StartHTMLfile();
 
-    //SECTION - reading from file
-        char* user_file = ReadFile("Expression.txt");
-        assert(user_file && "NULL user_file, check ReadFile func");
-        char* cur_pos = SkipSpaces(user_file);
+    Tree_t* user_tree = GetExpression(&count_img);
 
-        Node_t* user_nodes = GetG(&cur_pos);
-        MakePrevNode(user_nodes);
-        FREE(user_file)
-
-        StartHTMLfile();
-        TreeDump(user_nodes, count_img++);
-
-    //SECTION - user_tree struct
-        Tree_t* user_tree = TreeCtor(user_nodes);
-
-    //SECTION - write in LaTeX
-        srand((unsigned int) time(NULL));
-
-        FILE* tex_file = fopen("LaTeX.tex","w");
-        assert(tex_file);
-        BeginLaTeXDocument(tex_file);
-        PrintOriginalTree(tex_file, user_nodes);
-
-        Node_t* user_nodes_copy = DeepNodeCopy(user_nodes);
-        Tree_t* user_tree_copy = TreeCtor(user_nodes_copy);
-        SimplifyExpression(tex_file, user_tree_copy, user_tree, &count_img);
-        TreeDtor(&user_tree_copy);
-
-    //SECTION - calc user_tree:
-        PrintCalcBegining(tex_file);
-        PrintCalcResult(tex_file, user_tree);
+    FILE* tex_file = fopen("LaTeX.tex","w");
+    assert(tex_file);
+    BeginLaTeXDocument(tex_file);
+    PrintOriginalTree(tex_file, user_tree->root);
 
     Node_t* exp = user_tree->root;
     Tree_t* derivatives[TEYLOR_ORDER] = {};
-    for(int i = 0; i < TEYLOR_ORDER; i++)
+
+    bool is_print = true;
+    for(int derivative_order = 0; derivative_order < TEYLOR_ORDER; derivative_order++)
     {
-        PrintDerivativeBegining(tex_file);
-        Node_t* derivative = TakeDerivative(tex_file, exp, "x");
+        if(derivative_order > 0) fprintf(tex_file, "Идем дальше...\n\n");
+        if(derivative_order < MAX_DUMP_DERIVATIVE_ORDER)
+            PrintDerivativeBegining(tex_file);
+
+        Node_t* derivative = TakeDerivative(tex_file, exp, "x", &count_img, &is_print);
         MakePrevNode(derivative);
+        derivatives[derivative_order] = TreeCtor(derivative);
         TreeDump(derivative, count_img++);
 
-        derivatives[i] = TreeCtor(derivative);
-
-        SimplifyExpression(tex_file, user_tree, derivatives[i], &count_img);
-        char* img_name = (char*) calloc(8, sizeof(char));
-        sprintf(img_name, "graph%d", i);
-
-        DrawGraph(tex_file, img_name, user_tree->root, derivatives[i]->root);
-        exp = derivatives[i]->root;
-        free(img_name);
+        if(derivatives[derivative_order]->size < MAX_DUMP_SIZE)
+        {
+            char* img_name = (char*) calloc(8, sizeof(char));
+            sprintf(img_name, "graph%d", derivative_order);
+            DrawGraph(tex_file, img_name, user_tree->root, derivatives[derivative_order]->root);
+            free(img_name);
+        }
+        else
+        {
+            fprintf(tex_file, "\\section*{Построение графика функций}\n\n"
+                              "Сказал же, по аналогии. Сами дальше стройте!");
+        }
+        exp = derivatives[derivative_order]->root;
+        is_print = true;
     }
 
-    //SECTION - end of the program
-        EndLaTeXDocument(tex_file);
-        fclose(tex_file);
-        tex_file = NULL;
-
-        EndHTMLfile();
-
-        TreeDtor(&user_tree);
-        for(int i = 0; i < TEYLOR_ORDER; i++)
-            TreeDtor(&(derivatives[i]));
-
+    EndProgram(tex_file, user_tree, derivatives);
     return 0;
+}
+
+Tree_t* GetExpression(int* count_img)
+{
+    assert(count_img);
+
+    char* user_file = ReadFile("Expression.txt");
+    assert(user_file && "NULL user_file, check ReadFile func");
+
+    char* cur_pos = user_file;
+    Node_t* user_nodes = GetG(&cur_pos);
+    MakePrevNode(user_nodes);
+    FREE(user_file)
+
+    TreeDump(user_nodes, (*count_img)++);
+
+    return TreeCtor(user_nodes);
+}
+void EndProgram(FILE* tex_file, Tree_t* user_tree, Tree_t** derivatives)
+{
+    assert(tex_file);
+    assert(user_tree);
+    assert(derivatives);
+
+    EndLaTeXDocument(tex_file);
+    fclose(tex_file);
+    tex_file = NULL;
+
+    EndHTMLfile();
+
+    TreeDtor(&user_tree);
+    for(int i = 0; i < TEYLOR_ORDER; i++)
+    {
+        TreeDtor(&(derivatives[i]));
+    }
 }

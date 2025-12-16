@@ -310,7 +310,7 @@ void PrintBeginSimplify(FILE* file)
 {
     assert(file);
 
-    fprintf(file, "\\subsection*{Попробуем упростить полученное выражение}\n\\\\");
+    fprintf(file, "\\subsubsection*{Попробуем упростить полученное выражение}\n\\\\");
 }
 void PrintSimplifyRes(FILE* file, Node_t* base_node, Node_t* simple_node, const char* const var, bool flag)
 {

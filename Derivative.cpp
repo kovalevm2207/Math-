@@ -1,10 +1,12 @@
 #include "Derivative.h"
 
-Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var)
+Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var, int* count_img, bool* is_print)
 {
     assert(var);
     assert(node);
     assert(var);
+    assert(count_img);
+    assert(is_print);
 
     #include "DerivativeDSL.h"
     Node_t* new_node = NULL;
@@ -44,24 +46,36 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var)
                 case ARCCTG:    new_node = COMP_FUNC(DIV_(n(-1), ADD_(n(1), POW_(c(L), n(2)))));               break;  // -1/(1 + a^2) * d(a)
                 case LG:        new_node = COMP_FUNC(DIV_(n(1), MUL_(LN_(n(10)), c(L))));                      break;  //  1/(ln(10) * a) * d(a)
                 case LN:        new_node = COMP_FUNC(DIV_(n(1), c(L)));                                        break;  //  1/a * d(a)
-                case LOG:       new_node = LogDerivative(file, node, var);                                     break;
-                case POW:       new_node = PowDerivative(file, node, var);                                     break;
+                case LOG:       new_node = LogDerivative(file, node, var, count_img, is_print);                break;
+                case POW:       new_node = PowDerivative(file, node, var, count_img, is_print);                break;
             }
             break;
     }
+
+    if(CountTreeSize(new_node) < MAX_DUMP_SIZE && *is_print == true)
+    {
+        fprintf(file, "\\subsubsection*{Дифференцируем:}\n\n%s\n", TakeDerivativePhrases[(long unsigned int)rand() % TAKE_DERIVATIVE_PHRASES_NUM]);
+        fprintf(file, "\\begin{dmath}"
+                      "\\frac{d}{d%s}\\left(", var);
+        WriteTreeNodeLaTeX(file, node);
+        fprintf(file, "\\right)=");
+        WriteTreeNodeLaTeX(file, new_node);
+        fprintf(file, "\\end{dmath}\n");
+
+        PrintBeginSimplify(file);
+    }
+    else
+    {
+        if (*is_print == true) fprintf(file, "\\subsubsection*{Дальнейшее по аналогии...}\n\n");
+        *is_print = false;
+    }
+    Node_t* copy = c(new_node);
+    SimplifyExpression(file, copy, &new_node, count_img, is_print);
+    DeleteTreeNode(&copy);
     #include "UndefDerivativeDSL.h"
-
-    fprintf(file, "%s\n", TakeDerivativePhrases[(long unsigned int)rand() % TAKE_DERIVATIVE_PHRASES_NUM]);
-    fprintf(file, "\\begin{dmath}"
-                  "\\frac{d}{d%s}\\left(", var);
-    WriteTreeNodeLaTeX(file, node);
-    fprintf(file, "\\right)=");
-    WriteTreeNodeLaTeX(file, new_node);
-    fprintf(file, "\\end{dmath}\n");
-
     return new_node;
 }
-Node_t* PowDerivative(FILE* file, Node_t* node, const char* const var)
+Node_t* PowDerivative(FILE* file, Node_t* node, const char* const var, int* count_img, bool* is_print)
 {
     assert(file);
     assert(node);
@@ -83,7 +97,7 @@ Node_t* PowDerivative(FILE* file, Node_t* node, const char* const var)
     }
     else return n(0);  // 0
 }
-Node_t* LogDerivative(FILE* file, Node_t* node, const char* const var)
+Node_t* LogDerivative(FILE* file, Node_t* node, const char* const var, int* count_img, bool* is_print)
 {
     assert(file);
     assert(node);

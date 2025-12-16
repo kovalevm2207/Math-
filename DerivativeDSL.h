@@ -4,7 +4,7 @@
 
     #define        L left
     #define        R right
-    #define        d(sub_tree) TakeDerivative(file, sub_tree, var)
+    #define        d(sub_tree) TakeDerivative(file, sub_tree, var, count_img, is_print)
     #define        c(sub_tree) DeepNodeCopy(sub_tree)
     #define        n(number)   TreeNodeCtor_(NUM, {.num = number}, NULL, NULL)
     #define     ADD_(left_sub_tree, right_sub_tree) TreeNodeCtor_(OP, {.op = ADD   }, left_sub_tree, right_sub_tree)
