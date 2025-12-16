@@ -205,7 +205,7 @@ double CalcTree(Tree_t* tree)
 
     return CalcTreeNode(tree->root, tree->vars, tree->vars_num);
 }
-double CalcTreeNode(const Node_t* node, const Var_t* vars, size_t vars_num)
+double CalcTreeNode(const Node_t* node, const Var_t* vars, const size_t vars_num)
 {
     assert(node);
     assert(vars);

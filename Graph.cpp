@@ -18,7 +18,7 @@ int DrawGraph(FILE* file, const char* const img_name, Node_t* first_func, Node_t
     MakeGraphScript(first_func, sec_func, img_name);
 
     system("gnuplot script_plot1.gp");
-    fprintf(file, "\\includegraphics[width=1\\textwidth]{%s.pdf}\n\n", img_name);
+    fprintf(file, "\\includegraphics[width=1\\textwidth]{Graph/%s.pdf}\n\n", img_name);
 
     return 0;
 }
@@ -31,7 +31,7 @@ int MakeGraphScript(Node_t* first_func, Node_t* sec_func, const char* const img_
 
     fprintf(script,
     "set terminal pdfcairo enhanced color size 18cm,9cm font \"Arial,12\"\n"
-    "set output \"%s.pdf\"\n"
+    "set output \"Graph/%s.pdf\"\n"
     "set xrange [-0.5:0.5]\n"
     "set yrange [-15:15]\n"
     "set samples 10000\n"

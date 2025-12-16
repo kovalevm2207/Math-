@@ -1,61 +1,30 @@
 #include "Math_PP.h"
 
-const int TEYLOR_ORDER = 4;
-const int MAX_DUMP_DERIVATIVE_ORDER = 3;
-
 int main()
 {
     int count_img = 0;
     srand((unsigned int) time(NULL));
     StartHTMLfile();
 
-    Tree_t* user_tree = GetExpression(&count_img);
+    Tree_t* user_tree = GetExpression(&count_img, "Expression.txt");
 
     FILE* tex_file = fopen("LaTeX.tex","w");
     assert(tex_file);
     BeginLaTeXDocument(tex_file);
     PrintOriginalTree(tex_file, user_tree->root);
 
-    Node_t* exp = user_tree->root;
-    Tree_t* derivatives[TEYLOR_ORDER] = {};
+    Derivative_t* derivatives = GetNDerivatives(tex_file, user_tree, &count_img);
 
-    bool is_print = true;
-    for(int derivative_order = 0; derivative_order < TEYLOR_ORDER; derivative_order++)
-    {
-        if(derivative_order > 0) fprintf(tex_file, "Идем дальше...\n\n");
-        if(derivative_order < MAX_DUMP_DERIVATIVE_ORDER)
-            PrintDerivativeBegining(tex_file);
-
-        Node_t* derivative = TakeDerivative(tex_file, exp, "x", &count_img, &is_print);
-        MakePrevNode(derivative);
-        derivatives[derivative_order] = TreeCtor(derivative);
-        TreeDump(derivative, count_img++);
-
-        if(derivatives[derivative_order]->size < MAX_DUMP_SIZE)
-        {
-            char* img_name = (char*) calloc(8, sizeof(char));
-            sprintf(img_name, "graph%d", derivative_order);
-            DrawGraph(tex_file, img_name, user_tree->root, derivatives[derivative_order]->root);
-            free(img_name);
-        }
-        else
-        {
-            fprintf(tex_file, "\\section*{Построение графика функций}\n\n"
-                              "Сказал же, по аналогии. Сами дальше стройте!");
-        }
-        exp = derivatives[derivative_order]->root;
-        is_print = true;
-    }
-
-    EndProgram(tex_file, user_tree, derivatives);
+    EndProgram(tex_file, derivatives);
     return 0;
 }
 
-Tree_t* GetExpression(int* count_img)
+Tree_t* GetExpression(int* count_img, const char* const file_name)
 {
     assert(count_img);
+    assert(file_name);
 
-    char* user_file = ReadFile("Expression.txt");
+    char* user_file = ReadFile(file_name);
     assert(user_file && "NULL user_file, check ReadFile func");
 
     char* cur_pos = user_file;
@@ -67,10 +36,9 @@ Tree_t* GetExpression(int* count_img)
 
     return TreeCtor(user_nodes);
 }
-void EndProgram(FILE* tex_file, Tree_t* user_tree, Tree_t** derivatives)
+void EndProgram(FILE* tex_file, Derivative_t* derivatives)
 {
     assert(tex_file);
-    assert(user_tree);
     assert(derivatives);
 
     EndLaTeXDocument(tex_file);
@@ -79,9 +47,10 @@ void EndProgram(FILE* tex_file, Tree_t* user_tree, Tree_t** derivatives)
 
     EndHTMLfile();
 
-    TreeDtor(&user_tree);
-    for(int i = 0; i < TEYLOR_ORDER; i++)
+    for(int i = 0; i <= TEYLOR_ORDER; i++)
     {
-        TreeDtor(&(derivatives[i]));
+        TreeDtor(&(derivatives[i].tree));
+        derivatives[i].data = 0;
     }
+    FREE(derivatives)
 }

@@ -116,19 +116,6 @@ f'(x_0) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}
 \begin{dmath}\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\end{dmath}
 (Знаете, мне нет разницы с чем я буду сейчас работать, но вы то хоть сами понимаете, что написали?)
 
-\subsection*{Попробуем упростить полученное выражение}
-\\На этом я все, все остальное упрощайте сами, все равно на письмаке вам в задании скажут все это не упрощать...\\
-\section{Вычисление исходного выражения}
-Наверняка вам было бы интересно узнать (вы же у нас тут все такие любопытные), чему будет равняться ваше выражение, которое даже Пе*****чу либо вообще никогда в жизни не встречалось, либо снится в ночных кошмарах:\
-приступим:
-\begin{align*}
-	x = 4,	&&	\end{align*}
-
-
-Дифференцируем не глядя:
-
-\begin{dmath}\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1=0.2922\end{dmath}
-
 \section{Вывод производной}Настала пора какой-то магии вне Хогвартса, потому что я просто не знаю , как из нашего такого маленького красивого уравнения мог получится такой страшный монстр...\
 
 Тем не менее нам предстоит все это пронаблюдать, только не увлекайтесь и не вздумайте разбираться в том, что здесь происходит,
@@ -137,50 +124,127 @@ f'(x_0) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}
 \subsection*{Прямой расчет по правилам, без упрощения:}\\
 Давайте последовательно разберем каждый шаг:
 
-Собственно из этого уже мы легко получаем, что:
-\begin{dmath}\frac{d}{dx}\left(1\right)=0\end{dmath}
-Секундочку... вычисляем... готово:
-\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
-Производная готова, можете забрать:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Па па па па па папапапапа па:
-\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-Берем производную на скорость:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
-Так, тут производная будет... эээ... ну вот:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=0\cdot x+ 7\cdot 1+ 0\end{dmath}
-Я надеюсь, что вы все поняли, но в общем вот:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Теперь по известным всем вам правилам переходим к следующему выражению:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) ^{5}\right)=5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{5- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Производная готова, можете забрать:
-\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
-Так, щас быстренько продифференцировать... вжух:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Собственно из этого уже мы легко получаем, что:
-\begin{dmath}\frac{d}{dx}\left(x^{3}\right)=3\cdot x^{3- 1}\cdot 1\end{dmath}
-Как вы помните еще с рождения:
-\begin{dmath}\frac{d}{dx}\left(x^{3}\cdot 15\right)=3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\end{dmath}
-Производная готова, можете забрать:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) \right)=\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\end{dmath}
+\subsubsection*{Дифференцируем:}
+
 Дифференцируем на автопилоте:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}\right)=\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{5- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
+\begin{dmath}\frac{d}{dx}\left(1\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем как боги:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Всё уже упрощено до предела:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем на автопилоте:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение самодостаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Я надеюсь, что вы все поняли, но в общем вот:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вы достигли уровня 'и так сойдёт':
+
+\subsubsection*{Дифференцируем:}
+
+Ну тут вообще обсуждать нечего:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Секретная техника вычислений раскрыта:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Готово! Больше нечего сокращать:
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Кажется, вы достигли дна упрощения:
+
+\subsubsection*{Дифференцируем:}
+
+Ээээээээээ... ну тут короче так:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это и так оптимально, дальше некуда:
+
+\subsubsection*{Дифференцируем:}
+
+Производная как с конвейера:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) ^{5}\right)=5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{5- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение уже в максимально простой форме:
+
+\subsubsection*{Дифференцируем:}
+
+Производная? Легко! Смотрите:
+\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение самодостаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Не трудно заметить, что:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Перед вами - идеал математической простоты:
+
+\subsubsection*{Дифференцируем:}
+
+Я надеюсь, что вы все поняли, но в общем вот:
+\begin{dmath}\frac{d}{dx}\left(x^{3}\right)=3\cdot x^{3- 1}\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощаем по-хардкору:\\
+\begin{dmath}
+	\frac{d}{dx}\left(3\cdot x^{3- 1}\cdot 1\right) = 3\cdot x^{2}\end{dmath}
+
+Это как есть, и это прекрасно:
+
+\subsubsection*{Дифференцируем:}
+
+Так, щас быстренько продифференцировать... вжух:
+\begin{dmath}\frac{d}{dx}\left(x^{3}\cdot 15\right)=3\cdot x^{2}\cdot 15+ x^{3}\cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Магия! Исчезли лишние действия:\\
+\begin{dmath}
+	\frac{d}{dx}\left(3\cdot x^{2}\cdot 15+ x^{3}\cdot 0\right) = 3\cdot x^{2}\cdot 15\end{dmath}
+
+Это как есть, и это прекрасно:
+
+\subsubsection*{Дифференцируем:}
+
+Па па па па па папапапапа па:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) \right)=\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Смиритесь, это и есть ответ:
+
+\subsubsection*{Дифференцируем:}
+
 Не спрашивайте вообще, как это у нас получилось:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right)=\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{5- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)+ 0\end{dmath}
-\subsection*{Попробуем упростить полученное выражение}
-\\Сокращаем-сокращаем... и вот:\\
-\begin{dmath}
-	\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right) = \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{2}\cdot 1\cdot 15+ x^{3}\cdot 0\right)+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7+ 0\right)+ 0\end{dmath}
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}\right)=\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Математика говорит: 'Хватит, остановись!'
 
-Это как 2+2, только сложнее:\\
-\begin{dmath}
-	\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right) = \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(7+ 0\right)\end{dmath}
+\subsubsection*{Дифференцируем:}
 
-Секретная техника вычислений раскрыта:\\
+По правилам дифференцирования, которые вы все знаете наизусть:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right)=\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вжух-вжух и готово:\\
 \begin{dmath}
-	\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right) = \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+	\frac{d}{dx}\left(\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 0\right) = \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
 
-На этом я все, все остальное упрощайте сами, все равно на письмаке вам в задании скажут все это не упрощать...\\
+Математика говорит: 'Хватит, остановись!'
+
 \section{Построение графиков функций:}
 Построим график функции :\\
 
@@ -188,7 +252,9 @@ f'(x_0) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}
 
 \begin{dmath} g(x)=\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
 
-\includegraphics[width=1\textwidth]{graph0.pdf}
+\includegraphics[width=1\textwidth]{Graph/graph1.pdf}
+
+Идем дальше...
 
 \section{Вывод производной}Настала пора какой-то магии вне Хогвартса, потому что я просто не знаю , как из нашего такого маленького красивого уравнения мог получится такой страшный монстр...\
 
@@ -198,94 +264,287 @@ f'(x_0) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}
 \subsection*{Прямой расчет по правилам, без упрощения:}\\
 Давайте последовательно разберем каждый шаг:
 
-Берем производную на скорость:
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем не глядя:
 \begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-Ну это же элементарно, Ватсон:
-\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Можно попробовать, но зачем, если и так всё ясно?:
+
+\subsubsection*{Дифференцируем:}
+
 Не спрашивайте вообще, как это у нас получилось:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Ээээээээээ... ну тут короче так:
-\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-Производная как с конвейера:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
-Как вы помните еще с рождения:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=0\cdot x+ 7\cdot 1+ 0\end{dmath}
-Так, щас быстренько продифференцировать... вжух:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(7\cdot x+ 9\right) \right)=\operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Ээээээээээ... ну тут короче так:
-\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
-Секундочку... вычисляем... готово:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \right)=0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-После долгих мучительных преобразований мы наконец получаем:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
-Вопросы есть откуда это взялось?:
 \begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Дальше только квантовая физика... а нам не надо:
+
+\subsubsection*{Дифференцируем:}
+
 Ээээээээээ... ну тут короче так:
 \begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Всё и так на своих местах:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем по-быстрому:
 \begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вы достигли уровня 'и так сойдёт':
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем не глядя:
 \begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
-Секундочку... вычисляем... готово:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=0\cdot x+ 7\cdot 1+ 0\end{dmath}
-Дифференцируем не глядя:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Производная? Легко! Смотрите:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\right)=4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Теперь по известным всем вам правилам переходим к следующему выражению:
-\begin{dmath}\frac{d}{dx}\left(5\right)=0\end{dmath}
-Как вы помните еще с рождения:
-\begin{dmath}\frac{d}{dx}\left(5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Так, щас быстренько продифференцировать... вжух:
-\begin{dmath}\frac{d}{dx}\left(5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)\end{dmath}
-Дифференцируем не глядя:
-\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Тут даже ИИ не нужен, обычный калькулятор справится:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Хм... а тут и упрощать-то нечего:
+
+\subsubsection*{Дифференцируем:}
+
+Па па па па па папапапапа па:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение уже в максимально простой форме:
+
+\subsubsection*{Дифференцируем:}
+
+Тыры-пыры, шуры-муры и вот оно:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(7\cdot x+ 9\right) \right)=\operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Оставьте выражение в покое, оно и так достаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Это достаточно просто преобразуется в следующее выражение:
+\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
 Производная как с конвейера:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \right)=0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вжух-вжух и готово:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+
+Это и так оптимально, дальше некуда:
+
+\subsubsection*{Дифференцируем:}
+
+Секундочку... вычисляем... готово:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=(-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Магия! Исчезли лишние действия:\\
+\begin{dmath}
+	\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+
+Оставьте выражение в покое, оно и так достаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Не спрашивайте вообще, как это у нас получилось:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Кажется, вы достигли дна упрощения:
+
+\subsubsection*{Дифференцируем:}
+
+Ну это же элементарно, Ватсон:
 \begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Производная готова, можете забрать:
-\begin{dmath}\frac{d}{dx}\left(x^{2}\right)=2\cdot x^{2- 1}\cdot 1\end{dmath}
-Так, тут производная будет... эээ... ну вот:
-\begin{dmath}\frac{d}{dx}\left(3\right)=0\end{dmath}
-Дифференцируем на автопилоте:
-\begin{dmath}\frac{d}{dx}\left(3\cdot x^{2}\right)=0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\end{dmath}
-Производная? Легко! Смотрите:
-\begin{dmath}\frac{d}{dx}\left(3\cdot x^{2}\cdot 15\right)=\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\end{dmath}
-Дифференцируем как боги:
-\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
-Производная готова, можете забрать:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Производная? Легко! Смотрите:
-\begin{dmath}\frac{d}{dx}\left(x^{3}\right)=3\cdot x^{3- 1}\cdot 1\end{dmath}
-Я надеюсь, что вы все поняли, но в общем вот:
-\begin{dmath}\frac{d}{dx}\left(x^{3}\cdot 15\right)=3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\end{dmath}
-Я надеюсь, что вы все поняли, но в общем вот:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(x^{3}\cdot 15\right) \right)=(-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\end{dmath}
-Производная готова, можете забрать:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\right)=(-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\cdot 3\cdot x^{2}\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Иногда простота - это и есть сложность:
+
+\subsubsection*{Дифференцируем:}
+
 Собственно из этого уже мы легко получаем, что:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=(-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\cdot 3\cdot x^{2}\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)+ \left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)\end{dmath}
-\subsection*{Попробуем упростить полученное выражение}
-\\Смотрите-ка, а тут можно посчитать!\\
-\begin{dmath}
-	\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right) = (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{2}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\cdot 3\cdot x^{2}\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)+ \left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7+ 0\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)\end{dmath}
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Миссия выполнена: выражение упрощено до конца:
 
-Это как 2+2, только сложнее:\\
-\begin{dmath}
-	\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right) = (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(7+ 0\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(7+ 0\right)\cdot 7\end{dmath}
+\subsubsection*{Дифференцируем:}
 
-Тут даже ИИ не нужен, обычный калькулятор справится:\\
+Я надеюсь, что вы все поняли, но в общем вот:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Ну тут всё очевидно, даже комментировать не буду:\\
 \begin{dmath}
-	\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right) = (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
 
-На этом я все, все остальное упрощайте сами, все равно на письмаке вам в задании скажут все это не упрощать...\\
+Смиритесь, это и есть ответ:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем не глядя:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение самодостаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Ну это же элементарно, Ватсон:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Так, щас быстренько продифференцировать... вжух:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\right)=4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Хм... а тут и упрощать-то нечего:
+
+\subsubsection*{Дифференцируем:}
+
+Тыры-пыры, шуры-муры и вот оно:
+\begin{dmath}\frac{d}{dx}\left(5\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Как вы помните еще с рождения:
+\begin{dmath}\frac{d}{dx}\left(5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Долго ли, коротко ли, но посчиталось:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right) = 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+
+Всё уже упрощено до предела:
+
+\subsubsection*{Дифференцируем:}
+
+Не спрашивайте вообще, как это у нас получилось:
+\begin{dmath}\frac{d}{dx}\left(5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Иногда простота - это и есть сложность:
+
+\subsubsection*{Дифференцируем:}
+
+После долгих мучительных преобразований мы наконец получаем:
+\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Как вы помните еще с рождения:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение самодостаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Производная? Легко! Смотрите:
+\begin{dmath}\frac{d}{dx}\left(x^{2}\right)=2\cdot x^{2- 1}\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощаем по-хардкору:\\
+\begin{dmath}
+	\frac{d}{dx}\left(2\cdot x^{2- 1}\cdot 1\right) = 2\cdot x\end{dmath}
+
+Перфекционизм - это хорошо, но тут нечего улучшать:
+
+\subsubsection*{Дифференцируем:}
+
+Производная как с конвейера:
+\begin{dmath}\frac{d}{dx}\left(3\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение уже в максимально простой форме:
+
+\subsubsection*{Дифференцируем:}
+
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(3\cdot x^{2}\right)=0\cdot x^{2}+ 3\cdot 2\cdot x\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Surprise можно было и не писать столько:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x^{2}+ 3\cdot 2\cdot x\right) = 3\cdot 2\cdot x\end{dmath}
+
+Хм... а тут и упрощать-то нечего:
+
+\subsubsection*{Дифференцируем:}
+
+Я надеюсь, что вы все поняли, но в общем вот:
+\begin{dmath}\frac{d}{dx}\left(3\cdot x^{2}\cdot 15\right)=3\cdot 2\cdot x\cdot 15+ 3\cdot x^{2}\cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вы не поверите, но это упрощается именно так:\\
+\begin{dmath}
+	\frac{d}{dx}\left(3\cdot 2\cdot x\cdot 15+ 3\cdot x^{2}\cdot 0\right) = 3\cdot 2\cdot x\cdot 15\end{dmath}
+
+Дальше только квантовая физика... а нам не надо:
+
+\subsubsection*{Дифференцируем:}
+
+Теперь по известным всем вам правилам переходим к следующему выражению:
+\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это как есть, и это прекрасно:
+
+\subsubsection*{Дифференцируем:}
+
+Это достаточно просто преобразуется в следующее выражение:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Всё уже упрощено до предела:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем по-быстрому:
+\begin{dmath}\frac{d}{dx}\left(x^{3}\right)=3\cdot x^{3- 1}\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Ну тут всё очевидно, даже комментировать не буду:\\
+\begin{dmath}
+	\frac{d}{dx}\left(3\cdot x^{3- 1}\cdot 1\right) = 3\cdot x^{2}\end{dmath}
+
+Можно попробовать, но зачем, если и так всё ясно?:
+
+\subsubsection*{Дифференцируем:}
+
+Теперь по известным всем вам правилам переходим к следующему выражению:
+\begin{dmath}\frac{d}{dx}\left(x^{3}\cdot 15\right)=3\cdot x^{2}\cdot 15+ x^{3}\cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощаем по-хардкору:\\
+\begin{dmath}
+	\frac{d}{dx}\left(3\cdot x^{2}\cdot 15+ x^{3}\cdot 0\right) = 3\cdot x^{2}\cdot 15\end{dmath}
+
+Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Берем производную на скорость:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(x^{3}\cdot 15\right) \right)=(-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Можно попробовать, но зачем, если и так всё ясно?:
+
+\subsubsection*{Дифференцируем:}
+
+Ну тут вообще обсуждать нечего:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\right)=(-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Математика говорит: 'Хватит, остановись!'
+
+\subsubsection*{Дифференцируем:}
+
+Вопросы есть откуда это взялось?:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=(-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение самодостаточно:
+
 \section{Построение графиков функций:}
 Построим график функции :\\
 
-\begin{dmath} f(x)=\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\end{dmath}
+\begin{dmath} f(x)=\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
 
 \begin{dmath} g(x)=(-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
 
-\includegraphics[width=1\textwidth]{graph1.pdf}
+\includegraphics[width=1\textwidth]{Graph/graph2.pdf}
+
+Идем дальше...
 
 \section{Вывод производной}Настала пора какой-то магии вне Хогвартса, потому что я просто не знаю , как из нашего такого маленького красивого уравнения мог получится такой страшный монстр...\
 
@@ -295,211 +554,944 @@ f'(x_0) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}
 \subsection*{Прямой расчет по правилам, без упрощения:}\\
 Давайте последовательно разберем каждый шаг:
 
+\subsubsection*{Дифференцируем:}
+
 Дифференцируем как боги:
 \begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-Производная готова, можете забрать:
-\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-По правилам дифференцирования, которые вы все знаете наизусть:
-\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
-Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Ээээээээээ... ну тут короче так:
-\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-Берем производную на скорость:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
-Так, ну тут вообще ничего интересного:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=0\cdot x+ 7\cdot 1+ 0\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Производная как с конвейера:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
-Не спрашивайте вообще, как это у нас получилось:
-\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
-Дифференцируем как боги:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7+ (-1)\cdot \left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\right)\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)=\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7+ (-1)\cdot \left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\end{dmath}
-Тыры-пыры, шуры-муры и вот оно:
-\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
-Так, тут производная будет... эээ... ну вот:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Производная как с конвейера:
-\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-Ну тут вообще обсуждать нечего:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
-Па па па па па папапапапа па:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=0\cdot x+ 7\cdot 1+ 0\end{dmath}
-Так, ну тут вообще ничего интересного:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Так, тут производная будет... эээ... ну вот:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\right)=4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
-\begin{dmath}\frac{d}{dx}\left(5\right)=0\end{dmath}
-Не трудно заметить, что:
-\begin{dmath}\frac{d}{dx}\left(5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Математика говорит: 'Хватит, остановись!'
+
+\subsubsection*{Дифференцируем:}
+
 Собственно из этого уже мы легко получаем, что:
-\begin{dmath}\frac{d}{dx}\left(5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)=\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot \left(\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7+ (-1)\cdot \left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\right)\end{dmath}
-Дифференцируем не глядя:
 \begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-Производная? Легко! Смотрите:
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощать нечего, и так всё понятно:
+
+\subsubsection*{Дифференцируем:}
+
+Секундочку... вычисляем... готово:
 \begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
-Не спрашивайте вообще, как это у нас получилось:
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вы достигли уровня 'и так сойдёт':
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
 \begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
-\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощать больше нечего, возьмите с полки пирожок:
+
+\subsubsection*{Дифференцируем:}
+
 Дифференцируем как боги:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
-Ну тут вообще обсуждать нечего:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=0\cdot x+ 7\cdot 1+ 0\end{dmath}
-Не спрашивайте вообще, как это у нас получилось:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(7\cdot x+ 9\right) \right)=\operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение уже в максимально простой форме:
+
+\subsubsection*{Дифференцируем:}
+
 Теперь по известным всем вам правилам переходим к следующему выражению:
-\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
-Так, тут производная будет... эээ... ну вот:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \right)=0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Производная? Легко! Смотрите:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
-Так, ну тут вообще ничего интересного:
-\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-Я надеюсь, что вы все поняли, но в общем вот:
-\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
-Производная как с конвейера:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Так, ну тут вообще ничего интересного:
-\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-Дифференцируем не глядя:
 \begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
-Дифференцируем на автопилоте:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=0\cdot x+ 7\cdot 1+ 0\end{dmath}
-Ну тут вообще обсуждать нечего:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(7\cdot x+ 9\right) \right)=\operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Собственно из этого уже мы легко получаем, что:
-\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
-Производная готова, можете забрать:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \right)=0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Дифференцируем по-быстрому:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
-Ээээээээээ... ну тут короче так:
-\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
-Теперь по известным всем вам правилам переходим к следующему выражению:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Па па па па па папапапапа па:
-\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
-И любому ёжику понятно что здесь получится:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
-Па па па па па папапапапа па:
-\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=0\cdot x+ 7\cdot 1+ 0\end{dmath}
-Берем производную на скорость:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Па па па па па папапапапа па:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\right)=3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Как вы помните еще с рождения:
-\begin{dmath}\frac{d}{dx}\left(4\right)=0\end{dmath}
-Так, ну тут вообще ничего интересного:
-\begin{dmath}\frac{d}{dx}\left(4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\end{dmath}
-Вопросы есть откуда это взялось?:
-\begin{dmath}\frac{d}{dx}\left(4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
-\begin{dmath}\frac{d}{dx}\left(5\right)=0\end{dmath}
-Вопросы есть откуда это взялось?:
-\begin{dmath}\frac{d}{dx}\left(5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=0\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \left(\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)\right)\end{dmath}
-Производная как с конвейера:
-\begin{dmath}\frac{d}{dx}\left(5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=\left(0\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \left(\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)\end{dmath}
-Я надеюсь, что вы все поняли, но в общем вот:
-\begin{dmath}\frac{d}{dx}\left(5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)=\left(0\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \left(\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)+ \left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot \left(\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7+ (-1)\cdot \left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\right)\end{dmath}
-И любому ёжику понятно что здесь получится:
-\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
-И любому ёжику понятно что здесь получится:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Так, тут производная будет... эээ... ну вот:
-\begin{dmath}\frac{d}{dx}\left(2\right)=0\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
-\begin{dmath}\frac{d}{dx}\left(2\cdot x\right)=0\cdot x+ 2\cdot 1\end{dmath}
-Ээээээээээ... ну тут короче так:
-\begin{dmath}\frac{d}{dx}\left(3\right)=0\end{dmath}
-И любому ёжику понятно что здесь получится:
-\begin{dmath}\frac{d}{dx}\left(3\cdot 2\cdot x\right)=0\cdot 2\cdot x+ 3\cdot \left(0\cdot x+ 2\cdot 1\right)\end{dmath}
-Так, тут производная будет... эээ... ну вот:
-\begin{dmath}\frac{d}{dx}\left(3\cdot 2\cdot x\cdot 15\right)=\left(0\cdot 2\cdot x+ 3\cdot \left(0\cdot x+ 2\cdot 1\right)\right)\cdot 15+ 3\cdot 2\cdot x\cdot 0\end{dmath}
-Так, ну тут вообще ничего интересного:
-\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
-Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
-\begin{dmath}\frac{d}{dx}\left(x^{3}\right)=3\cdot x^{3- 1}\cdot 1\end{dmath}
-Секундочку... вычисляем... готово:
-\begin{dmath}\frac{d}{dx}\left(x^{3}\cdot 15\right)=3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\end{dmath}
-Секундочку... вычисляем... готово:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(x^{3}\cdot 15\right) \right)=(-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15\right)=(-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\cdot 3\cdot 2\cdot x\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot 2\cdot x+ 3\cdot \left(0\cdot x+ 2\cdot 1\right)\right)\cdot 15+ 3\cdot 2\cdot x\cdot 0\right)\end{dmath}
-Как вы помните еще с рождения:
-\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Не трудно заметить, что:
-\begin{dmath}\frac{d}{dx}\left(x^{2}\right)=2\cdot x^{2- 1}\cdot 1\end{dmath}
-Дифференцируем на автопилоте:
-\begin{dmath}\frac{d}{dx}\left(3\right)=0\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
-\begin{dmath}\frac{d}{dx}\left(3\cdot x^{2}\right)=0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\end{dmath}
-Собственно из этого уже мы легко получаем, что:
-\begin{dmath}\frac{d}{dx}\left(3\cdot x^{2}\cdot 15\right)=\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\end{dmath}
-Это достаточно просто преобразуется в следующее выражение:
-\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
-Как вы помните еще с рождения:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-По правилам дифференцирования, которые вы все знаете наизусть:
-\begin{dmath}\frac{d}{dx}\left(x^{2}\right)=2\cdot x^{2- 1}\cdot 1\end{dmath}
-Па па па па па папапапапа па:
-\begin{dmath}\frac{d}{dx}\left(3\right)=0\end{dmath}
-Ээээээээээ... ну тут короче так:
-\begin{dmath}\frac{d}{dx}\left(3\cdot x^{2}\right)=0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вот что получается, когда числа дружат:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Смиритесь, это и есть ответ:
+
+\subsubsection*{Дифференцируем:}
+
 Тыры-пыры, шуры-муры и вот оно:
-\begin{dmath}\frac{d}{dx}\left(3\cdot x^{2}\cdot 15\right)=\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\end{dmath}
-Секундочку... вычисляем... готово:
-\begin{dmath}\frac{d}{dx}\left(15\right)=0\end{dmath}
-Па па па па па папапапапа па:
-\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
-Производная? Легко! Смотрите:
-\begin{dmath}\frac{d}{dx}\left(x^{3}\right)=3\cdot x^{3- 1}\cdot 1\end{dmath}
-Производная как с конвейера:
-\begin{dmath}\frac{d}{dx}\left(x^{3}\cdot 15\right)=3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\end{dmath}
-Так, щас быстренько продифференцировать... вжух:
-\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) \right)=\operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\end{dmath}
-Дифференцируем не глядя:
-\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
-Тыры-пыры, шуры-муры и вот оно:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \right)=0\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) + (-1)\cdot \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\end{dmath}
-Дифференцируем не глядя:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\right)=\left(0\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) + (-1)\cdot \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)\end{dmath}
-Как вы помните еще с рождения:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15\right)=\left(\left(0\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) + (-1)\cdot \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)\end{dmath}
-Производная? Легко! Смотрите:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15\right)=\left(\left(0\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) + (-1)\cdot \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\cdot 3\cdot 2\cdot x\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot 2\cdot x+ 3\cdot \left(0\cdot x+ 2\cdot 1\right)\right)\cdot 15+ 3\cdot 2\cdot x\cdot 0\right)\end{dmath}
-Не трудно заметить, что:
-\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)=\left(\left(0\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) + (-1)\cdot \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{2- 1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{3- 1}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\cdot 3\cdot 2\cdot x\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot 2\cdot x+ 3\cdot \left(0\cdot x+ 2\cdot 1\right)\right)\cdot 15+ 3\cdot 2\cdot x\cdot 0\right)+ \left(0\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \left(\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)+ \left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\right)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot \left(\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7+ (-1)\cdot \left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7\cdot 1+ 0\right)\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\right)\end{dmath}
-\subsection*{Попробуем упростить полученное выражение}
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Миссия выполнена: выражение упрощено до конца:
+
+\subsubsection*{Дифференцируем:}
+
+Это достаточно просто преобразуется в следующее выражение:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Хм... а тут и упрощать-то нечего:
+
+\subsubsection*{Дифференцируем:}
+
+Ээээээээээ... ну тут короче так:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
 \\Считаем в уме... раз... два... готово:\\
 \begin{dmath}
-	\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right) = \left(\left(0\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) + (-1)\cdot \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{2}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot \left(\left(0\cdot x^{2}+ 3\cdot 2\cdot x^{1}\cdot 1\right)\cdot 15+ 3\cdot x^{2}\cdot 0\right)+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot \left(3\cdot x^{2}\cdot 1\cdot 15+ x^{3}\cdot 0\right)\cdot 3\cdot 2\cdot x\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot \left(\left(0\cdot 2\cdot x+ 3\cdot \left(0\cdot x+ 2\right)\right)\cdot 15+ 3\cdot 2\cdot x\cdot 0\right)+ \left(0\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \left(\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7+ 0\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)\right)\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot \left(\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7+ 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right)+ \left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7+ 0\right)\right)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot \left(\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7+ (-1)\cdot \left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(0\cdot x+ 7+ 0\right)\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\right)\right)\cdot 7+ (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\right)\end{dmath}
+	\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\right) = (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
 
-Опа, а тут числа сами посчитались!:\\
+Это как есть, и это прекрасно:
+
+\subsubsection*{Дифференцируем:}
+
+Так, тут производная будет... эээ... ну вот:
+\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение самодостаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Так, тут производная будет... эээ... ну вот:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7+ (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Долго ли, коротко ли, но посчиталось:\\
 \begin{dmath}
-	\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right) = \left((-1)\cdot \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot 2\cdot x\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot 2\cdot x\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot 15+ 5\cdot \left(4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(7+ 0\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(7+ 0\right)\cdot 7\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot \left(7+ 0\right)\cdot 7+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(7+ 0\right)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot \left(7+ 0\right)\cdot 7\cdot 7\end{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7+ (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right) = (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
 
-Зачем нам лишние вычисления? Вот проще:\\
+Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Не трудно заметить, что:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)=(-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7+ (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощаем по-хардкору:\\
 \begin{dmath}
-	\frac{d}{dx}\left(\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\right) = \left((-1)\cdot \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot 2\cdot x\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot 2\cdot x\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 90+ 5\cdot \left(4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\end{dmath}
+	\frac{d}{dx}\left((-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7+ (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\right) = (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\end{dmath}
 
-На этом я все, все остальное упрощайте сами, все равно на письмаке вам в задании скажут все это не упрощать...\\
-\section{Построение графиков функций:}
-Построим график функции :\\
+Вы достигли уровня 'и так сойдёт':
 
-\begin{dmath} f(x)=\operatorname{sin}\left(x^{3}\cdot 15\right) + \operatorname{cos}\left(7\cdot x+ 9\right) ^{5}+ 1\end{dmath}
+\subsubsection*{Дифференцируем:}
 
-\begin{dmath} g(x)=\left((-1)\cdot \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot 2\cdot x\cdot 15\right)\cdot 3\cdot x^{2}\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot 2\cdot x\cdot 15+ (-1)\cdot \operatorname{sin}\left(x^{3}\cdot 15\right) \cdot 3\cdot x^{2}\cdot 15\cdot 3\cdot 2\cdot x\cdot 15+ \operatorname{cos}\left(x^{3}\cdot 15\right) \cdot 90+ 5\cdot \left(4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\end{dmath}
+Собственно из этого уже мы легко получаем, что:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Математика говорит: 'Хватит, остановись!'
 
-\includegraphics[width=1\textwidth]{graph2.pdf}
+\subsubsection*{Дифференцируем:}
 
-\end{document}
+Теперь по известным всем вам правилам переходим к следующему выражению:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение уже в максимально простой форме:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем не глядя:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Дальше только квантовая физика... а нам не надо:
+
+\subsubsection*{Дифференцируем:}
+
+Вопросы есть откуда это взялось?:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Считаем в уме... раз... два... готово:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Дальше не упрощается, это конечная форма:
+
+\subsubsection*{Дифференцируем:}
+
+Производная? Легко! Смотрите:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это как есть, и это прекрасно:
+
+\subsubsection*{Дифференцируем:}
+
+Берем производную на скорость:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Можно попробовать, но зачем, если и так всё ясно?:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем на автопилоте:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\right)=4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Дальше не упрощается, это конечная форма:
+
+\subsubsection*{Дифференцируем:}
+
+После долгих мучительных преобразований мы наконец получаем:
+\begin{dmath}\frac{d}{dx}\left(5\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Всё и так на своих местах:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем на автопилоте:
+\begin{dmath}\frac{d}{dx}\left(5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это как 2+2, только сложнее:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right) = 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+
+Всё и так на своих местах:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем на автопилоте:
+\begin{dmath}\frac{d}{dx}\left(5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)=5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Дальше не упрощается, это конечная форма:
+
+\subsubsection*{Дифференцируем:}
+
+Не трудно заметить, что:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Это достаточно просто преобразуется в следующее выражение:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вы достигли уровня 'и так сойдёт':
+
+\subsubsection*{Дифференцируем:}
+
+Так, щас быстренько продифференцировать... вжух:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Можно попробовать, но зачем, если и так всё ясно?:
+
+\subsubsection*{Дифференцируем:}
+
+Я надеюсь, что вы все поняли, но в общем вот:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Кажется, вы достигли дна упрощения:
+
+\subsubsection*{Дифференцируем:}
+
+Берем производную на скорость:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вот что бывает, когда числа подчиняются законам математики\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Перфекционизм - это хорошо, но тут нечего улучшать:
+
+\subsubsection*{Дифференцируем:}
+
+Ну это же элементарно, Ватсон:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Хм... а тут и упрощать-то нечего:
+
+\subsubsection*{Дифференцируем:}
+
+Па па па па па папапапапа па:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(7\cdot x+ 9\right) \right)=\operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Всё уже упрощено до предела:
+
+\subsubsection*{Дифференцируем:}
+
+Не трудно заметить, что:
+\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Готово! Больше нечего сокращать:
+
+\subsubsection*{Дифференцируем:}
+
+Это достаточно просто преобразуется в следующее выражение:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \right)=0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощаем по-хардкору:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+
+Выражение говорит: 'Я и так хорош!'
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=(-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вот что бывает, когда числа подчиняются законам математики\\
+\begin{dmath}
+	\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+
+Математика говорит: 'Хватит, остановись!'
+
+\subsubsection*{Дифференцируем:}
+
+Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Всё уже упрощено до предела:
+
+\subsubsection*{Дифференцируем:}
+
+Не спрашивайте вообще, как это у нас получилось:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение говорит: 'Я и так хорош!'
+
+\subsubsection*{Дифференцируем:}
+
+Не спрашивайте вообще, как это у нас получилось:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощать нечего, и так всё понятно:
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Хм... а тут и упрощать-то нечего:
+
+\subsubsection*{Дифференцируем:}
+
+Производная? Легко! Смотрите:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Тут даже ИИ не нужен, обычный калькулятор справится:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Всё уже упрощено до предела:
+
+\subsubsection*{Дифференцируем:}
+
+Так, щас быстренько продифференцировать... вжух:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вы достигли уровня 'и так сойдёт':
+
+\subsubsection*{Дифференцируем:}
+
+Ну тут вообще обсуждать нечего:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(7\cdot x+ 9\right) \right)=\operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Оставьте выражение в покое, оно и так достаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Так, тут производная будет... эээ... ну вот:
+\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Готово! Больше нечего сокращать:
+
+\subsubsection*{Дифференцируем:}
+
+Я надеюсь, что вы все поняли, но в общем вот:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \right)=0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Считаем в уме... раз... два... готово:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+
+Математика говорит: 'Хватит, остановись!'
+
+\subsubsection*{Дифференцируем:}
+
+Вопросы есть откуда это взялось?:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=(-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Секретная техника вычислений раскрыта:\\
+\begin{dmath}
+	\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+
+Выражение говорит: 'Я и так хорош!'
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем на автопилоте:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощать больше нечего, возьмите с полки пирожок:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем по-быстрому:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Готово! Больше нечего сокращать:
+
+\subsubsection*{Дифференцируем:}
+
+Ээээээээээ... ну тут короче так:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение уже в максимально простой форме:
+
+\subsubsection*{Дифференцируем:}
+
+Это достаточно просто преобразуется в следующее выражение:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это как 2+2, только сложнее:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Ну тут вообще обсуждать нечего:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Перед вами - идеал математической простоты:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем как боги:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Оставьте выражение в покое, оно и так достаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Не спрашивайте вообще, как это у нас получилось:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\right)=3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Всё уже упрощено до предела:
+
+\subsubsection*{Дифференцируем:}
+
+Собственно из этого уже мы легко получаем, что:
+\begin{dmath}\frac{d}{dx}\left(4\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Перед вами - идеал математической простоты:
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left(4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Смотрите-ка, а тут можно посчитать!\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right) = 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+
+Иногда простота - это и есть сложность:
+
+\subsubsection*{Дифференцируем:}
+
+Ну это же элементарно, Ватсон:
+\begin{dmath}\frac{d}{dx}\left(4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вы достигли уровня 'и так сойдёт':
+
+\subsubsection*{Дифференцируем:}
+
+Так, тут производная будет... эээ... ну вот:
+\begin{dmath}\frac{d}{dx}\left(5\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Смиритесь, это и есть ответ:
+
+\subsubsection*{Дифференцируем:}
+
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=0\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \left(4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Тут даже ИИ не нужен, обычный калькулятор справится:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \left(4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)\right) = 5\cdot \left(4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)\end{dmath}
+
+Можно попробовать, но зачем, если и так всё ясно?:
+
+\subsubsection*{Дальнейшее по аналогии...}
+
+\section*{Построение графика функций}
+
+Сказал же, по аналогии. Сами дальше стройте!Идем дальше...
+
+\subsubsection*{Дифференцируем:}
+
+Производная как с конвейера:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Всё и так на своих местах:
+
+\subsubsection*{Дифференцируем:}
+
+Давайте не будем слишком долго останавливаться на таких простых преобразованиях и просто сразу напишем:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Хм... а тут и упрощать-то нечего:
+
+\subsubsection*{Дифференцируем:}
+
+Производная? Легко! Смотрите:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощать нечего, и так всё понятно:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем не глядя:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вы достигли уровня 'и так сойдёт':
+
+\subsubsection*{Дифференцируем:}
+
+Тыры-пыры, шуры-муры и вот оно:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Смиритесь, это и есть ответ:
+
+\subsubsection*{Дифференцируем:}
+
+Берем производную на скорость:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение самодостаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Вопросы есть откуда это взялось?:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Долго ли, коротко ли, но посчиталось:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Это как есть, и это прекрасно:
+
+\subsubsection*{Дифференцируем:}
+
+Па па па па па папапапапа па:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение говорит: 'Я и так хорош!'
+
+\subsubsection*{Дифференцируем:}
+
+Па па па па па папапапапа па:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(7\cdot x+ 9\right) \right)=\operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это как есть, и это прекрасно:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем по-быстрому:
+\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Перед вами - идеал математической простоты:
+
+\subsubsection*{Дифференцируем:}
+
+Производная? Легко! Смотрите:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \right)=0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощаем по-хардкору:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+
+Выражение самодостаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=(-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Surprise можно было и не писать столько:\\
+\begin{dmath}
+	\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+
+Можно попробовать, но зачем, если и так всё ясно?:
+
+\subsubsection*{Дифференцируем:}
+
+Берем производную на скорость:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)=(-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Ну наконец-то хоть что-то посчиталось:\\
+\begin{dmath}
+	\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\end{dmath}
+
+Дальше не упрощается, это конечная форма:
+
+\subsubsection*{Дифференцируем:}
+
+Ну тут вообще обсуждать нечего:
+\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение говорит: 'Я и так хорош!'
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем как боги:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)=0\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Секретная техника вычислений раскрыта:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\right) = (-1)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\end{dmath}
+
+Всё и так на своих местах:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем на автопилоте:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\right)=(-1)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\cdot 7+ (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Да это ж в уме посчитать можно:\\
+\begin{dmath}
+	\frac{d}{dx}\left((-1)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\cdot 7+ (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 0\right) = (-1)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\cdot 7\end{dmath}
+
+Это как есть, и это прекрасно:
+
+\subsubsection*{Дифференцируем:}
+
+Па па па па па папапапапа па:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это и так оптимально, дальше некуда:
+
+\subsubsection*{Дифференцируем:}
+
+Это достаточно просто преобразуется в следующее выражение:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Хм... а тут и упрощать-то нечего:
+
+\subsubsection*{Дифференцируем:}
+
+Ну тут вообще обсуждать нечего:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Сокращаем-сокращаем... и вот:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Это и так оптимально, дальше некуда:
+
+\subsubsection*{Дифференцируем:}
+
+Производная как с конвейера:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощать нечего, и так всё понятно:
+
+\subsubsection*{Дифференцируем:}
+
+Производная? Легко! Смотрите:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Можно попробовать, но зачем, если и так всё ясно?:
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\right)=4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Миссия выполнена: выражение упрощено до конца:
+
+\subsubsection*{Дифференцируем:}
+
+Не спрашивайте вообще, как это у нас получилось:
+\begin{dmath}\frac{d}{dx}\left(5\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощать больше нечего, возьмите с полки пирожок:
+
+\subsubsection*{Дифференцируем:}
+
+Не спрашивайте вообще, как это у нас получилось:
+\begin{dmath}\frac{d}{dx}\left(5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вот это да! Калькулятор сработал!:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}+ 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right) = 5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+
+Иногда простота - это и есть сложность:
+
+\subsubsection*{Дифференцируем:}
+
+Так, щас быстренько продифференцировать... вжух:
+\begin{dmath}\frac{d}{dx}\left(5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\right)=5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7+ 5\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{4}\cdot (-1)\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это и так оптимально, дальше некуда:
+
+\subsubsection*{Дифференцируем:}
+
+Ну это же элементарно, Ватсон:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Кажется, вы достигли дна упрощения:
+
+\subsubsection*{Дифференцируем:}
+
+Производная? Легко! Смотрите:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Всё и так на своих местах:
+
+\subsubsection*{Дифференцируем:}
+
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это как есть, и это прекрасно:
+
+\subsubsection*{Дифференцируем:}
+
+Не трудно заметить, что:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вы достигли уровня 'и так сойдёт':
+
+\subsubsection*{Дифференцируем:}
+
+Так, щас быстренько продифференцировать... вжух:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Математика говорит: 'Хватит, остановись!'
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Магия! Исчезли лишние действия:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Математика говорит: 'Хватит, остановись!'
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Вы достигли уровня 'и так сойдёт':
+
+\subsubsection*{Дифференцируем:}
+
+Па па па па па папапапапа па:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Долго ли, коротко ли, но посчиталось:\\
+\begin{dmath}
+	\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 0\right) = (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+
+Всё и так на своих местах:
+
+\subsubsection*{Дифференцируем:}
+
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Кажется, вы достигли дна упрощения:
+
+\subsubsection*{Дифференцируем:}
+
+Ну тут вообще обсуждать нечего:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7+ (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Долго ли, коротко ли, но посчиталось:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7+ (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right) = (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+
+Упрощать больше нечего, возьмите с полки пирожок:
+
+\subsubsection*{Дифференцируем:}
+
+Как вы помните еще с рождения:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)=(-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7+ (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Считаем в уме... раз... два... готово:\\
+\begin{dmath}
+	\frac{d}{dx}\left((-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7+ (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 0\right) = (-1)\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\cdot 7\end{dmath}
+
+Кажется, вы достигли дна упрощения:
+
+\subsubsection*{Дифференцируем:}
+
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это финальная форма, аплодируем стоя:
+
+\subsubsection*{Дифференцируем:}
+
+Собственно из этого уже мы легко получаем, что:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Перед вами - идеал математической простоты:
+
+\subsubsection*{Дифференцируем:}
+
+Берем производную на скорость:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Это и так оптимально, дальше некуда:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем не глядя:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Дальше только квантовая физика... а нам не надо:
+
+\subsubsection*{Дифференцируем:}
+
+Это достаточно просто преобразуется в следующее выражение:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Зачем нам лишние вычисления? Вот проще:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Готово! Больше нечего сокращать:
+
+\subsubsection*{Дифференцируем:}
+
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Всё уже упрощено до предела:
+
+\subsubsection*{Дифференцируем:}
+
+Производная готова, можете забрать:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{sin}\left(7\cdot x+ 9\right) \right)=\operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение уже в максимально простой форме:
+
+\subsubsection*{Дифференцируем:}
+
+Ну тут вообще обсуждать нечего:
+\begin{dmath}\frac{d}{dx}\left((-1)\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение говорит: 'Я и так хорош!'
+
+\subsubsection*{Дифференцируем:}
+
+Ну тут вообще обсуждать нечего:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \right)=0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Как по маслу пошло:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{sin}\left(7\cdot x+ 9\right) + (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+
+Готово! Больше нечего сокращать:
+
+\subsubsection*{Дифференцируем:}
+
+Так, ну тут вообще ничего интересного:
+\begin{dmath}\frac{d}{dx}\left((-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=(-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Surprise можно было и не писать столько:\\
+\begin{dmath}
+	\frac{d}{dx}\left((-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7+ (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 0\right) = (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+
+Готово! Больше нечего сокращать:
+
+\subsubsection*{Дифференцируем:}
+
+Вопросы есть откуда это взялось?:
+\begin{dmath}\frac{d}{dx}\left(9\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Можно попробовать, но зачем, если и так всё ясно?:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем не глядя:
+\begin{dmath}\frac{d}{dx}\left(x\right)=1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение уже в максимально простой форме:
+
+\subsubsection*{Дифференцируем:}
+
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(7\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Кажется, вы достигли дна упрощения:
+
+\subsubsection*{Дифференцируем:}
+
+Как вы помните еще с рождения:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x\right)=0\cdot x+ 7\cdot 1\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Тут даже ИИ не нужен, обычный калькулятор справится:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot x+ 7\cdot 1\right) = 7\end{dmath}
+
+Иногда простота - это и есть сложность:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем по-быстрому:
+\begin{dmath}\frac{d}{dx}\left(7\cdot x+ 9\right)=7+ 0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Дальше не упрощается, это конечная форма:
+
+\subsubsection*{Дифференцируем:}
+
+Собственно из этого уже мы легко получаем, что:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) \right)=(-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение самодостаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Дифференцируем на автопилоте:
+\begin{dmath}\frac{d}{dx}\left(\operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\right)=3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3- 1}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощать нечего, и так всё понятно:
+
+\subsubsection*{Дифференцируем:}
+
+Как вы помните еще с рождения:
+\begin{dmath}\frac{d}{dx}\left(4\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощать больше нечего, возьмите с полки пирожок:
+
+\subsubsection*{Дифференцируем:}
+
+Так, тут производная будет... эээ... ну вот:
+\begin{dmath}\frac{d}{dx}\left(4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\right)=0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Ну тут всё очевидно, даже комментировать не буду:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}+ 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right) = 4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\end{dmath}
+
+Оставьте выражение в покое, оно и так достаточно:
+
+\subsubsection*{Дифференцируем:}
+
+Берем производную на скорость:
+\begin{dmath}\frac{d}{dx}\left(4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Математика говорит: 'Хватит, остановись!'
+
+\subsubsection*{Дифференцируем:}
+
+И любому ёжику понятно что здесь получится:
+\begin{dmath}\frac{d}{dx}\left(5\right)=0\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Выражение говорит: 'Я и так хорош!'
+
+\subsubsection*{Дифференцируем:}
+
+Я надеюсь, что вы все поняли, но в общем вот:
+\begin{dmath}\frac{d}{dx}\left(5\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\right)=0\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \left(4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)\end{dmath}
+\subsubsection*{Попробуем упростить полученное выражение}
+\\Упрощаем по-хардкору:\\
+\begin{dmath}
+	\frac{d}{dx}\left(0\cdot 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 5\cdot \left(4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)\right) = 5\cdot \left(4\cdot 3\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{2}\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7\cdot (-1)\cdot \operatorname{sin}\left(7\cdot x+ 9\right) \cdot 7+ 4\cdot \operatorname{cos}\left(7\cdot x+ 9\right) ^{3}\cdot (-1)\cdot \operatorname{cos}\left(7\cdot x+ 9\right) \cdot 7\cdot 7\right)\end{dmath}
+
+Дальше только квантовая физика... а нам не надо:
+
+\subsubsection*{Дальнейшее по аналогии...}
+
+\section*{Построение графика функций}
+
+Сказал же, по аналогии. Сами дальше стройте!\end{document}
