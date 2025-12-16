@@ -67,4 +67,4 @@ ObjectFiles/SimplifyExpression.o: SimplifyExpression.cpp SimplifyExpression.h In
 	@ g++ $(FLAGS) $(MODE) -c SimplifyExpression.cpp -o ObjectFiles/SimplifyExpression.o
 
 clean:
-	rm ObjectFiles/*.o
+	rm ObjectFiles/*.o math++ TreeMemStruct/svg_dot/*.svg
