@@ -23,7 +23,7 @@ TreeErr_t SimplifyExpression(FILE* file, Node_t* base_tree, Node_t** tree, int* 
         *tree = result;
         if(is_change_CF)
         {
-            TreeDump(*tree, (*count_img)++);
+            //TreeDump(*tree, (*count_img)++);
             if(CountTreeSize(base_tree) < MAX_DUMP_SIZE && *is_print == true)
                 PrintSimplifyRes(file, base_tree, *tree, "x", is_change_NEE);
             else *is_print = false;
@@ -34,7 +34,7 @@ TreeErr_t SimplifyExpression(FILE* file, Node_t* base_tree, Node_t** tree, int* 
         *tree = result;
         if(is_change_NEE)
         {
-            TreeDump(*tree, (*count_img)++);
+            //TreeDump(*tree, (*count_img)++);
             if(CountTreeSize(base_tree) < MAX_DUMP_SIZE && *is_print == true)
                 PrintSimplifyRes(file, base_tree, *tree, "x", is_change_NEE);
             else *is_print = false;

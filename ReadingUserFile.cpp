@@ -1,5 +1,22 @@
 #include "ReadingUserFile.h"
 
+
+Tree_t* GetExpression(const char* const file_name)
+{
+    assert(file_name);
+
+    char* user_file = ReadFile(file_name);
+    assert(user_file && "NULL user_file, check ReadFile func");
+
+    char* cur_pos = SkipSpaces(user_file);
+
+    Node_t* user_nodes = GetG(&cur_pos);
+    MakePrevNode(user_nodes);
+    FREE(user_file)
+
+    return TreeCtor(user_nodes);
+}
+
 Node_t* GetTreeNode(char** cur_pos)
 {
     ON_DEBUG(printf("In func GetTreeNode\n"));
@@ -118,7 +135,7 @@ Node_t* GetG(char** s)
     if((**s) != '\0')
     {
         //DeleteTreeNode(&root);
-        ERR_PRINT("SyntaxErr\n");
+        ERR_PRINT("SyntaxErr in GetG\n");
         return NULL;
     }
     return root;
@@ -212,7 +229,7 @@ Node_t* GetP(char** s)
         }
         else
         {
-            ERR_PRINT("SyntaxErr\n");
+            ERR_PRINT("SyntaxErr in GetP after '('\n");
             DeleteTreeNode(&node);
         }
     }
@@ -241,7 +258,7 @@ Node_t* GetP(char** s)
                     DeleteTreeNode(&args);
                     return node;
                 }
-                ERR_PRINT("SyntaxErr\n");
+                ERR_PRINT("SyntaxErr in GetP apsent ')'\n");
                 DeleteTreeNode(&args);
             }
         }

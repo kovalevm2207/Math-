@@ -209,7 +209,6 @@ double CalcTreeNode(const Node_t* node, const Var_t* vars, const size_t vars_num
 {
     assert(node);
     assert(vars);
-
     switch(node->node_type)
     {
         default:

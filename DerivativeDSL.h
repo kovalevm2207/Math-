@@ -7,6 +7,7 @@
     #define        d(sub_tree) TakeDerivative(file, sub_tree, var, count_img, is_print)
     #define        c(sub_tree) DeepNodeCopy(sub_tree)
     #define        n(number)   TreeNodeCtor_(NUM, {.num = number}, NULL, NULL)
+    #define        v(name)   TreeNodeCtor_(VAR, {.var = strdup(name)}, NULL, NULL)
     #define     ADD_(left_sub_tree, right_sub_tree) TreeNodeCtor_(OP, {.op = ADD   }, left_sub_tree, right_sub_tree)
     #define     SUB_(left_sub_tree, right_sub_tree) TreeNodeCtor_(OP, {.op = SUB   }, left_sub_tree, right_sub_tree)
     #define     MUL_(left_sub_tree, right_sub_tree) TreeNodeCtor_(OP, {.op = MUL   }, left_sub_tree, right_sub_tree)

@@ -33,10 +33,12 @@ all: math++
 
 math++: ObjectFiles/Main.o        ObjectFiles/Tree.o            ObjectFiles/TreeDump.o \
 		ObjectFiles/Instruments.o ObjectFiles/ReadingUserFile.o ObjectFiles/PrintFunctions.o \
-		ObjectFiles/Derivative.o  ObjectFiles/Graph.o           ObjectFiles/SimplifyExpression.o
+		ObjectFiles/Derivative.o  ObjectFiles/Graph.o           ObjectFiles/SimplifyExpression.o \
+		ObjectFiles/Teylor.o
 	@ g++ $(FLAGS) $(MODE) ObjectFiles/Main.o        ObjectFiles/Tree.o            ObjectFiles/TreeDump.o \
 						   ObjectFiles/Instruments.o ObjectFiles/ReadingUserFile.o ObjectFiles/PrintFunctions.o \
-						   ObjectFiles/Derivative.o  ObjectFiles/Graph.o           ObjectFiles/SimplifyExpression.o -o math++
+						   ObjectFiles/Derivative.o  ObjectFiles/Graph.o           ObjectFiles/SimplifyExpression.o -o math++ \
+						   ObjectFiles/Teylor.o
 
 ObjectFiles/Tree.o: TreeMemStruct/Tree.cpp TreeMemStruct/Tree.h TreeMemStruct/TreeBase.h
 	@ g++ $(FLAGS) $(MODE) -c TreeMemStruct/Tree.cpp -o ObjectFiles/Tree.o
@@ -65,6 +67,9 @@ ObjectFiles/Graph.o: Graph.cpp Graph.h Instruments.h
 
 ObjectFiles/SimplifyExpression.o: SimplifyExpression.cpp SimplifyExpression.h Instruments.h
 	@ g++ $(FLAGS) $(MODE) -c SimplifyExpression.cpp -o ObjectFiles/SimplifyExpression.o
+
+ObjectFiles/Teylor.o: Teylor.cpp Teylor.h Instruments.h
+	@ g++ $(FLAGS) $(MODE) -c Teylor.cpp -o ObjectFiles/Teylor.o
 
 clean:
 	rm ObjectFiles/*.o math++ TreeMemStruct/svg_dot/*.svg

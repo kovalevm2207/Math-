@@ -7,6 +7,7 @@
     #undef d
     #undef c
     #undef n
+    #undef v
     #undef ADD_
     #undef SUB_
     #undef MUL_

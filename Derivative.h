@@ -12,7 +12,7 @@ typedef struct
     double data;
 } Derivative_t;
 
-const int TEYLOR_ORDER = 4;
+const int TAYLOR_ORDER = 7;
 const int MAX_DUMP_DERIVATIVE_ORDER = 3;
 
 Derivative_t* GetNDerivatives(FILE* file, Tree_t* user_tree, int* count_img);

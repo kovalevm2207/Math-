@@ -3,6 +3,8 @@
 
 #include "Instruments.h"
 
+Tree_t* GetExpression(const char* const file_name);
+
 Node_t* GetTreeNode(char** cur_pos);
 data_t* GetAndUnulyzeWord(char** cur_pos, data_t* data);
 data_t* AnalyzeWord(char* word, data_t* data);

@@ -96,7 +96,7 @@ const size_t START_VARS_NUM = 4;
 
 typedef struct
 {
-    char*  name;
+    const char*  name;
     double data;
 } Var_t;
 

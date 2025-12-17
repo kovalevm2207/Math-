@@ -1,20 +1,25 @@
 #include "Derivative.h"
 
 
-Derivative_t* GetNDerivatives(FILE* file, Tree_t* user_tree, int* count_img)
+Derivative_t*   GetNDerivatives(FILE* file, Tree_t* user_tree, int* count_img)
 {
     assert(user_tree);
     assert(count_img);
     assert(file);
 
-    Derivative_t* derivatives = (Derivative_t*) calloc(TEYLOR_ORDER + 1, sizeof(Derivative_t));
+
+    Derivative_t* derivatives = (Derivative_t*) calloc(TAYLOR_ORDER + 1, sizeof(Derivative_t));
     derivatives[0].tree = user_tree;
 
     GetVarsValues(user_tree);
     ON_DEBUG(TreeStructDump(user_tree));
 
+    derivatives[0].data = CalcTreeNode(derivatives[0].tree->root,
+                                       derivatives[0].tree->vars,
+                                       derivatives[0].tree->vars_num);
+
     bool is_print = true;
-    for(int derivative_order = 1; derivative_order <= TEYLOR_ORDER; derivative_order++)
+    for(int derivative_order = 1; derivative_order <= TAYLOR_ORDER; derivative_order++)
     {
         if(derivative_order > 1) fprintf(file, "Идем дальше...\n\n");
         if(derivative_order <= MAX_DUMP_DERIVATIVE_ORDER)
@@ -23,7 +28,8 @@ Derivative_t* GetNDerivatives(FILE* file, Tree_t* user_tree, int* count_img)
         Node_t* derivative = TakeDerivative(file, derivatives[derivative_order - 1].tree->root, "x", count_img, &is_print);
         MakePrevNode(derivative);
         derivatives[derivative_order].tree = TreeCtor(derivative);
-        TreeDump(derivative, (*count_img)++);
+        //if(derivative_order <= MAX_DUMP_DERIVATIVE_ORDER)
+        //    TreeDump(derivative, (*count_img)++);
 
         if(derivatives[derivative_order].tree->size < MAX_DUMP_SIZE)
         {
