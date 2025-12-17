@@ -1,1 +1,7 @@
-sin((x^3)*15)+cos(7*x+9)^5+1
+formula: sin((x^3)*15)+cos(7*x+9)^5+1$
+
+taylor_order  = 7
+expansion_dot = 2.5
+
+x_scale: {-1.5:1.5}
+y_scale: {-1:2.5}
