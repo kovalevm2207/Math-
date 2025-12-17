@@ -1,9 +1,9 @@
-G   ::= F T_O E_D X_S Y_S
+G   ::= F [T_O] [E_D] [X_S] [Y_S]
 F   ::= "formula:" E '$'
-T_O ::= "taylor_order  =" N
-E_D ::= "expansion_dot =" N
-X_S ::= "x_scale:" '{' N : N '}'
-Y_S ::= "y_scale:" '{' N : N '}'
+T_O ::= "taylor_order"  '=' N
+E_D ::= "expansion_dot" '=' N
+X_S ::= "x_scale:" '{' N ':' N '}'
+Y_S ::= "y_scale:" '{' N ':' N '}'
 E   ::= T {['+' '-'] T }*
 T   ::= S {['*' '/'] S }*
 S   ::= P ['^' S]
