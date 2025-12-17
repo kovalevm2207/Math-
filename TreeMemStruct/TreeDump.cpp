@@ -28,8 +28,6 @@ FILE* StartHTMLfile(void)
     fclose(dump_file);
     return  dump_file;
 }
-
-
 TreeErr_t CreateDotFile(const Node_t* node)
 {
     assert(node != NULL);
@@ -57,18 +55,18 @@ TreeErr_t CreateDotFile(const Node_t* node)
                                  "dir=normal]\n");
 
     int node_count = 0;
-    MakeNodes(node, &node_count, dump_file);
+    DEBUG_OFF(MakeNodes(node, &node_count, dump_file));
+    ON_DEBUG(MakeManyNodes(node, &node_count, dump_file));
 
     node_count = 0;
-    MakeArrows(node, &node_count, dump_file);
+    DEBUG_OFF(MakeArrows(node, &node_count, dump_file));
+    ON_DEBUG(MakeManyArrows(node, &node_count, dump_file));
 
     fprintf(dump_file,"}\n");
 
     fclose(dump_file);
     return TREE_OK;
 }
-
-
 void MakeNodes(const Node_t* node, int* node_count, FILE* file)
 {
     assert(node != NULL);
@@ -157,8 +155,71 @@ void MakeNodes(const Node_t* node, int* node_count, FILE* file)
 
     return;
 }
+void MakeManyNodes(const Node_t* node, int* node_count, FILE* file)
+{
+    assert(node != NULL);
+    assert(file != NULL);
+    assert(node_count != NULL);
 
+    const char* shape = NULL, *color = NULL;
 
+    switch(node->node_type)
+    {
+        case NUM:
+            shape = "box";
+            color = "#90EE90";
+            break;
+        case VAR:
+            shape = "circle";
+            color = "#FFB6C1";
+            break;
+        case OP:
+            shape = "triangle";
+            color = "#87CEEB";
+            break;
+        default:
+            fprintf(stderr, "Ошибка: неизвестный тип узла %d\n", node->node_type);
+            return;
+    }
+
+    int current_index = *node_count;
+
+    fprintf(file,
+        "    node%d [shape=%s, style=filled, fillcolor=\"%s\", "
+        "fontcolor=black, fontsize=12, fontname=\"Arial\", label=\"",
+        current_index, shape, color);
+
+    switch(node->node_type)
+    {
+        case NUM:
+            fprintf(file, "%lg", node->value.num);
+            break;
+        case VAR:
+            fprintf(file, "%s", node->value.var);
+            break;
+        case OP:
+            fprintf(file, "%s", Operators[node->value.op].symbol);
+            break;
+        default:
+            break;
+    }
+
+    fprintf(file, "\"];\n");
+
+    if (node->left)
+    {
+        ++*node_count;
+        MakeManyNodes(node->left, node_count, file);
+    }
+
+    if (node->right)
+    {
+        ++*node_count;
+        MakeManyNodes(node->right, node_count, file);
+    }
+
+    return;
+}
 const char* GenerateColor(const void* ptr)
 {
     if (ptr == NULL) return "#cccccc";
@@ -185,8 +246,6 @@ const char* GenerateColor(const void* ptr)
     snprintf(hex, sizeof(hex), "#%02x%02x%02x", r, g, b);
     return hex;
 }
-
-
 void MakeArrows(const Node_t* node, int* node_count, FILE* file)
 {
     assert(node != NULL);
@@ -207,8 +266,26 @@ void MakeArrows(const Node_t* node, int* node_count, FILE* file)
         MakeArrows(node->right, node_count, file);
     }
 }
+void MakeManyArrows(const Node_t* node, int* node_count, FILE* file)
+{
+    assert(node != NULL);
+    assert(file != NULL);
 
+    int cur_node_count = *node_count;
 
+    if (node->left)
+    {
+        fprintf(file, "    node%d -> node%d [dir=normal, color=\"#4d00a6ff\"];\n",
+                       cur_node_count, ++*node_count);
+        MakeArrows(node->left, node_count, file);
+    }
+    if (node->right)
+    {
+        fprintf(file, "    node%d -> node%d [dir=normal, color=\"#4d00a6ff\"];\n",
+                      cur_node_count, ++*node_count);
+        MakeArrows(node->right, node_count, file);
+    }
+}
 TreeErr_t WriteInHtmlFile(const Node_t* node, int count_img, const char* func, const char* file, int line)
 {
     assert(node != NULL);
@@ -228,8 +305,6 @@ TreeErr_t WriteInHtmlFile(const Node_t* node, int count_img, const char* func, c
 
     return TREE_OK;
 }
-
-
 int EndHTMLfile(void)
 {
     FILE* dump_file = fopen("dump.html", "a");

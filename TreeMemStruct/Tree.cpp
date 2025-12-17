@@ -335,7 +335,7 @@ TreeErr_t TreeDump_(FILE* tex_file, const Node_t* node, int count_img, const cha
     system(command);
 
     WriteInHtmlFile(node, count_img, func, file, line);
-    fprintf(tex_file, "\\includegraphics[width=1\\textwidth]{TreeMemStruct/pdf_dot/%ddump.pdf}\n\n", count_img);
+    fprintf(tex_file, "\\includegraphics[width=0.7\\textwidth]{TreeMemStruct/pdf_dot/%ddump.pdf}\n\n", count_img);
 
     return TREE_OK;
 }
