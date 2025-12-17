@@ -15,6 +15,6 @@
 #include "SimplifyExpression.h"
 #include "Teylor.h"
 
-void EndProgram(FILE* tex_file, Derivative_t* derivatives, ProgramData_t input_data);
+void EndProgram(FILE* tex_file, Derivative_t* derivatives, ProgramData_t* input_data);
 
 #endif // MATH_PP

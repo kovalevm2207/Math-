@@ -37,6 +37,7 @@ Tree_t* MakeTaylorTree(Derivative_t* derivatives)
         factorial *= i;
         fprintf(file, "+%f*(x-%f)^%d", derivatives[i].data/factorial, derivatives[0].tree->vars[0].data, i);
     }
+    fprintf(file, "$");
     fclose(file);
 
     return GetExpression("TaylorExpansion.txt");

@@ -144,5 +144,6 @@ void EndLaTeXDocument(FILE* file);
 void PrintPlotBinaryOperator(FILE* file, const char* const op, Node_t* node);
 void PrintPlotUnaryOperator(FILE* file, const char* const op, Node_t* node);
 void WriteTreeNodeGnuPlot(FILE* file, Node_t* node);
+void HelpUser(void);
 
 #endif//PRINT_FUNCTIONS

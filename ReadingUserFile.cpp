@@ -1,6 +1,20 @@
 #include "ReadingUserFile.h"
 
 
+ProgramData_t GetInputData(const char* const file_name)
+{
+    assert(file_name);
+
+    char* user_file = ReadFile(file_name);
+    assert(user_file && "NULL user_file, check ReadFile func");
+
+    char* cur_pos = SkipSpaces(user_file);
+
+    ProgramData_t input_data = GetG(&cur_pos);
+    FREE(user_file)
+
+    return input_data;
+}
 Tree_t* GetExpression(const char* const file_name)
 {
     assert(file_name);
@@ -10,12 +24,13 @@ Tree_t* GetExpression(const char* const file_name)
 
     char* cur_pos = SkipSpaces(user_file);
 
-    Node_t* user_nodes = GetG(&cur_pos);
-    MakePrevNode(user_nodes);
+    Node_t* node = GetE(&cur_pos);
+    MakePrevNode(node);
     FREE(user_file)
 
-    return TreeCtor(user_nodes);
+    return TreeCtor(node);
 }
+  // to do:  MakePrevNode(user_nodes);
 
 Node_t* GetTreeNode(char** cur_pos)
 {
@@ -123,7 +138,162 @@ data_t* AnalyzeWord(char* word, data_t* data)
     return NULL;
 }
 
-Node_t* GetG(char** s)
+
+ProgramData_t GetG(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    ProgramData_t input_data = {};
+
+    Node_t* user_nodes = GetF(s);
+    assert(user_nodes);
+    MakePrevNode(user_nodes);
+    input_data.user_tree = TreeCtor(user_nodes);
+
+    input_data.taylor_order  = GetT_O(s);
+    input_data.expansion_dot = GetE_D(s);
+    input_data.x = GetX_S(s);
+    input_data.y = GetY_S(s);
+
+    return input_data;
+}
+Scale_t GetX_S(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    *s = SkipSpaces(*s);
+
+    Scale_t x_scale = {.left_border = BASE_LEFT_X_SCALE, .right_border = BASE_RIGHT_X_SCALE};
+    if(**s == 'x')
+    {
+        const char syntax_string[] = "x_scale";
+        size_t string_length = sizeof(syntax_string) - 1;
+
+        if(strncmp(*s, syntax_string, string_length) == 0)
+        {
+            *s += string_length;
+            *s = SkipSpaces(*s);
+            if(**s == '{')
+            {
+                ++*s;
+                x_scale.left_border = GetN(s);
+                *s = SkipSpaces(*s);
+                if(**s == ':')
+                {
+                    ++*s;
+                    x_scale.right_border = GetN(s);
+                    *s = SkipSpaces(*s);
+                    if(**s == '}')
+                    {
+                        ++*s;
+                        return x_scale;
+                    }
+                    x_scale.right_border = BASE_RIGHT_X_SCALE;
+                }
+                x_scale.left_border = BASE_LEFT_X_SCALE;
+            }
+        }
+        ERR_PRINT("Syntax Err in GetX_S\n");
+    }
+    return x_scale;
+}
+Scale_t GetY_S(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    *s = SkipSpaces(*s);
+
+    Scale_t y_scale = {.left_border = BASE_LEFT_Y_SCALE, .right_border = BASE_RIGHT_Y_SCALE};
+
+    if(**s == 'y')
+    {
+        const char syntax_string[] = "y_scale";
+        size_t string_length = sizeof(syntax_string) - 1;
+
+        if(strncmp(*s, syntax_string, string_length) == 0)
+        {
+            *s += string_length;
+            *s = SkipSpaces(*s);
+            if(**s == '{')
+            {
+                ++*s;
+                y_scale.left_border = GetN(s);
+                *s = SkipSpaces(*s);
+                if(**s == ':')
+                {
+                    ++*s;
+                    y_scale.right_border = GetN(s);
+                    *s = SkipSpaces(*s);
+                    if(**s == '}')
+                    {
+                        ++*s;
+                        return y_scale;
+                    }
+                    y_scale.right_border = BASE_RIGHT_X_SCALE;
+                }
+                y_scale.left_border = BASE_LEFT_X_SCALE;
+            }
+        }
+        ERR_PRINT("Syntax Err in GetX_S\n");
+    }
+    return y_scale;
+}
+double GetT_O(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    *s = SkipSpaces(*s);
+
+    if(**s == 't')
+    {
+        const char syntax_string[] = "taylor_order";
+        size_t string_length = sizeof(syntax_string) - 1;
+
+        if(strncmp(*s, syntax_string, string_length) == 0)
+        {
+            *s += string_length;
+            *s = SkipSpaces(*s);
+            if(**s == '=')
+            {
+                ++*s;
+                return GetN(s);
+            }
+        }
+        ERR_PRINT("Syntax Err in GetT_O\n");
+    }
+    return BASE_TAYLOR_ORDER;
+}
+double GetE_D(char** s)
+{
+    assert(s);
+    assert(*s);
+
+    *s = SkipSpaces(*s);
+
+    if(**s == 'e')
+    {
+        const char syntax_string[] = "expansion_dot";
+        size_t string_length = sizeof(syntax_string) - 1;
+
+        if(strncmp(*s, syntax_string, string_length) == 0)
+        {
+            *s += string_length;
+            *s = SkipSpaces(*s);
+            if(**s == '=')
+            {
+                ++*s;
+                return GetN(s);
+            }
+        }
+        ERR_PRINT("Syntax Err in GetE_D\n");
+    }
+    return BASE_EXPANSION_DOT;
+}
+Node_t* GetF(char** s)
 {
     assert(s);
     assert(*s);
@@ -132,12 +302,13 @@ Node_t* GetG(char** s)
     Node_t* root = GetE(s);
     *s = SkipSpaces(*s);
 
-    if((**s) != '\0')
+    if((**s) != '$')
     {
         //DeleteTreeNode(&root);
         ERR_PRINT("SyntaxErr in GetG\n");
         return NULL;
     }
+    ++*s;
     return root;
 }
 Node_t* GetE(char** s)
@@ -233,7 +404,7 @@ Node_t* GetP(char** s)
             DeleteTreeNode(&node);
         }
     }
-    else if(**s == '-' || ('0' <= **s && **s <= '9')) return GetN(s);
+    else if(**s == '-' || ('0' <= **s && **s <= '9')) return TreeNodeCtor_(NUM, {.num = GetN(s)}, NULL, NULL);
     else
     {
         char* word = GetW(s);
@@ -296,7 +467,7 @@ Node_t* GetA(char** s)
 
     return TreeNodeCtor_(OP, {.op = NOT_OP}, first_arg, sec_arg);
 }
-Node_t* GetN(char** s)
+double GetN(char** s)
 {
     assert(s);
     assert(*s);
@@ -310,8 +481,8 @@ Node_t* GetN(char** s)
     }
     if(!('0'<=(**s) && (**s)<='9'))
     {
-        ERR_PRINT("SyntaxErr\n");
-        return NULL;
+        ERR_PRINT("SyntaxErr in GetN\n");
+        return 0;
     }
 
     double val = 0;
@@ -335,7 +506,7 @@ Node_t* GetN(char** s)
 
         val += frac_part;
     }
-    return TreeNodeCtor_(NUM, {.num = val * sign}, NULL, NULL);
+    return val * sign;
 }
 char* GetW(char** s)
 {
