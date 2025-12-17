@@ -137,14 +137,31 @@ typedef struct
     Value_t value;
 } data_t;
 
+typedef struct
+{
+    double left_border;
+    double right_border;
+} Scale_t;
+
+typedef struct
+{
+    Node_t* user_tree;
+    double taylor_order;
+    double expansion_dot;
+    Scale_t x;
+    Scale_t y;
+} ProgramData_t;
+
 #ifdef DEBUG
     #define ON_DEBUG(func) func
+    #define DEBUG_OFF(func)
     #define CHECK_PTR(param, name) if (param == NULL)        \
                                    {                         \
                                        return NULL_##name;   \
                                    }
 #else
     #define ON_DEBUG(func)
+    #define DEBUG_OFF(func) func
     #define CHECK_PTR(param, name)
 #endif // DEBUG
 
