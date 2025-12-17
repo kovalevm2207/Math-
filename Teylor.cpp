@@ -1,12 +1,12 @@
 #include "Teylor.h"
 
-Tree_t* TaylorExpansion(FILE* file, Derivative_t* derivatives)
+Tree_t* TaylorExpansion(FILE* file, Derivative_t* derivatives, ProgramData_t input_data)
 {
     assert(derivatives);
     assert(file);
 
     Tree_t* taylor_tree = MakeTaylorTree(derivatives);
-    MakeGraphScript(derivatives[0].tree->root, taylor_tree->root, "taylor");
+    MakeGraphScript(derivatives[0].tree->root, taylor_tree->root, "taylor", input_data);
 
     #define K  derivatives[1].data
     #define Y0 derivatives[0].data

@@ -1,17 +1,17 @@
 #include "Derivative.h"
 
 
-Derivative_t*   GetNDerivatives(FILE* file, Tree_t* user_tree, int* count_img)
+Derivative_t*   GetNDerivatives(FILE* file, ProgramData_t input_data, int* count_img)
 {
-    assert(user_tree);
     assert(count_img);
     assert(file);
 
+    Tree_t* user_tree = input_data.user_tree;
 
     Derivative_t* derivatives = (Derivative_t*) calloc(TAYLOR_ORDER + 1, sizeof(Derivative_t));
     derivatives[0].tree = user_tree;
 
-    GetVarsValues(user_tree);
+    user_tree->vars[0].data = input_data.expansion_dot;
     ON_DEBUG(TreeStructDump(user_tree));
 
     derivatives[0].data = CalcTreeNode(derivatives[0].tree->root,
@@ -28,14 +28,12 @@ Derivative_t*   GetNDerivatives(FILE* file, Tree_t* user_tree, int* count_img)
         Node_t* derivative = TakeDerivative(file, derivatives[derivative_order - 1].tree->root, "x", count_img, &is_print);
         MakePrevNode(derivative);
         derivatives[derivative_order].tree = TreeCtor(derivative);
-        //if(derivative_order <= MAX_DUMP_DERIVATIVE_ORDER)
-        //    TreeDump(derivative, (*count_img)++);
 
         if(derivatives[derivative_order].tree->size < MAX_DUMP_SIZE)
         {
             char* img_name = (char*) calloc(8, sizeof(char));
             sprintf(img_name, "graph%d", derivative_order);
-            DrawGraph(file, img_name, derivatives[derivative_order - 1].tree->root, derivatives[derivative_order].tree->root);
+            DrawGraph(file, img_name, input_data, derivatives[derivative_order - 1].tree->root, derivatives[derivative_order].tree->root);
             free(img_name);
         }
         else

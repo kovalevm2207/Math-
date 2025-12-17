@@ -13,21 +13,13 @@ int main(const int argc, const char* const argv[])
     }else input_file = argv[1];
     ProgramData_t input_data = GetInputData(input_file);
 
-    fprintf(stderr, "проверка корректности считывания:\n");
-    fprintf(stderr, "input_data.taylor_order = %lg\n",   input_data.taylor_order);
-    fprintf(stderr, "input_data.expansion_dot = %lg\n",  input_data.expansion_dot);
-    fprintf(stderr, "input_data.x.left_border = %lg\n",  input_data.x.left_border);
-    fprintf(stderr, "input_data.x.right_border = %lg\n", input_data.x.right_border);
-    fprintf(stderr, "input_data.y.left_border = %lg\n",  input_data.y.left_border);
-    fprintf(stderr, "input_data.y.right_border = %lg\n", input_data.y.right_border);
-
     FILE* tex_file = fopen("LaTeX.tex","w");
     assert(tex_file);
     BeginLaTeXDocument(tex_file);
     PrintOriginalTree(tex_file, input_data.user_tree->root);
 
-    Derivative_t* derivatives = GetNDerivatives(tex_file, input_data.user_tree, &count_img);
-    Tree_t* taylor_tree = TaylorExpansion(tex_file, derivatives);
+    Derivative_t* derivatives = GetNDerivatives(tex_file, input_data, &count_img);
+    Tree_t* taylor_tree = TaylorExpansion(tex_file, derivatives, input_data);
 
     EndProgram(tex_file, derivatives, &input_data);
     TreeDtor(&taylor_tree);

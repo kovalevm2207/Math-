@@ -1,6 +1,6 @@
 #include "Graph.h"
 
-int DrawGraph(FILE* file, const char* const img_name, Node_t* first_func, Node_t* sec_func)
+int DrawGraph(FILE* file, const char* const img_name, ProgramData_t input_data, Node_t* first_func, Node_t* sec_func)
 {
     assert(first_func);
     fprintf(file,
@@ -15,14 +15,14 @@ int DrawGraph(FILE* file, const char* const img_name, Node_t* first_func, Node_t
         WriteTreeNodeLaTeX(file, sec_func);
         fprintf(file, "\\end{dmath}\n\n");
     }
-    MakeGraphScript(first_func, sec_func, img_name);
+    MakeGraphScript(first_func, sec_func, img_name, input_data);
 
     system("gnuplot script_plot.gp");
     fprintf(file, "\\includegraphics[width=1\\textwidth]{Graph/%s.pdf}\n\n", img_name);
 
     return 0;
 }
-int MakeGraphScript(Node_t* first_func, Node_t* sec_func, const char* const img_name)
+int MakeGraphScript(Node_t* first_func, Node_t* sec_func, const char* const img_name, ProgramData_t input_data)
 {
     assert(first_func); assert(img_name);
 
@@ -32,8 +32,8 @@ int MakeGraphScript(Node_t* first_func, Node_t* sec_func, const char* const img_
     fprintf(script,
     "set terminal pdfcairo enhanced color size 18cm,9cm font \"Arial,12\"\n"
     "set output \"Graph/%s.pdf\"\n"
-    "set xrange [0.5:1.5]\n"
-    "set yrange [-1:2.5]\n"
+    "set xrange [%lg:%lg]\n"
+    "set yrange [%lg:%lg]\n"
     "set samples 10000\n"
     "set xtics 1\n"
     "set ytics 1\n"
@@ -44,7 +44,10 @@ int MakeGraphScript(Node_t* first_func, Node_t* sec_func, const char* const img_
     "set grid xtics ytics mxtics mytics lt 1 lc rgb \"#aeb1b1\" lw 1, lt 0 lc rgb \"#aeb1b1\" lw 0.5\n"
     "set key right top\n"
     "set arrow from 9.5, 0 to 10, 0 head size 0.08,20 lw 2 lc \"black\" front\n"
-    "set arrow from 0, 4.5 to 0, 5 head size 0.08,20 lw 2 lc \"black\" front\n", img_name);
+    "set arrow from 0, 4.5 to 0, 5 head size 0.08,20 lw 2 lc \"black\" front\n",
+    img_name,
+    input_data.x.left_border, input_data.x.right_border,
+    input_data.y.left_border, input_data.y.right_border);
 
     fprintf(script, "plot ");
     WriteTreeNodeGnuPlot(script, first_func);
