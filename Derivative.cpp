@@ -105,6 +105,7 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var, int* cou
             }
             break;
     }
+    #include "UndefDerivativeDSL.h"
 
     if(CountTreeSize(new_node) < MAX_DUMP_SIZE && *is_print == true)
     {
@@ -116,6 +117,8 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var, int* cou
         WriteTreeNodeLaTeX(file, new_node);
         fprintf(file, "\\end{dmath}\n");
 
+        ON_DEBUG(fprintf(file, "Исходное дерево:\n\n"));
+        ON_DEBUG(TreeDump(file, new_node, (*count_img)++));
         PrintBeginSimplify(file);
     }
     else
@@ -123,10 +126,7 @@ Node_t* TakeDerivative(FILE* file, Node_t* node, const char* const var, int* cou
         if (*is_print == true) fprintf(file, "\\subsubsection*{Дальнейшее по аналогии...}\n\n");
         *is_print = false;
     }
-    Node_t* copy = c(new_node);
-    SimplifyExpression(file, copy, &new_node, count_img, is_print);
-    DeleteTreeNode(&copy);
-    #include "UndefDerivativeDSL.h"
+    SimplifyExpression(file, node, &new_node, count_img, is_print);
     return new_node;
 }
 Node_t* PowDerivative(FILE* file, Node_t* node, const char* const var, int* count_img, bool* is_print)

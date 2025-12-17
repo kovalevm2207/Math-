@@ -321,6 +321,7 @@ void PrintSimplifyRes(FILE* file, Node_t* base_node, Node_t* simple_node, const 
 
     if(flag)
     {
+        fprintf(file, "Подтвердил распечатку, печатаю:\n\n");
         fprintf(file,
         "%s\\\\\n", ConstantFoldingPhrases[(long unsigned int)rand() % CONST_FOLDING_PHRASES_NUM]);
         fprintf(file,
@@ -333,6 +334,7 @@ void PrintSimplifyRes(FILE* file, Node_t* base_node, Node_t* simple_node, const 
         fprintf(file,
         "\\end{dmath}\n\n");
     }
+    else fprintf(file, "Что-то я расхотел печатать как-то\n\n");
 }
 void EndLaTeXDocument(FILE* file)
 {

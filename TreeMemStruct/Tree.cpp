@@ -322,7 +322,7 @@ TreeErr_t PrintTreeData(FILE* stream, const Node_t* node)
 
     return TREE_OK;
 }
-TreeErr_t TreeDump_(const Node_t* node, int count_img, const char* func, const char* file, int line)
+TreeErr_t TreeDump_(FILE* tex_file, const Node_t* node, int count_img, const char* func, const char* file, int line)
 {
     ON_DEBUG(printf("node ptr = %p\n", node));
     if (node == NULL) return NULL_NODE;
@@ -331,8 +331,11 @@ TreeErr_t TreeDump_(const Node_t* node, int count_img, const char* func, const c
     char command[MAX_FILE_NAME] = {};
     sprintf(command, "dot -Tsvg TreeMemStruct/svg_dot/dump.dot -o TreeMemStruct/svg_dot/%ddump.svg", count_img);
     system(command);
+    sprintf(command, "dot -Tpdf TreeMemStruct/svg_dot/dump.dot -o TreeMemStruct/pdf_dot/%ddump.pdf", count_img);
+    system(command);
 
     WriteInHtmlFile(node, count_img, func, file, line);
+    fprintf(tex_file, "\\includegraphics[width=1\\textwidth]{TreeMemStruct/pdf_dot/%ddump.pdf}\n\n", count_img);
 
     return TREE_OK;
 }

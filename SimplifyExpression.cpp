@@ -21,22 +21,32 @@ TreeErr_t SimplifyExpression(FILE* file, Node_t* base_tree, Node_t** tree, int* 
         result = ConstantFolding(tree, &is_change_CF);
         assert(result);
         *tree = result;
+        ON_DEBUG(if(*is_print) fprintf(file, "is_change_CF = %d\n\n", is_change_CF));
         if(is_change_CF)
         {
-            //TreeDump(*tree, (*count_img)++);
-            if(CountTreeSize(base_tree) < MAX_DUMP_SIZE && *is_print == true)
-                PrintSimplifyRes(file, base_tree, *tree, "x", is_change_NEE);
+            ON_DEBUG(if(*is_print) fprintf(file, "is_print = %d\n\n", *is_print));
+            if(CountTreeSize(base_tree) < MAX_DUMP_SIZE && *is_print)
+            {
+                ON_DEBUG(fprintf(file, "После ConstantFolding:\n\n"));
+                ON_DEBUG(TreeDump(file, *tree, (*count_img)++));
+                PrintSimplifyRes(file, base_tree, *tree, "x", is_change_CF);
+            }
             else *is_print = false;
         }
 
         result = NeutralElementElimination(tree, &is_change_NEE);
         assert(result);
         *tree = result;
+        ON_DEBUG(if(*is_print) fprintf(file, "is_change_NEE = %d\n\n", is_change_NEE));
         if(is_change_NEE)
         {
-            //TreeDump(*tree, (*count_img)++);
-            if(CountTreeSize(base_tree) < MAX_DUMP_SIZE && *is_print == true)
+            ON_DEBUG(if(*is_print) fprintf(file, "is_print = %d\n\n", *is_print));
+            if(CountTreeSize(base_tree) < MAX_DUMP_SIZE && *is_print)
+            {
+                ON_DEBUG(fprintf(file, "После NeutralElementElimination:\n\n"));
+                ON_DEBUG(TreeDump(file, *tree, (*count_img)++));
                 PrintSimplifyRes(file, base_tree, *tree, "x", is_change_NEE);
+            }
             else *is_print = false;
         }
     }

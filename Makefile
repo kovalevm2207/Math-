@@ -72,4 +72,4 @@ ObjectFiles/Teylor.o: Teylor.cpp Teylor.h Instruments.h
 	@ g++ $(FLAGS) $(MODE) -c Teylor.cpp -o ObjectFiles/Teylor.o
 
 clean:
-	rm ObjectFiles/*.o math++ TreeMemStruct/svg_dot/*.svg
+	rm ObjectFiles/*.o math++ TreeMemStruct/svg_dot/*.svg TreeMemStruct/pdf_dot/*.pdf
