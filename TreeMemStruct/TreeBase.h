@@ -146,7 +146,7 @@ typedef struct
 typedef struct
 {
     Tree_t* user_tree;
-    double taylor_order;
+    size_t taylor_order;
     double expansion_dot;
     Scale_t x;
     Scale_t y;

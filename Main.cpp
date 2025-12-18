@@ -37,6 +37,12 @@ void EndProgram(FILE* tex_file, Derivative_t* derivatives, ProgramData_t* input_
 
     EndHTMLfile();
 
+    for(size_t i = 0; i <= input_data->taylor_order; i++)
+    {
+        TreeDtor(&(derivatives[i].tree));
+        derivatives[i].data = 0;
+    }
+
     input_data->user_tree = NULL;
     input_data->taylor_order = 0;
     input_data->x.left_border = 0;
@@ -44,10 +50,5 @@ void EndProgram(FILE* tex_file, Derivative_t* derivatives, ProgramData_t* input_
     input_data->y.left_border = 0;
     input_data->y.right_border = 0;
 
-    for(int i = 0; i <= TAYLOR_ORDER; i++)
-    {
-        TreeDtor(&(derivatives[i].tree));
-        derivatives[i].data = 0;
-    }
     FREE(derivatives)
 }

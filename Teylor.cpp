@@ -5,7 +5,7 @@ Tree_t* TaylorExpansion(FILE* file, Derivative_t* derivatives, ProgramData_t inp
     assert(derivatives);
     assert(file);
 
-    Tree_t* taylor_tree = MakeTaylorTree(derivatives);
+    Tree_t* taylor_tree = MakeTaylorTree(derivatives, input_data);
     MakeGraphScript(derivatives[0].tree->root, taylor_tree->root, "taylor", input_data);
 
     #define K  derivatives[1].data
@@ -23,16 +23,16 @@ Tree_t* TaylorExpansion(FILE* file, Derivative_t* derivatives, ProgramData_t inp
 
     return taylor_tree;
 }
-Tree_t* MakeTaylorTree(Derivative_t* derivatives)
+Tree_t* MakeTaylorTree(Derivative_t* derivatives, ProgramData_t input_data)
 {
     assert(derivatives);
 
     FILE* file = fopen("TaylorExpansion.txt", "w");
     assert(file);
 
-    double factorial = 1;
+    int factorial = 1;
     fprintf(file, "%f", derivatives[0].data/factorial);
-    for(int i = 1; i <= TAYLOR_ORDER; i++)
+    for(int i = 1;(size_t) i <= input_data.taylor_order; i++)
     {
         factorial *= i;
         fprintf(file, "+%f*(x-%f)^%d", derivatives[i].data/factorial, derivatives[0].tree->vars[0].data, i);

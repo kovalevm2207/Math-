@@ -8,7 +8,7 @@ Derivative_t*   GetNDerivatives(FILE* file, ProgramData_t input_data, int* count
 
     Tree_t* user_tree = input_data.user_tree;
 
-    Derivative_t* derivatives = (Derivative_t*) calloc(TAYLOR_ORDER + 1, sizeof(Derivative_t));
+    Derivative_t* derivatives = (Derivative_t*) calloc(input_data.taylor_order + 1, sizeof(Derivative_t));
     derivatives[0].tree = user_tree;
 
     user_tree->vars[0].data = input_data.expansion_dot;
@@ -19,7 +19,7 @@ Derivative_t*   GetNDerivatives(FILE* file, ProgramData_t input_data, int* count
                                        derivatives[0].tree->vars_num);
 
     bool is_print = true;
-    for(int derivative_order = 1; derivative_order <= TAYLOR_ORDER; derivative_order++)
+    for(size_t derivative_order = 1; derivative_order <= input_data.taylor_order; derivative_order++)
     {
         if(derivative_order > 1) fprintf(file, "Идем дальше...\n\n");
         if(derivative_order <= MAX_DUMP_DERIVATIVE_ORDER)
@@ -32,7 +32,7 @@ Derivative_t*   GetNDerivatives(FILE* file, ProgramData_t input_data, int* count
         if(derivatives[derivative_order].tree->size < MAX_DUMP_SIZE)
         {
             char* img_name = (char*) calloc(8, sizeof(char));
-            sprintf(img_name, "graph%d", derivative_order);
+            sprintf(img_name, "graph%zu", derivative_order);
             DrawGraph(file, img_name, input_data, derivatives[derivative_order - 1].tree->root, derivatives[derivative_order].tree->root);
             free(img_name);
         }
